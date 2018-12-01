@@ -48,7 +48,7 @@
 
 
 /// This macro defines a string that identifies the name and version of this program. 
-#define PROGRAM_VERSION		PMS ("ME405 Lab 1 Unmodified Program V0.01 ")
+#define PROGRAM_VERSION		PMS ("ME507 Term Project Steering V0.01")
 
 
 //-------------------------------------------------------------------------------------

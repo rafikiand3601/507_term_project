@@ -1,9 +1,9 @@
 //**************************************************************************************
-/** @file task_steering.cpp
- *    This file contains code to drive the steering servo for the ME 507 term project. 
+/** @file task_motor.cpp
+ *    This file contains code to drive the ESC for the ME 507 term project. 
  *
  *  Revisions:
- *    @li 11-29-2018 KM file created to test steering servo.
+ *    @li 11-29-2018 KM file created to test ESC.
  *    
 //**************************************************************************************
 */
@@ -12,7 +12,7 @@
 #include <avr/io.h>                         // Port I/O for SFR's
 #include <avr/wdt.h>                        // Watchdog timer header
 
-#include "task_steering.h"                      // Header for this file
+#include "task_motor.h"                     // Header for this file
 
 
 /** This constant sets how many RTOS ticks the task delays if the user's not talking.
@@ -30,7 +30,7 @@ const TickType_t ticks_to_delay = ((configTICK_RATE_HZ / 1000) * 5);
  *                      (default: configMINIMAL_STACK_SIZE)
  */
 
-task_steering::task_steering (const char* a_name, 
+task_motor::task_motor (const char* a_name, 
 					  unsigned portBASE_TYPE a_priority, 
 					  size_t a_stack_size
 					 )
@@ -45,7 +45,7 @@ task_steering::task_steering (const char* a_name,
 /** This task handles the steering 
  */
 
-void task_steering::run (void)
+void task_motor::run (void)
 {
 
 
@@ -58,39 +58,37 @@ void task_steering::run (void)
 		switch (state)
 		{
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			// In state 0, setup the output pin for the servo on PB5(OC1A)
+			// In state 0, setup the output pin for the servo on PB4(OC2A)
 			case (0):
 				// Need a wave with period ~ 20 ms and pulse length of 1.0-2.0 ms
 				/** f = f_clk / N*(1 + TOP)
 				  * Want f = 50 [hz]
-				  * TOP = 0xFFFF = 65,535, f_clk = 16 [mhz]
-				  * N = 8 ---> f = 30.5 [hz] close enough
+				  * TOP = 0xFF = 255, f_clk = 16 [Mhz]
+				  * N = 1024 ---> f = 61.3 [hz] close enough
 				
 				*/
 				
-				// Set PB5 as output pin
-				DDRB |= (1 << PB5);
-				// Setup register for fast pwm, non-inverting
-				// WGM: fast pwm     COM1A1: non-inverting output
-				TCCR1A |= (1 << WGM10) & (1 << WGM11) & (1 << COM1A1);
-				// WGM: fast pwm     CS11: prescaler = 8
-				TCCR1B |= (1 << WGM12) & (1 << WGM13) & (1 << CS11);
-				// TCCR1C unused
+				// Set PB4 as output pin
+				DDRB |= (1 << PB4);
+				// Setup timer register for fast pwm, non-inverting
+				// WGM: fast pwm     COM: non-inverting output
+				TCCR2A |= (1 << WGM20) & (1 << WGM21) & (1 << COM2A1);
+				// WGM: fast pwm     CS: prescaler = 1024
+				TCCR2B |= (1 << WGM22) & (1 << CS22) & (1 << CS21) & (1 << CS20);
+
 				// Setup of OCR
 				// 1.5 [ms] ----> 667 [hz] ---> 3000 ---> 0x0BB8
 				// Should run 30.5 [hz] period with 1.5 [ms] pulses
-				OCR1AH = 0x0B;
-				OCR1AL = 0xB8;
+				OCR2A = 0x18;
 				state = 1;
 				break; // End of state 0
 
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			// In state 1, control the servo position
+			// In state 1, control the esc power
 			case (1):
 				// Vary OCR to change pulse length.
 				// Pulses are between 1.0 and 2.0 [ms]
-				OCR1AH = 0x0B;
-				OCR1AL = 0xB8;
+				OCR2A = 0x18;
 				break; // End of state 1
 
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -113,7 +111,7 @@ void task_steering::run (void)
 
 
 
-uint8_t task_steering::calc_pwm (uint8_t pwm)
+uint8_t task_motor::calc_pwm (uint8_t pwm)
 {
 	return pwm;
 }

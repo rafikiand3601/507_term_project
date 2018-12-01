@@ -86,8 +86,7 @@ TextQueue* p_print_ser_queue;
 int main (void)
 {
 	
-	DDRA |= 0b00000001;
-	PORTA |= 0b00000001;
+
 	// Disable the watchdog timer unless it's needed later. This is important because
 	// sometimes the watchdog timer may have been left on...and it tends to stay on
 	MCUSR = 0;
