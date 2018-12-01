@@ -59,7 +59,8 @@
 
 // task includes
 #include "task_user.h"                      // Header for user interface task
-#include "task_steering.h"                  // Header for user steering task
+#include "task_steering.h"                  // Header for steering task
+#include "task_motor.h"                  // Header for motor task
 
 // Declare the queues which are used by tasks to communicate with each other here. 
 // Each queue must also be declared 'extern' in a header file which will be read 
@@ -111,7 +112,7 @@ int main (void)
 	new task_steering ("Steering", task_priority (5), 200);
 	
 	// Create a Task to control the motor
-	//new task_motor ("Motor", task_priority (8), 200);
+	new task_motor ("Motor", task_priority (8), 200);
 	
 	// Create a Task to control the RF transciever
 	//new task_rf ("RF", task_priority (6), 200);
