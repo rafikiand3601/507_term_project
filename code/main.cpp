@@ -115,6 +115,9 @@ int main (void)
 	
 	// Create a Task to control the RF transciever
 	//new task_rf ("RF", task_priority (6), 200);
+	
+	//Create a Task to coordinate the other tasks
+	//new task_CarControl ("CarControl",task_priority (4),200);
 
 	// Here's where the RTOS scheduler is started up. It should never exit as long as
 	// power is on and the microcontroller isn't rebooted
