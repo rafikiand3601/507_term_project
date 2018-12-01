@@ -30,7 +30,7 @@ PROJECT_NAME = proj
 
 # A list of the source (.c, .cc, .cpp) files in the project. Files in library 
 # subdirectories do not go in this list; they're included automatically
-SOURCES = main.cpp task_user.cpp adc.cpp task_steering.h
+SOURCES = main.cpp task_user.cpp adc.cpp task_steering.h task_motor.h
 
 # Clock frequency of the CPU, in Hz. This number should be an unsigned long integer.
 # For example, 16 MHz would be represented as 16000000UL. 

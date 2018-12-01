@@ -1,5 +1,5 @@
 //**************************************************************************************
-/** @file task_steering.h
+/** @file task_motor.h
  *    This file contains header stuff for a user interface task for a ME507/FreeRTOS
  *    test suite. 
  *
@@ -10,8 +10,8 @@
 */
 
 // This define prevents this .h file from being included multiple times in a .cpp file
-#ifndef _TASK_STEERING_H_
-#define _TASK_STEERING_H_
+#ifndef _TASK_MOTOR_H_
+#define _TASK_MOTOR_H_
 
 #include <stdlib.h>                         // Prototype declarations for I/O functions
 
@@ -36,8 +36,7 @@
 
 
 
-
-class task_steering : public TaskBase
+class task_motor : public TaskBase
 {
 private:
 	// No private variables or methods for this class
@@ -48,11 +47,11 @@ protected:
 
 public:
 	// This constructor creates a user interface task object
-	task_steering (const char*, unsigned portBASE_TYPE, size_t);
+	task_motor (const char*, unsigned portBASE_TYPE, size_t);
 
 	/** This method is called by the RTOS once to run the task loop for ever and ever.
 	 */
 	void run (void);
 };
 
-#endif // _TASK_STEERING_H_
+#endif // _TASK_MOTOR_H_

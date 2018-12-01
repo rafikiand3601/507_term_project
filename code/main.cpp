@@ -59,7 +59,8 @@
 
 // task includes
 #include "task_user.h"                      // Header for user interface task
-#include "task_steering.h"                  // Header for user steering task
+#include "task_steering.h"                  // Header for steering task
+#include "task_motor.h"                  // Header for motor task
 
 // Declare the queues which are used by tasks to communicate with each other here. 
 // Each queue must also be declared 'extern' in a header file which will be read 
@@ -86,8 +87,7 @@ TextQueue* p_print_ser_queue;
 int main (void)
 {
 	
-	DDRA |= 0b00000001;
-	PORTA |= 0b00000001;
+
 	// Disable the watchdog timer unless it's needed later. This is important because
 	// sometimes the watchdog timer may have been left on...and it tends to stay on
 	MCUSR = 0;
@@ -109,28 +109,16 @@ int main (void)
 	new task_user ("UserInt", task_priority (1), 260, p_ser_port);
 
 	// Create a Task to control the steering of the car
-	new task_steering ("Steering", task_priority (5), 200, p_ser_port);
+	new task_steering ("Steering", task_priority (5), 200);
 	
 	// Create a Task to control the motor
-	//new task_motor ("Motor", task_priority (8), p_ser_port);
+	new task_motor ("Motor", task_priority (8), 200);
 	
-	// Create a Task to control the RF transceiver
-	//new task_rf ("RF", task_priority (6), 200, p_ser_port);
+	// Create a Task to control the RF transciever
+	//new task_rf ("RF", task_priority (6), 200);
 	
 	//Create a Task to coordinate the other tasks
-	//new task_CarControl ("CarControl",task_priority (2),200, p_ser_port);
-	
-	//Create a Task to read ultrasonic receiver 1
-	//new task_USR1 ("USR1",task_priority (7),200, p_ser_port);
-	
-	//Create a Task to read ultrasonic receiver 2
-	//new task_USR2 ("USR2",task_priority (7),200, p_ser_port);
-	
-	//Create a Task to read ultrasonic distance sensor
-	//new task_USD ("USD",task_priority (3),200, p_ser_port);
-	
-	//Create a Task to read motor hall efect sensor 
-	//new task_HallEffect ("HallEffect",task_priority (9),200, p_ser_port);
+	//new task_CarControl ("CarControl",task_priority (4),200);
 
 	// Here's where the RTOS scheduler is started up. It should never exit as long as
 	// power is on and the microcontroller isn't rebooted
