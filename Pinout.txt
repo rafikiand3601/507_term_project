@@ -1,0 +1,28 @@
+Servo:
+	PB5(OC1A)
+
+ESC:
+	PB4(OC2A)
+
+Ultrasonic 1 (JP3):
+	Trig: PC1
+	Echo: PC0
+
+Ultrasonic 2 (JP4):
+	Trig: PC3
+	Echo: PC2
+
+Ultrasonic 3 (JP5):
+	Trig: PC5
+	Echo: PC4
+
+Ultrasonic 4 (JP6):
+	Trig: PC6
+	Echo: PC4
+
+NRF24L01:
+	CSN: 
+	CE: 
+	SCK: 
+	MISO: 
+	MOSI: 
