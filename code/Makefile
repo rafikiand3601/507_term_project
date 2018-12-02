@@ -1,9 +1,9 @@
 #--------------------------------------------------------------------------------------
 # File:    Makefile for an AVR project
-#          The makefile is the standard way to control the compilation and linking of 
+#          The makefile is the standard way to control the compilation and linking of
 #          C/C++ files into an executable file. This makefile is also used to control
-#          the downloading of the executable file to the target processor and the 
-#          generation of documentation for the project. 
+#          the downloading of the executable file to the target processor and the
+#          generation of documentation for the project.
 #
 # Version:  4-11-2004 JRR Original file
 #           6-19-2006 JRR Modified to use AVR-JTAG-ICE for debugging
@@ -17,23 +17,23 @@
 #          AVR-Insight or DDD and avarice, if debugging with the JTAG port
 #          Doxygen, for automatic documentation generation
 #
-# Copyright 2006-2015 by JR Ridgely.  This makefile is intended for use in educational 
-# courses only, but its use is not restricted thereto. It is released under the terms 
+# Copyright 2006-2015 by JR Ridgely.  This makefile is intended for use in educational
+# courses only, but its use is not restricted thereto. It is released under the terms
 # of the Lesser GNU Public License with no warranty whatsoever, not even an implied
-# warranty of merchantability or fitness for any particular purpose. Anyone who uses 
-# this file agrees to take all responsibility for any and all consequences of that use. 
+# warranty of merchantability or fitness for any particular purpose. Anyone who uses
+# this file agrees to take all responsibility for any and all consequences of that use.
 #--------------------------------------------------------------------------------------
 
 # The name of the program you're building, without its extension. The name is used for
 # the downloadable and map files, which are mostly worked with automatically
 PROJECT_NAME = proj
 
-# A list of the source (.c, .cc, .cpp) files in the project. Files in library 
+# A list of the source (.c, .cc, .cpp) files in the project. Files in library
 # subdirectories do not go in this list; they're included automatically
-SOURCES = main.cpp task_user.cpp adc.cpp task_steering.h task_motor.h
+SOURCES = main.cpp task_user.cpp adc.cpp task_USR1.cpp task_steering.h task_motor.h
 
 # Clock frequency of the CPU, in Hz. This number should be an unsigned long integer.
-# For example, 16 MHz would be represented as 16000000UL. 
+# For example, 16 MHz would be represented as 16000000UL.
 F_CPU = 16000000UL
 
 # These codes are used to switch on debugging modes if they're being used. Several can
@@ -47,7 +47,7 @@ OTHERS = -DSERIAL_DEBUG
 # If the code -DTASK_SETUP_AND_LOOP is specified, ME405/FreeRTOS tasks classes will be
 # required to provide methods setup() and loop(). Otherwise, they must only provide a
 # a method called run() which is called just once by the scheduler.
-OTHERS += 
+OTHERS +=
 
 # Other codes, used for turning on special features in a given project, can be put here
 # -DSWOOP_BOARD        Tells the nRF24L01 radio driver to set up for the Swoop 1 board
@@ -55,9 +55,9 @@ OTHERS +=
 # -DME405_BOARD_V06    Sets up radio driver for new ME405 board with 2 motor drivers
 # -DME405_BREADBOARD   Sets up radio driver for ATmegaXX 40-pin on breadboard
 # -DPOLYDAQ_BOARD      Sets up radio and other stuff for a PolyDAQ board
-OTHERS += 
+OTHERS +=
 
-# This define is used to choose the type of programmer from the following options: 
+# This define is used to choose the type of programmer from the following options:
 # bsd        - Parallel port in-system (ISP) programmer using SPI interface on AVR
 # jtagice    - Serial or USB interface JTAG-ICE mk I clone from ETT or Olimex
 # bootloader - Resident program in the AVR which downloads through USB/serial port
@@ -79,9 +79,9 @@ PROG = usbasp
 # MCU = atmega1284p
 MCU = atmega2561
 
-# These defines specify the ports to which the downloader device is connected. 
+# These defines specify the ports to which the downloader device is connected.
 # PPORT is for "bsd" on a parallel port, lpt1 on Windows or /dev/parport0 on Linux.
-# JPORT is for "jtagice" on a serial port such as com1 or /dev/ttyS0, or usb-serial 
+# JPORT is for "jtagice" on a serial port such as com1 or /dev/ttyS0, or usb-serial
 #       such as com4 or /dev/ttyUSB1, or aliased serial port such as /dev/avrjtag
 # BPORT is for "bootloader", the USB/serial port program downloader on the AVR
 # The usbtiny programmer doesn't need a port specification; it has a USB identifier
@@ -92,8 +92,8 @@ BPORT = /dev/ttyUSB0
 #######################################################################################
 ################ End of the stuff the user is expected to need to change ##############
 
-# In this section, default settings for fuse bytes are given for each processor which 
-# this makefile supports. New chip specifications can be added to this file as needed. 
+# In this section, default settings for fuse bytes are given for each processor which
+# this makefile supports. New chip specifications can be added to this file as needed.
 
 # ATmega128 set up for ME405 board with JTAG enabled
 ifeq ($(MCU), atmega128)
@@ -107,7 +107,7 @@ else ifeq ($(MCU), atmega1281)
   LFUSE = 0xEF
 # ATmega32 configured for Swoop sensor board with JTAG disabled to save power
 else ifeq ($(MCU), atmega32)
-  EFUSE = 
+  EFUSE =
   HFUSE = 0x99
   LFUSE = 0xEF
 # ATmega324P configured for Swoop sensor board with JTAG disabled
@@ -203,7 +203,7 @@ HEX = $(BUILDDIR)/$(PROJECT_NAME).hex
 BIN = $(BUILDDIR)/$(PROJECT_NAME).bin
 
 #--------------------------------------------------------------------------------------
-# List the various programs which are used to compile, link, archive, etc. 
+# List the various programs which are used to compile, link, archive, etc.
 ARCHIE  = avr
 CC      = $(ARCHIE)-gcc
 CXX     = $(ARCHIE)-g++
@@ -227,7 +227,7 @@ OPTIM = -O2
 # Warnings which need to be given
 C_WARNINGS = -Wall -Wextra -Wshadow -Wpointer-arith -Wbad-function-cast -Wcast-align \
              -Wsign-compare -Wstrict-prototypes -Wmissing-prototypes -Wunused \
-             -Wmissing-declarations -Waggregate-return 
+             -Wmissing-declarations -Waggregate-return
 
 CPP_WARNINGS = -Wall -Wextra -Wshadow -Wpointer-arith -Wcast-align -Wsign-compare \
                -Wmissing-declarations -Wunused
@@ -251,9 +251,9 @@ vpath %.cpp $(LIB_FULL)
 vpath %.c $(LIB_FULL)
 
 #=================================== THE RULES ========================================
-# Inference rules show how to process each kind of file. 
+# Inference rules show how to process each kind of file.
 
-# Rules to make downloadable binary files in ELF (which contains debugging 
+# Rules to make downloadable binary files in ELF (which contains debugging
 # information), BIN (pure binary machine code), and HEX (text binary) formats
 $(BIN): $(ELF)
 	@$(OBJCOPY) -O binary $< $@
@@ -293,13 +293,13 @@ $(LIB_FILE): $(LIB_OBJS)
 
 #==================================== TARGETS =========================================
 
-# Make the main target of this project.  This target is invoked when the user types 
+# Make the main target of this project.  This target is invoked when the user types
 # 'make' as opposed to 'make <target>.'  This must be the first target in Makefile.
 
 all: $(HEX) $(BIN)
 
 #--------------------------------------------------------------------------------------
-# 'make install' will make the project, then download the program using whichever 
+# 'make install' will make the project, then download the program using whichever
 # method has been selected -- ISP cable, JTAG-ICE module, or USB/serial bootloader
 
 install:  $(ELF) $(BIN) $(HEX)
@@ -319,12 +319,12 @@ install:  $(ELF) $(BIN) $(HEX)
 
 #--------------------------------------------------------------------------------------
 # 'make fuses' will set up the processor's fuse bits in a "standard" mode. Standard is
-# a setup in which there is no bootloader but the ISP and JTAG interfaces are enabled. 
+# a setup in which there is no bootloader but the ISP and JTAG interfaces are enabled.
 
 fuses:
   ifeq ($(PROG), bsd)
-	$(DUDE) -p $(MCU) -P $(PPORT) -c $(PROG) -V -E noreset -Ulfuse:w:$(LFUSE):m 
-	$(DUDE) -p $(MCU) -P $(PPORT) -c $(PROG) -V -E noreset -Uhfuse:w:$(HFUSE):m 
+	$(DUDE) -p $(MCU) -P $(PPORT) -c $(PROG) -V -E noreset -Ulfuse:w:$(LFUSE):m
+	$(DUDE) -p $(MCU) -P $(PPORT) -c $(PROG) -V -E noreset -Uhfuse:w:$(HFUSE):m
 	$(DUDE) -p $(MCU) -P $(PPORT) -c $(PROG) -V -E noreset -Uefuse:w:$(EFUSE):m
   else ifeq ($(PROG), jtagice)
 	@echo "ERROR: Fuse byte programming not set up for JTAG in this Makefile"
@@ -383,7 +383,7 @@ libdoc:
 #--------------------------------------------------------------------------------------
 # 'make clean' will erase the compiled files, listing files, etc. so you can restart
 # the building process from a clean slate. It's also useful before committing files to
-# a CVS or SVN or Git repository. 
+# a CVS or SVN or Git repository.
 
 clean:
 	@echo -n Cleaning compiled files and documentation...
