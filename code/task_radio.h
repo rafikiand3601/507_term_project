@@ -49,7 +49,7 @@ private:
 	nRF24L01 *rf;
 
 protected:
-	void setup_rf (nRF24L01&);
+	void setup_rf (nRF24L01*);
 
 public:
 	// This constructor creates a user interface task object

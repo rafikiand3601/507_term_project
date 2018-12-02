@@ -58,9 +58,10 @@ void task_radio::run (void)
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// State 0, setup radio transciever
 			case (0):
-				to_address[2] = {0x01, 0x01};
+				to_address[0] = 0x01;
+				to_address[1] = 0x01;
 				rf = nRF24L01_init();
-				setup_rf(*rf);
+				setup_rf(rf);
 				
 				state = 1;
 				break; // End of state 0

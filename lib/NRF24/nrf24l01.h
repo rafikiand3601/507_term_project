@@ -27,6 +27,10 @@ typedef struct {
 } nRF24L01;
 
 
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 nRF24L01 *nRF24L01_init(void);
 void nRF24L01_begin(nRF24L01 *rf);
 uint8_t nRF24L01_send_command(nRF24L01 *rf, uint8_t command, void *data,
@@ -49,5 +53,9 @@ void nRF24L01_retry_transmit(nRF24L01 *rf);
 void nRF24L01_clear_interrupts(nRF24L01 *rf);
 void nRF24L01_clear_transmit_interrupts(nRF24L01 *rf);
 void nRF24L01_clear_receive_interrupt(nRF24L01 *rf);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
