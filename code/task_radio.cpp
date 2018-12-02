@@ -58,7 +58,7 @@ void task_radio::run (void)
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// State 0, setup radio transciever
 			case (0):
-				to_address[0] = 0x01;
+				to_address[0] = 0x00;
 				to_address[1] = 0x01;
 				rf = nRF24L01_init();
 				setup_rf(rf);
@@ -69,10 +69,21 @@ void task_radio::run (void)
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Run control actions
 			case (1):
+				// Wait for ping flag to be set
+				if (p_rf_ping->get () == 1)
+				{
+					p_rf_ping->put (0);
+					state = 2;
+				}
+				break;
 				
+			case (2):
+				memcpy(msg.data, "a", 2);
 				nRF24L01_transmit(rf, to_address, &msg);
+				state = 1;
 				break; // End of state 1
-
+				
+				
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// We should never get to the default state. If we do, complain and restart
 			default:
@@ -106,9 +117,6 @@ void task_radio::setup_rf(nRF24L01 *p_rf) {
     p_rf->mosi.pin = PB2;
     p_rf->miso.port = &PORTB;
     p_rf->miso.pin = PB3;
-    // interrupt on falling edge of INT0 (PD2)
-    //EICRA |= _BV(ISC01);
-    //EIMSK |= _BV(INT0);
     nRF24L01_begin(p_rf);
 }
 

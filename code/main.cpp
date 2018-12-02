@@ -63,7 +63,7 @@
 #include "task_motor.h"                     // Header for motor task
 #include "task_car_control.h"               // Header for car control task
 #include "task_radio.h"                     // Header for car control task
-#include "task_USR1.h"											// Header for ultra sonic receiver task
+#include "task_USR1.h"		                // Header for ultra sonic receiver task
 
 
 // Declare the queues which are used by tasks to communicate with each other here.
@@ -82,6 +82,8 @@ TextQueue* p_print_ser_queue;
 TaskShare<int8_t>* p_servo_pos;
 TaskShare<int8_t>* p_motor_vel;
 TaskShare<int8_t>* p_enc_read;
+TaskShare<bool>* p_rf_ping;
+TaskShare<bool>* p_drive_state;
 
 
 //=====================================================================================
@@ -117,33 +119,40 @@ int main (void)
 	// Create the shared encoder reading variable
 	p_enc_read = new TaskShare<int8_t> ("Encoder_read");
 
+	// Create the shared ping flag variable
+	p_rf_ping = new TaskShare<bool> ("Ping_Flag");
+
+	// Create the shared drive flag variable
+	p_drive_state = new TaskShare<bool> ("Drive_State");
+	p_drive_state->put (0);
+	
 	// The user interface is at low priority; it could have been run in the idle task
 	// but it is desired to exercise the RTOS more thoroughly in this test program
 	new task_user ("UserInt", task_priority (1), 260, p_ser_port);
 
 	// Create a Task to control the steering of the car
-	//new task_steering ("Steering", task_priority (5), 200);
+	new task_steering ("Steering", task_priority (5), 200, p_ser_port);
 
 	// Create a Task to control the motor
-	//new task_motor ("Motor", task_priority (8), p_ser_port);
+	new task_motor ("Motor", task_priority (8), 200, p_ser_port);
 
 	// Create a Task to control the RF transceiver
-	//new task_rf ("RF", task_priority (6), 200, p_ser_port);
+	new task_radio ("RF", task_priority (6), 200, p_ser_port);
 
 	//Create a Task to coordinate the other tasks
-	new task_car_control ("CarControl",task_priority (2),200, p_ser_port);
+	new task_car_control ("CarControl",task_priority (2), 200, p_ser_port);
 
 	//Create a Task to read ultrasonic receiver 1
-	//new task_USR1 ("USR1",task_priority (7),200, p_ser_port);
+	//new task_USR1 ("USR1",task_priority (7), 200, p_ser_port);
 
 	//Create a Task to read ultrasonic receiver 2
-	//new task_USR2 ("USR2",task_priority (7),200, p_ser_port);
+	//new task_USR2 ("USR2",task_priority (7), 200, p_ser_port);
 
 	//Create a Task to read ultrasonic distance sensor
-	//new task_USD ("USD",task_priority (3),200, p_ser_port);
+	//new task_USD ("USD",task_priority (3), 200, p_ser_port);
 
 	//Create a Task to read motor hall efect sensor
-	//new task_HallEffect ("HallEffect",task_priority (9),200, p_ser_port);
+	//new task_HallEffect ("HallEffect",task_priority (9), 200, p_ser_port);
 
 	// Here's where the RTOS scheduler is started up. It should never exit as long as
 	// power is on and the microcontroller isn't rebooted

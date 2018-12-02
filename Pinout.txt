@@ -21,7 +21,7 @@ Ultrasonic 4 (JP6):
 	Echo: PC4
 
 NRF24L01:
-	CSN: E0
+	CSN/SS: E0
 	CE: E1
 	SCK: PB1
 	MISO: MISO

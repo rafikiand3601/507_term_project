@@ -48,7 +48,7 @@ protected:
 
 public:
 	// This constructor creates a user interface task object
-	task_motor (const char*, unsigned portBASE_TYPE, size_t);
+	task_motor (const char*, unsigned portBASE_TYPE, size_t, emstream*);
 
 	/** This method is called by the RTOS once to run the task loop for ever and ever.
 	 */

@@ -61,18 +61,32 @@ void task_car_control::run (void)
 				p_motor_vel->put (0);
 				p_servo_pos->put (0);
 				
-				state = 1;
+				state = 2;
 				break; // End of state 0
 
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Run control actions
 			case (1):
+				if (!(p_drive_state->get ()))
+				{
+					state = 2;
+				}
+				p_motor_vel->put (30);
+				p_servo_pos->put (10);
 				
+				break; // End of state 1
+				
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			// Stop car from running
+			case (2):
+				if ((p_drive_state->get ()))
+				{
+					state = 1;
+				}
 				p_motor_vel->put (0);
 				p_servo_pos->put (0);
 				
-				break; // End of state 1
-
+				break; // End of state 2
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// We should never get to the default state. If we do, complain and restart
 			default:

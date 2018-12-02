@@ -96,13 +96,26 @@ void task_user::run (void)
 					// commands typed in by the user
 					switch (char_in)
 					{
+						// The 'r' command starts the car
+						case ('r'):
+							*p_serial << PMS ("run car") << endl;
+							p_drive_state->put (1);
+							break;
+							
+						// The 's' command stops the car from running
+						case ('s'):
+							*p_serial << PMS ("stopping car") << endl;
+							p_drive_state->put (0);
+							break;
+							
+							
 						// The 't' command asks what time it is right now
 						case ('t'):
 							*p_serial << (a_time.set_to_now ()) << endl;
 							break;
 
-						// The 's' command asks for version and status information
-						case ('s'):
+						// The 'v' command asks for version and status information
+						case ('v'):
 							show_status ();
 							break;
 
@@ -124,7 +137,13 @@ void task_user::run (void)
 							number_entered = 0;
 							transition_to (1);
 							break;
-
+							
+						// The 'p' command pings the tracked ball
+						case ('p'):
+							*p_serial << PMS ("sending ping") << endl;
+							p_rf_ping->put (1);
+							break;
+							
 						// A control-C character causes the CPU to restart
 						case (3):
 							*p_serial << PMS ("Resetting AVR") << endl;
@@ -210,8 +229,11 @@ void task_user::run (void)
 void task_user::print_help_message (void)
 {
 	*p_serial << PROGRAM_VERSION << PMS (" help") << endl;
+	*p_serial << PMS ("  r:     Start the car driving") << endl;
+	*p_serial << PMS ("  s:     Stop the car from running") << endl;
+	*p_serial << PMS ("  p:     Send a ping via RF") << endl;
 	*p_serial << PMS ("  t:     Show the time right now") << endl;
-	*p_serial << PMS ("  s:     Version and setup information") << endl;
+	*p_serial << PMS ("  v:     Version and setup information") << endl;
 	*p_serial << PMS ("  d:     Stack dump for tasks") << endl;
 	*p_serial << PMS ("  n:     Enter a number (demo)") << endl;
 	*p_serial << PMS ("  Ctl-C: Reset the AVR") << endl;

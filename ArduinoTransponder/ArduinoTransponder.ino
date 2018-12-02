@@ -23,7 +23,7 @@ void setup()
   // Start radio and serial
   Serial.begin(115200);
   radio.begin();
-  uint8_t addresses[][6] = {"1Node", "2Node"};
+  uint8_t addresses[][6] = {0x0010, 0x0001};
   radio.openWritingPipe(addresses[1]);
   radio.openReadingPipe(1, addresses[0]);
   Serial.println("Server Running");
@@ -32,11 +32,12 @@ void setup()
 
 void loop()
 {
+  // Wait until a message is recieved
   if (radio.available())
-  {
-    // Should be a message for us now   
+  { 
     uint8_t buf[20];
     uint8_t len = sizeof(buf);
+    // Read message into buffer
     radio.read(buf, &len);
     if (buf[0] == 'a')
     {
@@ -45,11 +46,10 @@ void loop()
       delayMicroseconds(10);
       digitalWrite(trig_pin, LOW);
     }
-    Serial.print("got request: ");
     Serial.println((char*)buf);
       
     // Send a reply
-    uint8_t data[] = "And hello back to you";
+    uint8_t data[] = "received";
     radio.stopListening();
     radio.write(data, sizeof(data));
     Serial.println("Sent a reply");

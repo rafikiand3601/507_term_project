@@ -47,4 +47,10 @@ extern TaskShare<int8_t>* p_servo_pos;
 // Encoder feedback variable
 extern TaskShare<int8_t>* p_enc_read;
 
+// Radio ping flag
+extern TaskShare<bool>* p_rf_ping;
+
+// Drive state flag
+extern TaskShare<bool>* p_drive_state;
+
 #endif // _SHARES_H_

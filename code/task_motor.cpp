@@ -29,9 +29,10 @@
 
 task_motor::task_motor (const char* a_name, 
 					  unsigned portBASE_TYPE a_priority, 
-					  size_t a_stack_size
+					  size_t a_stack_size,
+					  emstream* p_ser_dev
 					 )
-	: TaskBase (a_name, a_priority, a_stack_size)
+	: TaskBase (a_name, a_priority, a_stack_size, p_ser_dev)
 {
 	// Nothing is done in the body of this constructor. All the work is done in the
 	// call to the frt_task constructor on the line just above this one
@@ -55,7 +56,7 @@ void task_motor::run (void)
 		switch (state)
 		{
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			// In state 0, setup the output pin for the servo on PB4(OC2A)
+			// In state 0, setup the output pin for the motor on PB4(OC2A)
 			case (0):
 				// Need a wave with period ~ 20 ms and pulse length of 1.0-2.0 ms
 				/** f = f_clk / N*(1 + TOP)
@@ -76,6 +77,8 @@ void task_motor::run (void)
 				// 1.5 [ms] ----> 667 [hz] ---> 24
 				// Should run 61.3 [hz] period with 1.5 [ms] pulses
 				OCR2A = 24;
+				
+				// Move to control state
 				state = 1;
 				break; // End of state 0
 
@@ -85,6 +88,7 @@ void task_motor::run (void)
 				// Vary OCR to change pulse length.
 				// Pulses are between 1.0 and 2.0 [ms]
 				OCR2A = calc_pwm(p_motor_vel->get ());
+				
 				break; // End of state 1
 
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
