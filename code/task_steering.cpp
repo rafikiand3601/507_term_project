@@ -4,9 +4,10 @@
  *
  *  Revisions:
  *    @li 11-29-2018 KM file created to test steering servo.
- *    
+ *  
+ */ 
 //**************************************************************************************
-*/
+
 
 
 #include <avr/io.h>                         // Port I/O for SFR's
@@ -48,7 +49,9 @@ task_steering::task_steering (const char* a_name,
 void task_steering::run (void)
 {
 
-
+	int8_t sig = 0;
+	bool sig_inc = 1;
+	uint8_t count = 0;
 
 	// This is an infinite loop; it runs until the power is turned off. There is one 
 	// such loop inside the code for each task
@@ -63,24 +66,24 @@ void task_steering::run (void)
 				// Need a wave with period ~ 20 ms and pulse length of 1.0-2.0 ms
 				/** f = f_clk / N*(1 + TOP)
 				  * Want f = 50 [hz]
-				  * TOP = 0xFFFF = 65,535, f_clk = 16 [mhz]
-				  * N = 8 ---> f = 30.5 [hz] close enough
-				
+				  * TOP = 0xFF = 255, f_clk = 16 [Mhz]
+				  * N = 1024 ---> f = 61.3 [hz] close enough
 				*/
 				
 				// Set PB5 as output pin
 				DDRB |= (1 << PB5);
 				// Setup register for fast pwm, non-inverting
-				// WGM: fast pwm     COM1A1: non-inverting output
-				TCCR1A |= (1 << WGM10) & (1 << WGM11) & (1 << COM1A1);
-				// WGM: fast pwm     CS11: prescaler = 8
-				TCCR1B |= (1 << WGM12) & (1 << WGM13) & (1 << CS11);
+				// WGM: fast pwm 0xFF    COM1A1: non-inverting output
+				TCCR1A |= (1 << WGM10) | (1 << COM1A1);
+				// WGM: fast pwm 0xFF     CS: prescaler = 1024
+				TCCR1B |= (1 << WGM12) | (1 << CS10) | (1 << CS12);
 				// TCCR1C unused
+				
 				// Setup of OCR
-				// 1.5 [ms] ----> 667 [hz] ---> 3000 ---> 0x0BB8
-				// Should run 30.5 [hz] period with 1.5 [ms] pulses
-				OCR1AH = 0x0B;
-				OCR1AL = 0xB8;
+				// 1.5 [ms] ----> 667 [hz] ---> 24
+				// Should run 61.3 [hz] period with 1.5 [ms] pulses
+				OCR1AH = 0x00;
+				OCR1AL = 24;
 				state = 1;
 				break; // End of state 0
 
@@ -89,8 +92,28 @@ void task_steering::run (void)
 			case (1):
 				// Vary OCR to change pulse length.
 				// Pulses are between 1.0 and 2.0 [ms]
-				OCR1AH = 0x0B;
-				OCR1AL = 0xB8;
+				
+				OCR1AL = calc_pwm(sig);
+				
+				if (sig > 90)
+				{
+					sig_inc = 0;
+				} else if (sig < -90) {
+					sig_inc = 1;
+				}
+				
+				if (count == 25)
+				{
+					if (sig_inc)
+					{
+						sig += 1;
+					} else {
+						sig -= 1;
+					}
+					count = 0;
+				}
+				count++;
+				
 				break; // End of state 1
 
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -98,7 +121,7 @@ void task_steering::run (void)
 			default:
 				*p_serial << PMS ("Illegal state! Resetting AVR") << endl;
 				wdt_enable (WDTO_120MS);
-				for (;;);
+				for (;;) ;
 				break;
 
 		} // End switch state
@@ -113,7 +136,16 @@ void task_steering::run (void)
 
 
 
-uint8_t task_steering::calc_pwm (uint8_t pwm)
+uint8_t task_steering::calc_pwm (int8_t pwm)
 {
-	return pwm;
+	// Make sure input is between -90 and 90 degrees
+	if (pwm < -90)
+	{
+		pwm = -90;
+	} else if (pwm > 90) {
+		pwm = 90;
+	}
+	
+	// Convert degrees to pulse length (16-31)
+	return (uint8_t) (24 + (pwm * 0.077));
 }

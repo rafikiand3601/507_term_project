@@ -6,8 +6,9 @@
  *  Revisions:
  *    @li 11-29-2018 KM Header to 
  *
+  */
 //**************************************************************************************
-*/
+
 
 // This define prevents this .h file from being included multiple times in a .cpp file
 #ifndef _TASK_MOTOR_H_
@@ -43,7 +44,7 @@ private:
 
 protected:
 	// protected method which calculates pwm duty cycle from servo angle
-	uint8_t calc_pwm (uint8_t);
+	uint8_t calc_pwm (int8_t);
 
 public:
 	// This constructor creates a user interface task object

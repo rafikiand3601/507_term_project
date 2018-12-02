@@ -3,7 +3,7 @@
 #include <SPI.h>
 #include <RF24.h>
 
-uint8_t trig_pin = 2;
+uint8_t trig_pin = 3;
 uint8_t led_pin = 13;
 
 uint8_t cs_pin = 8;

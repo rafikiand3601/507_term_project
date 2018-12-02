@@ -4,9 +4,10 @@
  *
  *  Revisions:
  *    @li 11-29-2018 KM file created to test ESC.
- *    
+ * 
+ */ 
 //**************************************************************************************
-*/
+
 
 
 #include <avr/io.h>                         // Port I/O for SFR's
@@ -42,7 +43,7 @@ task_motor::task_motor (const char* a_name,
 
 
 //-------------------------------------------------------------------------------------
-/** This task handles the steering 
+/** This task handles the motor driving
  */
 
 void task_motor::run (void)
@@ -65,21 +66,20 @@ void task_motor::run (void)
 				  * Want f = 50 [hz]
 				  * TOP = 0xFF = 255, f_clk = 16 [Mhz]
 				  * N = 1024 ---> f = 61.3 [hz] close enough
-				
 				*/
 				
 				// Set PB4 as output pin
 				DDRB |= (1 << PB4);
 				// Setup timer register for fast pwm, non-inverting
 				// WGM: fast pwm     COM: non-inverting output
-				TCCR2A |= (1 << WGM20) & (1 << WGM21) & (1 << COM2A1);
+				TCCR2A |= (1 << WGM20) | (1 << WGM21) | (1 << COM2A1);
 				// WGM: fast pwm     CS: prescaler = 1024
-				TCCR2B |= (1 << WGM22) & (1 << CS22) & (1 << CS21) & (1 << CS20);
+				TCCR2B |= (1 << CS22) | (1 << CS21) | (1 << CS20);
 
 				// Setup of OCR
-				// 1.5 [ms] ----> 667 [hz] ---> 3000 ---> 0x0BB8
-				// Should run 30.5 [hz] period with 1.5 [ms] pulses
-				OCR2A = 0x18;
+				// 1.5 [ms] ----> 667 [hz] ---> 24
+				// Should run 61.3 [hz] period with 1.5 [ms] pulses
+				OCR2A = 24;
 				state = 1;
 				break; // End of state 0
 
@@ -88,7 +88,7 @@ void task_motor::run (void)
 			case (1):
 				// Vary OCR to change pulse length.
 				// Pulses are between 1.0 and 2.0 [ms]
-				OCR2A = 0x18;
+				OCR2A = calc_pwm(0);
 				break; // End of state 1
 
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -96,7 +96,7 @@ void task_motor::run (void)
 			default:
 				*p_serial << PMS ("Illegal state! Resetting AVR") << endl;
 				wdt_enable (WDTO_120MS);
-				for (;;);
+				for (;;) ;
 				break;
 
 		} // End switch state
@@ -111,7 +111,16 @@ void task_motor::run (void)
 
 
 
-uint8_t task_motor::calc_pwm (uint8_t pwm)
+uint8_t task_motor::calc_pwm (int8_t pwm)
 {
-	return pwm;
+	// Make sure input is between -90 and 90 degrees
+	if (pwm < -90)
+	{
+		pwm = -90;
+	} else if (pwm > 90) {
+		pwm = 90;
+	}
+	
+	// Convert degrees to pulse length (16-31)
+	return (uint8_t) (24 + (pwm * 0.077));
 }
