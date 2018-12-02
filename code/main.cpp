@@ -60,7 +60,10 @@
 // task includes
 #include "task_user.h"                      // Header for user interface task
 #include "task_steering.h"                  // Header for steering task
-#include "task_motor.h"                  // Header for motor task
+#include "task_motor.h"                     // Header for motor task
+#include "task_car_control.h"               // Header for car control task
+#include "task_radio.h"                     // Header for car control task
+
 
 // Declare the queues which are used by tasks to communicate with each other here.
 // Each queue must also be declared 'extern' in a header file which will be read
@@ -75,6 +78,9 @@
  *  task to be printed.
  */
 TextQueue* p_print_ser_queue;
+TaskShare<int8_t>* p_servo_pos;
+TaskShare<int8_t>* p_motor_vel;
+TaskShare<int8_t>* p_enc_read;
 
 
 //=====================================================================================
@@ -103,6 +109,14 @@ int main (void)
 	// Create the queues and other shared data items here
 	p_print_ser_queue = new TextQueue (32, "Print", p_ser_port, 10);
 
+	// Create the shared servo position object (-90 degrees to 90 degrees)
+	p_servo_pos = new TaskShare<int8_t> ("Servo_Pos");
+	
+	// Create the shared servo position object (-100 to 100)
+	p_motor_vel = new TaskShare<int8_t> ("Motor_Vel");
+	
+	// Create the shared encoder reading variable
+	p_enc_read = new TaskShare<int8_t> ("Encoder_read");
 
 	// The user interface is at low priority; it could have been run in the idle task
 	// but it is desired to exercise the RTOS more thoroughly in this test program
@@ -118,7 +132,7 @@ int main (void)
 	//new task_rf ("RF", task_priority (6), 200, p_ser_port);
 
 	//Create a Task to coordinate the other tasks
-	//new task_CarControl ("CarControl",task_priority (2),200, p_ser_port);
+	new task_car_control ("CarControl",task_priority (2),200, p_ser_port);
 
 	//Create a Task to read ultrasonic receiver 1
 	//new task_USR1 ("USR1",task_priority (7),200, p_ser_port);

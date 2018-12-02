@@ -1,10 +1,10 @@
 //**************************************************************************************
-/** @file task_motor.cpp
- *    This file contains code to drive the ESC for the ME 507 term project. 
+/** @file task_car_control.cpp
+ *    This file contains code to drive the steering servo for the ME 507 term project. 
  *
  *  Revisions:
- *    @li 11-29-2018 KM file created to test ESC.
- * 
+ *    @li 11-29-2018 KM file created to test steering servo.
+ *  
  */ 
 //**************************************************************************************
 
@@ -13,7 +13,7 @@
 #include <avr/io.h>                         // Port I/O for SFR's
 #include <avr/wdt.h>                        // Watchdog timer header
 
-#include "task_motor.h"                     // Header for this file
+#include "task_car_control.h"                      // Header for this file
 
 
 
@@ -27,11 +27,12 @@
  *                      (default: configMINIMAL_STACK_SIZE)
  */
 
-task_motor::task_motor (const char* a_name, 
+task_car_control::task_car_control (const char* a_name, 
 					  unsigned portBASE_TYPE a_priority, 
-					  size_t a_stack_size
+					  size_t a_stack_size,
+					  emstream* p_ser_dev
 					 )
-	: TaskBase (a_name, a_priority, a_stack_size)
+	: TaskBase (a_name, a_priority, a_stack_size, p_ser_dev)
 {
 	// Nothing is done in the body of this constructor. All the work is done in the
 	// call to the frt_task constructor on the line just above this one
@@ -39,13 +40,11 @@ task_motor::task_motor (const char* a_name,
 
 
 //-------------------------------------------------------------------------------------
-/** This task handles the motor driving
+/** This task handles the steering 
  */
 
-void task_motor::run (void)
+void task_car_control::run (void)
 {
-
-
 
 	// This is an infinite loop; it runs until the power is turned off. There is one 
 	// such loop inside the code for each task
@@ -55,36 +54,23 @@ void task_motor::run (void)
 		switch (state)
 		{
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			// In state 0, setup the output pin for the servo on PB4(OC2A)
+			// State 0
 			case (0):
-				// Need a wave with period ~ 20 ms and pulse length of 1.0-2.0 ms
-				/** f = f_clk / N*(1 + TOP)
-				  * Want f = 50 [hz]
-				  * TOP = 0xFF = 255, f_clk = 16 [Mhz]
-				  * N = 1024 ---> f = 61.3 [hz] close enough
-				*/
 				
-				// Set PB4 as output pin
-				DDRB |= (1 << PB4);
-				// Setup timer register for fast pwm, non-inverting
-				// WGM: fast pwm     COM: non-inverting output
-				TCCR2A |= (1 << WGM20) | (1 << WGM21) | (1 << COM2A1);
-				// WGM: fast pwm     CS: prescaler = 1024
-				TCCR2B |= (1 << CS22) | (1 << CS21) | (1 << CS20);
-
-				// Setup of OCR
-				// 1.5 [ms] ----> 667 [hz] ---> 24
-				// Should run 61.3 [hz] period with 1.5 [ms] pulses
-				OCR2A = 24;
+				// Set motor and servo to initial positions
+				p_motor_vel->put (0);
+				p_servo_pos->put (0);
+				
 				state = 1;
 				break; // End of state 0
 
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			// In state 1, control the esc power
+			// Run control actions
 			case (1):
-				// Vary OCR to change pulse length.
-				// Pulses are between 1.0 and 2.0 [ms]
-				OCR2A = calc_pwm(p_motor_vel->get ());
+				
+				p_motor_vel->put (0);
+				p_servo_pos->put (0);
+				
 				break; // End of state 1
 
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -106,17 +92,3 @@ void task_motor::run (void)
 }
 
 
-
-uint8_t task_motor::calc_pwm (int8_t pwm)
-{
-	// Make sure input is between -90 and 90 degrees
-	if (pwm < -90)
-	{
-		pwm = -90;
-	} else if (pwm > 90) {
-		pwm = 90;
-	}
-	
-	// Convert degrees to pulse length (16-31)
-	return (uint8_t) (24 + (pwm * 0.069));
-}

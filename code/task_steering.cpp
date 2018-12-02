@@ -16,10 +16,6 @@
 #include "task_steering.h"                      // Header for this file
 
 
-/** This constant sets how many RTOS ticks the task delays if the user's not talking.
- *  The duration is calculated to be about 5 ms.
- */
-const TickType_t ticks_to_delay = ((configTICK_RATE_HZ / 1000) * 5);
 
 
 //-------------------------------------------------------------------------------------
@@ -33,9 +29,10 @@ const TickType_t ticks_to_delay = ((configTICK_RATE_HZ / 1000) * 5);
 
 task_steering::task_steering (const char* a_name, 
 					  unsigned portBASE_TYPE a_priority, 
-					  size_t a_stack_size
+					  size_t a_stack_size,
+					  emstream* p_ser_dev
 					 )
-	: TaskBase (a_name, a_priority, a_stack_size)
+	: TaskBase (a_name, a_priority, a_stack_size, p_ser_dev)
 {
 	// Nothing is done in the body of this constructor. All the work is done in the
 	// call to the frt_task constructor on the line just above this one
@@ -48,10 +45,6 @@ task_steering::task_steering (const char* a_name,
 
 void task_steering::run (void)
 {
-
-	int8_t sig = 0;
-	bool sig_inc = 1;
-	uint8_t count = 0;
 
 	// This is an infinite loop; it runs until the power is turned off. There is one 
 	// such loop inside the code for each task
@@ -93,26 +86,7 @@ void task_steering::run (void)
 				// Vary OCR to change pulse length.
 				// Pulses are between 1.0 and 2.0 [ms]
 				
-				OCR1AL = calc_pwm(sig);
-				
-				if (sig > 90)
-				{
-					sig_inc = 0;
-				} else if (sig < -90) {
-					sig_inc = 1;
-				}
-				
-				if (count == 25)
-				{
-					if (sig_inc)
-					{
-						sig += 1;
-					} else {
-						sig -= 1;
-					}
-					count = 0;
-				}
-				count++;
+				OCR1AL = calc_pwm(p_servo_pos->get ());
 				
 				break; // End of state 1
 

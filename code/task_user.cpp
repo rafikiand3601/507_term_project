@@ -129,7 +129,7 @@ void task_user::run (void)
 						case (3):
 							*p_serial << PMS ("Resetting AVR") << endl;
 							wdt_enable (WDTO_120MS);
-							for (;;);
+							for (;;) ;
 							break;
 
 						// If character isn't recognized, ask What's That Function?
@@ -189,7 +189,7 @@ void task_user::run (void)
 			default:
 				*p_serial << PMS ("Illegal state! Resetting AVR") << endl;
 				wdt_enable (WDTO_120MS);
-				for (;;);
+				for (;;) ;
 				break;
 
 		} // End switch state

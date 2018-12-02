@@ -1,5 +1,5 @@
 //**************************************************************************************
-/** @file task_steering.h
+/** @file task_car_control.h
  *    This file contains header stuff for a user interface task for a ME507/FreeRTOS
  *    test suite. 
  *
@@ -11,8 +11,8 @@
 
 
 // This define prevents this .h file from being included multiple times in a .cpp file
-#ifndef _TASK_STEERING_H_
-#define _TASK_STEERING_H_
+#ifndef _TASK_CAR_CONTROL_H_
+#define _TASK_CAR_CONTROL_H_
 
 #include <stdlib.h>                         // Prototype declarations for I/O functions
 
@@ -37,22 +37,21 @@
 
 
 
-class task_steering : public TaskBase
+class task_car_control : public TaskBase
 {
 private:
 	// No private variables or methods for this class
 
 protected:
 	// protected method which calculates pwm duty cycle from servo angle
-	uint8_t calc_pwm (int8_t);
 
 public:
 	// This constructor creates a user interface task object
-	task_steering (const char*, unsigned portBASE_TYPE, size_t, emstream*);
+	task_car_control (const char*, unsigned portBASE_TYPE, size_t, emstream*);
 
 	/** This method is called by the RTOS once to run the task loop for ever and ever.
 	 */
 	void run (void);
 };
 
-#endif // _TASK_STEERING_H_
+#endif // _TASK_CAR_CONTROL_H_

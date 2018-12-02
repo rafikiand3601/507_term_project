@@ -30,7 +30,8 @@ PROJECT_NAME = proj
 
 # A list of the source (.c, .cc, .cpp) files in the project. Files in library 
 # subdirectories do not go in this list; they're included automatically
-SOURCES = main.cpp task_user.cpp adc.cpp task_steering.h task_motor.h
+SOURCES = main.cpp task_user.cpp adc.cpp task_steering.cpp task_motor.cpp \
+			task_car_control.cpp task_radio.cpp
 
 # Clock frequency of the CPU, in Hz. This number should be an unsigned long integer.
 # For example, 16 MHz would be represented as 16000000UL. 
@@ -170,7 +171,7 @@ LIB_FILE = $(BUILDDIR)/lib_me405.a
 
 # A list of directories in which source files (*.cpp, *.c) and headers (.h) for the
 # library are kept
-LIB_DIRS = freertos frtcpp misc serial
+LIB_DIRS = freertos frtcpp misc serial NRF24
 
 # Create a list of relative path names by which the library directories can be found
 LIB_FULL = $(addprefix $(PROJROOT)/$(LIBROOT)/, $(LIB_DIRS))

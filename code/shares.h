@@ -38,5 +38,13 @@
 // This queue allows tasks to send characters to the user interface task for display.
 extern TextQueue* p_print_ser_queue;
 
+// Motor velocity setting variable
+extern TaskShare<int8_t>* p_motor_vel;
+
+// Servo position setting variable
+extern TaskShare<int8_t>* p_servo_pos;
+
+// Encoder feedback variable
+extern TaskShare<int8_t>* p_enc_read;
 
 #endif // _SHARES_H_

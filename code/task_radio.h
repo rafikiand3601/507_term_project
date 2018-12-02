@@ -1,5 +1,5 @@
 //**************************************************************************************
-/** @file task_steering.h
+/** @file task_radio.h
  *    This file contains header stuff for a user interface task for a ME507/FreeRTOS
  *    test suite. 
  *
@@ -11,8 +11,8 @@
 
 
 // This define prevents this .h file from being included multiple times in a .cpp file
-#ifndef _TASK_STEERING_H_
-#define _TASK_STEERING_H_
+#ifndef _TASK_RADIO_H_
+#define _TASK_RADIO_H_
 
 #include <stdlib.h>                         // Prototype declarations for I/O functions
 
@@ -32,27 +32,32 @@
 #include "textqueue.h"                      // Header for a "<<" queue class
 #include "taskshare.h"                      // Header for thread-safe shared data
 
+
+// NRF24 Library
+#include "nrf24l01.h"
+
 #include "shares.h"                         // Global ('extern') queue declarations
 
 
 
 
-class task_steering : public TaskBase
+class task_radio : public TaskBase
 {
 private:
-	// No private variables or methods for this class
+	uint8_t to_address[2];
+	nRF24L01Message msg;
+	nRF24L01 *rf;
 
 protected:
-	// protected method which calculates pwm duty cycle from servo angle
-	uint8_t calc_pwm (int8_t);
+	void setup_rf (nRF24L01&);
 
 public:
 	// This constructor creates a user interface task object
-	task_steering (const char*, unsigned portBASE_TYPE, size_t, emstream*);
+	task_radio (const char*, unsigned portBASE_TYPE, size_t, emstream*);
 
 	/** This method is called by the RTOS once to run the task loop for ever and ever.
 	 */
 	void run (void);
 };
 
-#endif // _TASK_STEERING_H_
+#endif // _TASK_RADIO_H_

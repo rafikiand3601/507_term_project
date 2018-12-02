@@ -11,7 +11,7 @@ build/main.o: main.cpp ../lib/freertos/FreeRTOS.h \
   ../lib/frtcpp/baseshare.h ../lib/frtcpp/taskqueue.h \
   ../lib/frtcpp/taskshare.h shares.h task_user.h adc.h \
   ../lib/freertos/semphr.h ../lib/freertos/queue.h task_steering.h \
-  task_motor.h
+  task_motor.h task_car_control.h task_radio.h ../lib/NRF24/nrf24l01.h
 
 ../lib/freertos/FreeRTOS.h:
 
@@ -70,3 +70,9 @@ adc.h:
 task_steering.h:
 
 task_motor.h:
+
+task_car_control.h:
+
+task_radio.h:
+
+../lib/NRF24/nrf24l01.h:
