@@ -63,6 +63,7 @@
 #include "task_motor.h"                     // Header for motor task
 #include "task_car_control.h"               // Header for car control task
 #include "task_radio.h"                     // Header for car control task
+#include "task_USR1.h"											// Header for ultra sonic receiver task
 
 
 // Declare the queues which are used by tasks to communicate with each other here.
@@ -92,8 +93,6 @@ TaskShare<int8_t>* p_enc_read;
 
 int main (void)
 {
-
-
 	// Disable the watchdog timer unless it's needed later. This is important because
 	// sometimes the watchdog timer may have been left on...and it tends to stay on
 	MCUSR = 0;
@@ -111,10 +110,10 @@ int main (void)
 
 	// Create the shared servo position object (-90 degrees to 90 degrees)
 	p_servo_pos = new TaskShare<int8_t> ("Servo_Pos");
-	
+
 	// Create the shared servo position object (-100 to 100)
 	p_motor_vel = new TaskShare<int8_t> ("Motor_Vel");
-	
+
 	// Create the shared encoder reading variable
 	p_enc_read = new TaskShare<int8_t> ("Encoder_read");
 
@@ -123,7 +122,7 @@ int main (void)
 	new task_user ("UserInt", task_priority (1), 260, p_ser_port);
 
 	// Create a Task to control the steering of the car
-	new task_steering ("Steering", task_priority (5), 200, p_ser_port);
+	//new task_steering ("Steering", task_priority (5), 200);
 
 	// Create a Task to control the motor
 	//new task_motor ("Motor", task_priority (8), p_ser_port);
