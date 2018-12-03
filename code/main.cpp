@@ -125,7 +125,7 @@ int main (void)
 	// Create the shared drive flag variable
 	p_drive_state = new TaskShare<bool> ("Drive_State");
 	p_drive_state->put (0);
-	
+
 	// The user interface is at low priority; it could have been run in the idle task
 	// but it is desired to exercise the RTOS more thoroughly in this test program
 	new task_user ("UserInt", task_priority (1), 260, p_ser_port);
@@ -159,4 +159,23 @@ int main (void)
 	vTaskStartScheduler ();
 
 	return 1;
+}
+
+ISR(TIMER3_CAPT_vect)
+{
+    uint16_t count = TIMER3.TCNT;
+
+    if (edge)	// rising edge
+    {
+	// set Edge Sense set to falling edge, clear counter
+        TIMER3.TCCRB &= ~(1 << ICES3);
+        TIMER3.TCNT = 0;
+    }
+    else        // falling edge
+    {
+        // set Edge Sense set to rising edge
+        TIMER3.TCCRB |= (1 << ICES3);
+	    width = count;	//store value of pulse width
+    }
+    edge = !edge;	// toggle edge
 }

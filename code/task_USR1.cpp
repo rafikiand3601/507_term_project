@@ -70,13 +70,19 @@ task_USR1::task_USR1 (const char* a_name,
 void task_USR1::run (void)
 {
 
-	DDRC |= (1 << PC1);				//Configure port pin as output
-
 	for (;;)
 	{
-		PORTC ^= (1 << PC1);		//Toggle pinC1 high and low
-		delay_ms(1000);
-		//*p_serial <<'1'<< endl;	//debugging print statement
-	 //}
- }
+		switch (state)
+		{
+			//State 0
+			case (0):
+					//DDRG |= (1 << PG5);				//Configure port pin as output
+					//TCCR0 |= ((1 << WGM02) | (1 << CS02) | (1 << CS01) | (1 << CS00))
+					//DDRC &= (1 << PC0);				//Configure port pin as input
+					DDRE &= (1 << PE7)					//Configure as input
+					TCCR3B |= (1 << ICES3) | (1<<CS30)
+
+			case (1):
+		}
+ 	}
 }
