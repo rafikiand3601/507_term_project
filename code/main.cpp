@@ -106,8 +106,6 @@ int main (void)
 	// the task scheduler has been started by the function vTaskStartScheduler()
 	rs232* p_ser_port = new rs232 (9600, 1);
 	*p_ser_port << clrscr << PMS ("ME405 Lab 1 Starting Program") << endl;
-	
-	nRF24L01 *rf = nRF24L01_init();
 
 	// Create the queues and other shared data items here
 	p_print_ser_queue = new TextQueue (32, "Print", p_ser_port, 10);
@@ -126,7 +124,6 @@ int main (void)
 
 	// Create the shared drive flag variable
 	p_drive_state = new TaskShare<bool> ("Drive_State");
-	p_drive_state->put (0);
 	
 	// The user interface is at low priority; it could have been run in the idle task
 	// but it is desired to exercise the RTOS more thoroughly in this test program
@@ -139,7 +136,7 @@ int main (void)
 	new task_motor ("Motor", task_priority (8), 200, p_ser_port);
 
 	// Create a Task to control the RF transceiver
-	new task_radio ("RF", task_priority (6), 200, p_ser_port, rf);
+	new task_radio ("RF", task_priority (6), 200, p_ser_port);
 	
 	//Create a Task to coordinate the other tasks
 	new task_car_control ("CarControl",task_priority (2), 200, p_ser_port);

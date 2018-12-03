@@ -214,7 +214,7 @@ static void spi_init(nRF24L01 *rf) {
 	
 	/* Set MOSI and SCK output, MISO input */
 	DDRB |= (1 << PB2) | (1 << PB1);
-	DDRB &= ~(PB3);
+	DDRB &= ~(1 << PB3);
 	/* Enable SPI, Master, set clock rate fck/16 */
 	SPCR = (1 << SPE) | (1 << MSTR) | (1 << SPR0) | (1 << SPR1);
 }

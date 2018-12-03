@@ -15,7 +15,7 @@
 #define _TASK_RADIO_H_
 
 #include <stdlib.h>                         // Prototype declarations for I/O functions
-
+#include <util/delay.h>
 
 // FreeRTOS library includes
 #include "FreeRTOS.h"                       // Primary header for FreeRTOS
@@ -34,9 +34,10 @@
 
 
 // NRF24 Library
-extern "C" {
-#include "nrf24l01.h"
-}
+//extern "C" {
+//#include "nrf24l01.h"
+//}
+#include "nrf_names.h"
 
 #include "shares.h"                         // Global ('extern') queue declarations
 
@@ -47,15 +48,18 @@ class task_radio : public TaskBase
 {
 private:
 	uint8_t to_address[2];
-	nRF24L01Message msg;
-	nRF24L01* p_rf;
 
 protected:
-	void setup_rf();
+	void setup_rf (void);
+	void init_spi (void);
+	char write_byte (char);
+	uint8_t get_reg (uint8_t);
+	void write_nrf (uint8_t, uint8_t);
+	uint8_t *read_or_write (uint8_t, uint8_t, uint8_t*, uint8_t);
 
 public:
 	// This constructor creates a user interface task object
-	task_radio (const char*, unsigned portBASE_TYPE, size_t, emstream*, nRF24L01*);
+	task_radio (const char*, unsigned portBASE_TYPE, size_t, emstream*);
 
 	/** This method is called by the RTOS once to run the task loop for ever and ever.
 	 */
