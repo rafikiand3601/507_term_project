@@ -1,8 +1,8 @@
 Servo:
-	PB5(OC1A)
+	PB4(OC2A)
 
 ESC:
-	PB4(OC2A)
+	PB5(OC1A)
 
 Ultrasonic 1 (JP3):
 	Trig: PC1
@@ -21,8 +21,8 @@ Ultrasonic 4 (JP6):
 	Echo: PC4
 
 NRF24L01:
-	CSN/SS: E0
-	CE: E1
+	CSN/SS: E2
+	CE: E3
 	SCK: PB1
-	MISO: MISO
-	MOSI: MOSI
+	MISO: MISO/PB3
+	MOSI: MOSI/PB2

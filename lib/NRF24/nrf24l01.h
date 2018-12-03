@@ -6,6 +6,7 @@
 #define _NRF24L01_H
 
 
+
 typedef struct {
     int pipe_number;
     uint8_t data[32];
@@ -27,9 +28,7 @@ typedef struct {
 } nRF24L01;
 
 
-#ifdef __cplusplus
-extern "C"{
-#endif
+
 
 nRF24L01 *nRF24L01_init(void);
 void nRF24L01_begin(nRF24L01 *rf);
@@ -50,12 +49,6 @@ void nRF24L01_transmit(nRF24L01 *rf, void *address, nRF24L01Message *msg);
 int nRF24L01_transmit_success(nRF24L01 *rf);
 void nRF24L01_flush_transmit_message(nRF24L01 *rf);
 void nRF24L01_retry_transmit(nRF24L01 *rf);
-void nRF24L01_clear_interrupts(nRF24L01 *rf);
-void nRF24L01_clear_transmit_interrupts(nRF24L01 *rf);
-void nRF24L01_clear_receive_interrupt(nRF24L01 *rf);
 
-#ifdef __cplusplus
-}
-#endif
 
 #endif

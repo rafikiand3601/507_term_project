@@ -45,6 +45,7 @@ private:
 protected:
 	// protected method which calculates pwm duty cycle from servo angle
 	uint8_t calc_pwm (int8_t);
+	int8_t offset;
 
 public:
 	// This constructor creates a user interface task object

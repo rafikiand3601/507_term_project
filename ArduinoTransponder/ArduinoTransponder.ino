@@ -54,7 +54,7 @@ void loop()
     radio.write(data, sizeof(data));
     Serial.println("Sent a reply");
     radio.startListening();
-    delay(100);
+    delay(1000);
     digitalWrite(led_pin, LOW);
   }
 }

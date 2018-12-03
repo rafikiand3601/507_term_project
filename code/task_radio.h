@@ -34,7 +34,9 @@
 
 
 // NRF24 Library
+extern "C" {
 #include "nrf24l01.h"
+}
 
 #include "shares.h"                         // Global ('extern') queue declarations
 
@@ -46,14 +48,14 @@ class task_radio : public TaskBase
 private:
 	uint8_t to_address[2];
 	nRF24L01Message msg;
-	nRF24L01 *rf;
+	nRF24L01* p_rf;
 
 protected:
-	void setup_rf (nRF24L01*);
+	void setup_rf();
 
 public:
 	// This constructor creates a user interface task object
-	task_radio (const char*, unsigned portBASE_TYPE, size_t, emstream*);
+	task_radio (const char*, unsigned portBASE_TYPE, size_t, emstream*, nRF24L01*);
 
 	/** This method is called by the RTOS once to run the task loop for ever and ever.
 	 */

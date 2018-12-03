@@ -13,6 +13,7 @@
 #include <avr/io.h>                         // Port I/O for SFR's
 #include <avr/wdt.h>                        // Watchdog timer header
 
+
 #include "task_radio.h"                     // Header for this file
 
 
@@ -32,10 +33,12 @@
 task_radio::task_radio (const char* a_name, 
 					  unsigned portBASE_TYPE a_priority, 
 					  size_t a_stack_size,
-					  emstream* p_ser_dev
+					  emstream* p_ser_dev,
+					  nRF24L01* rf
 					 )
 	: TaskBase (a_name, a_priority, a_stack_size, p_ser_dev)
 {
+	p_rf = rf;
 	// Nothing is done in the body of this constructor. All the work is done in the
 	// call to the frt_task constructor on the line just above this one
 }
@@ -60,8 +63,7 @@ void task_radio::run (void)
 			case (0):
 				to_address[0] = 0x00;
 				to_address[1] = 0x01;
-				rf = nRF24L01_init();
-				setup_rf(rf);
+				setup_rf();
 				
 				state = 1;
 				break; // End of state 0
@@ -79,7 +81,7 @@ void task_radio::run (void)
 				
 			case (2):
 				memcpy(msg.data, "a", 2);
-				nRF24L01_transmit(rf, to_address, &msg);
+				nRF24L01_transmit(p_rf, to_address, &msg);
 				state = 1;
 				break; // End of state 1
 				
@@ -104,13 +106,11 @@ void task_radio::run (void)
 
 
 
-
-
-void task_radio::setup_rf(nRF24L01 *p_rf) {
+void task_radio::setup_rf(void) {
     p_rf->ss.port = &PORTE;
-    p_rf->ss.pin = PE0;
+    p_rf->ss.pin = PE2;
     p_rf->ce.port = &PORTE;
-    p_rf->ce.pin = PE1;
+    p_rf->ce.pin = PE3;
     p_rf->sck.port = &PORTB;
     p_rf->sck.pin = PB1;
     p_rf->mosi.port = &PORTB;
@@ -119,4 +119,3 @@ void task_radio::setup_rf(nRF24L01 *p_rf) {
     p_rf->miso.pin = PB3;
     nRF24L01_begin(p_rf);
 }
-

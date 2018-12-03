@@ -75,7 +75,7 @@ void task_USR1::run (void)
 	for (;;)
 	{
 		PORTC ^= (1 << PC1);		//Toggle pinC1 high and low
-		delay_ms(1000);
+		//delay_ms(1000);
 		//*p_serial <<'1'<< endl;	//debugging print statement
 	 //}
  }

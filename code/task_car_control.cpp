@@ -71,8 +71,8 @@ void task_car_control::run (void)
 				{
 					state = 2;
 				}
-				p_motor_vel->put (30);
-				p_servo_pos->put (10);
+				p_motor_vel->put (10);
+				p_servo_pos->put (0);
 				
 				break; // End of state 1
 				
@@ -84,7 +84,7 @@ void task_car_control::run (void)
 					state = 1;
 				}
 				p_motor_vel->put (0);
-				p_servo_pos->put (0);
+				p_servo_pos->put (90);
 				
 				break; // End of state 2
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
