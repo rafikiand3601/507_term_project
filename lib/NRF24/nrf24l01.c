@@ -7,6 +7,8 @@
 #include "nrf24l01-mnemonics.h"
 
 
+
+
 static void copy_address(uint8_t *source, uint8_t *destination);
 inline static void set_as_output(gpio_pin pin);
 inline static void set_high(gpio_pin pin);
@@ -19,9 +21,11 @@ nRF24L01 *nRF24L01_init(void) {
     nRF24L01 *rf = malloc(sizeof(nRF24L01));
     memset(rf, 0, sizeof(nRF24L01));
     return rf;
+
 }
 
 void nRF24L01_begin(nRF24L01 *rf) {
+	
     set_as_output(rf->ss);
     set_as_output(rf->ce);
 
@@ -32,7 +36,6 @@ void nRF24L01_begin(nRF24L01 *rf) {
 
     nRF24L01_send_command(rf, FLUSH_RX, NULL, 0);
     nRF24L01_send_command(rf, FLUSH_TX, NULL, 0);
-    nRF24L01_clear_interrupts(rf);
 
     uint8_t data;
     data = _BV(EN_CRC) | _BV(CRCO) | _BV(PWR_UP) | _BV(PRIM_RX);
@@ -55,6 +58,7 @@ void nRF24L01_begin(nRF24L01 *rf) {
     // disable all rx addresses
     data = 0;
     nRF24L01_write_register(rf, EN_RXADDR, &data, 1);
+
 }
 
 uint8_t nRF24L01_send_command(nRF24L01 *rf, uint8_t command, void *data,
@@ -114,7 +118,6 @@ void nRF24L01_listen(nRF24L01 *rf, int pipe, uint8_t *address) {
 
 bool nRF24L01_read_received_data(nRF24L01 *rf, nRF24L01Message *message) {
     message->pipe_number = nRF24L01_pipe_number_received(rf);
-    nRF24L01_clear_receive_interrupt(rf);
     if (message->pipe_number < 0) {
         message->length = 0;
         return false;
@@ -136,7 +139,6 @@ int nRF24L01_pipe_number_received(nRF24L01 *rf) {
 }
 
 void nRF24L01_transmit(nRF24L01 *rf, void *address, nRF24L01Message *msg) {
-    nRF24L01_clear_transmit_interrupts(rf);
     uint8_t addr[5];
     copy_address((uint8_t *)address, addr);
     nRF24L01_write_register(rf, TX_ADDR, addr, 5);
@@ -157,7 +159,6 @@ int nRF24L01_transmit_success(nRF24L01 *rf) {
     if (rf->status & _BV(TX_DS)) success = 0;
     else if (rf->status & _BV(MAX_RT)) success = -1;
     else success = -2;
-    nRF24L01_clear_transmit_interrupts(rf);
     uint8_t config;
     nRF24L01_read_register(rf, CONFIG, &config, 1);
     config |= _BV(PRIM_RX);
@@ -167,30 +168,6 @@ int nRF24L01_transmit_success(nRF24L01 *rf) {
 
 void nRF24L01_flush_transmit_message(nRF24L01 *rf) {
     nRF24L01_send_command(rf, FLUSH_TX, NULL, 0);
-}
-
-void nRF24L01_retry_transmit(nRF24L01 *rf) {
-    // XXX not sure it works this way, never tested
-    uint8_t config;
-    nRF24L01_read_register(rf, CONFIG, &config, 1);
-    config &= ~_BV(PRIM_RX);
-    nRF24L01_write_register(rf, CONFIG, &config, 1);
-    set_high(rf->ce);
-}
-
-void nRF24L01_clear_interrupts(nRF24L01 *rf) {
-    uint8_t data = _BV(RX_DR) | _BV(TX_DS) | _BV(MAX_RT);
-    nRF24L01_write_register(rf, STATUS, &data, 1);
-}
-
-void nRF24L01_clear_transmit_interrupts(nRF24L01 *rf) {
-    uint8_t data = _BV(TX_DS) | _BV(MAX_RT);
-    nRF24L01_write_register(rf, STATUS, &data, 1);
-}
-
-void nRF24L01_clear_receive_interrupt(nRF24L01 *rf) {
-    uint8_t data = _BV(RX_DR) | rf->status;
-    nRF24L01_write_register(rf, STATUS, &data, 1);
 }
 
 static void copy_address(uint8_t *source, uint8_t *destination) {
@@ -205,39 +182,45 @@ inline static void set_as_output(gpio_pin pin) {
 
 inline static void set_as_input(gpio_pin pin) {
     volatile uint8_t *ddr = pin.port - 1;
-    *ddr &= ~_BV(pin.pin);
+    *ddr &= ~(1 << pin.pin);
 }
 
 inline static void set_high(gpio_pin pin) {
-    *pin.port |= _BV(pin.pin);
+    *pin.port |= (1 << pin.pin);
 }
 
 inline static void set_low(gpio_pin pin) {
-    *pin.port &= ~_BV(pin.pin);
+    *pin.port &= ~(1 << pin.pin);
 }
 
 static void spi_init(nRF24L01 *rf) {
     // set as master
-    SPCR |= _BV(MSTR);
+    //SPCR |= _BV(MSTR);
     // enable SPI
-    SPCR |= _BV(SPE);
+    //SPCR |= _BV(SPE);
     // MISO pin automatically overrides to input
-    set_as_output(rf->sck);
-    set_as_output(rf->mosi);
-    set_as_input(rf->miso);
+    //set_as_output(rf->sck);
+    //set_as_output(rf->mosi);
+    //set_as_input(rf->miso);
     // SPI mode 0: Clock Polarity CPOL = 0, Clock Phase CPHA = 0
-    SPCR &= ~_BV(CPOL);
-    SPCR &= ~_BV(CPHA);
+    //SPCR &= ~_BV(CPOL);
+    //SPCR &= ~_BV(CPHA);
     // Clock 2X speed
-    SPCR &= ~_BV(SPR0);
-    SPCR &= ~_BV(SPR1);
-    SPSR |= _BV(SPI2X);
+    //SPCR &= ~_BV(SPR0);
+    //SPCR &= ~_BV(SPR1);
+    //SPSR |= _BV(SPI2X);
     // most significant first (MSB)
-    SPCR &= ~_BV(DORD);
+    //SPCR &= ~_BV(DORD);
+	
+	/* Set MOSI and SCK output, MISO input */
+	DDRB |= (1 << PB2) | (1 << PB1);
+	DDRB &= ~(1 << PB3);
+	/* Enable SPI, Master, set clock rate fck/16 */
+	SPCR = (1 << SPE) | (1 << MSTR) | (1 << SPR0) | (1 << SPR1);
 }
 
 static uint8_t spi_transfer(uint8_t data) {
     SPDR = data;
-    while (!(SPSR & _BV(SPIF)));
+	while(!(SPSR & (1<<SPIF)))
     return SPDR;
 }

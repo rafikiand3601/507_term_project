@@ -54,7 +54,7 @@ void task_steering::run (void)
 		switch (state)
 		{
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			// In state 0, setup the output pin for the servo on PB5(OC1A)
+			// In state 0, setup the output pin for the servo on PB4(OC2A)
 			case (0):
 				// Need a wave with period ~ 20 ms and pulse length of 1.0-2.0 ms
 				/** f = f_clk / N*(1 + TOP)
@@ -63,20 +63,19 @@ void task_steering::run (void)
 				  * N = 1024 ---> f = 61.3 [hz] close enough
 				*/
 				
-				// Set PB5 as output pin
-				DDRB |= (1 << PB5);
-				// Setup register for fast pwm, non-inverting
-				// WGM: fast pwm 0xFF    COM1A1: non-inverting output
-				TCCR1A |= (1 << WGM10) | (1 << COM1A1);
-				// WGM: fast pwm 0xFF     CS: prescaler = 1024
-				TCCR1B |= (1 << WGM12) | (1 << CS10) | (1 << CS12);
-				// TCCR1C unused
-				
+				// Set PB4 as output pin
+				DDRB |= (1 << PB4);
+				// Setup timer register for fast pwm, non-inverting
+				// WGM: fast pwm     COM: non-inverting output
+				TCCR2A |= (1 << WGM20) | (1 << WGM21) | (1 << COM2A1);
+				// WGM: fast pwm     CS: prescaler = 1024
+				TCCR2B |= (1 << CS22) | (1 << CS21) | (1 << CS20);
+
 				// Setup of OCR
 				// 1.5 [ms] ----> 667 [hz] ---> 24
 				// Should run 61.3 [hz] period with 1.5 [ms] pulses
-				OCR1AH = 0x00;
-				OCR1AL = 24;
+				OCR2A = 24;
+				
 				state = 1;
 				break; // End of state 0
 
@@ -85,8 +84,7 @@ void task_steering::run (void)
 			case (1):
 				// Vary OCR to change pulse length.
 				// Pulses are between 1.0 and 2.0 [ms]
-				
-				OCR1AL = calc_pwm(p_servo_pos->get ());
+				OCR2A = calc_pwm(p_servo_pos->get ());
 				
 				break; // End of state 1
 
