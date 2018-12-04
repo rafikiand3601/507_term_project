@@ -134,19 +134,19 @@ int main (void)
 
 	// The user interface is at low priority; it could have been run in the idle task
 	// but it is desired to exercise the RTOS more thoroughly in this test program
-//	new task_user ("UserInt", task_priority (1), 260, p_ser_port);
+	new task_user ("UserInt", task_priority (1), 260, p_ser_port);
 
 	// Create a Task to control the steering of the car
-	//new task_steering ("Steering", task_priority (5), 200, p_ser_port);
+	new task_steering ("Steering", task_priority (5), 200, p_ser_port);
 
 	// Create a Task to control the motor
-//	new task_motor ("Motor", task_priority (8), 200, p_ser_port);
+	new task_motor ("Motor", task_priority (8), 200, p_ser_port);
 
 	// Create a Task to control the RF transceiver
-	//new task_radio ("RF", task_priority (6), 200, p_ser_port);
+	new task_radio ("RF", task_priority (6), 200, p_ser_port);
 
 	//Create a Task to coordinate the other tasks
-	//new task_car_control ("CarControl",task_priority (2), 200, p_ser_port);
+	new task_car_control ("CarControl",task_priority (2), 200, p_ser_port);
 
 	//Create a Task to read ultrasonic receiver 1
 	new task_USR1 ("USR1",task_priority (7), 200, p_ser_port);
