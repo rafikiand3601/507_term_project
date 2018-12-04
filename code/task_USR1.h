@@ -58,7 +58,7 @@ private:
 	// No private variables or methods for this class
 
 protected:
-
+uint8_t ECHO;
 
 public:
 	// This constructor creates a user interface task object

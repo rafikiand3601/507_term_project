@@ -81,12 +81,12 @@ void task_USR1::run (void)
 					//DDRG |= (1 << PG5);				//Configure port pin as output
 					//TCCR0 |= ((1 << WGM02) | (1 << CS02) | (1 << CS01) | (1 << CS00))
 					//DDRC &= (1 << PC0);				//Configure port pin as input
-
+					ECHO = 0;
 					//Input capture initialization for ECHO pin
 					DDRE &= (1 << PE7);					//Configure as input
 					DDRE = 0x00;	//test code
 					TCCR3B = 0x00; //test code
-					TCCR3B |= (1 << ICES3) | (1<<CS30) | (1<<CS32);	//Set to edge capture, 1024 prescaler set
+					TCCR3B |= (1 << ICES3) | (1<<CS32);	//Set to edge capture, 1024 prescaler set
 					TIMSK3 |= (1 << ICIE3);
 					TIFR3 = (1 << ICF3);
 
@@ -95,7 +95,6 @@ void task_USR1::run (void)
 
 					//Initialize Trigger pin
 					DDRC |= (1 << PC1);		//Configure as output
-					PORTC |= (1 << PC1);		//Set PC1 high (test code)
 					transition_to (1);		//Go to state 1
 					break;
 			case (1):
@@ -107,11 +106,17 @@ void task_USR1::run (void)
 						PORTC &= ~(1 << PC1);		//Set PC1 low (test code)
 						width_1->put(0);			//Set width_1 to 0 (test code)
 					}
-
+					else if (ECHO)
+					{
+						PORTC &= ~(1 << PC1);		//Set PC1 low (test code)
+						ECHO = 0;
+					}
 					else
 					{
 						*p_serial <<width_1->get()<< endl;
 						PORTC |= (1 << PC1);		//Set PC1 high (test code)
+						ECHO = 1;
+						//delay_ms(50);
 					}
 
 					break;
@@ -126,6 +131,6 @@ void task_USR1::run (void)
 
 		// No matter the state, wait for approximately a millisecond before we
 		// run the loop again. This gives lower priority tasks a chance to run
-		delay_ms (100);
+		delay_ms (50);
  	}
 }
