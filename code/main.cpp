@@ -40,7 +40,7 @@
 #include <avr/io.h>                         // Port I/O for SFR's
 #include <avr/wdt.h>                        // Watchdog timer header
 #include <string.h>                         // Functions for C string handling
-#include <avr/interrupt.h>
+
 
 // FreeRTOS includes
 #include "FreeRTOS.h"                       // Primary header for FreeRTOS
@@ -84,8 +84,8 @@ TaskShare<int8_t>* p_motor_vel;
 TaskShare<int8_t>* p_enc_read;
 TaskShare<bool>* p_rf_ping;
 TaskShare<bool>* p_drive_state;
-TaskShare<int8_t>* edge_1;
-TaskShare<uint16_t>* width_1;
+
+
 //=====================================================================================
 /** The main function sets up the RTOS.  Some test tasks are created. Then the
  *  scheduler is started up; the scheduler runs until power is turned off or there's a
@@ -124,32 +124,26 @@ int main (void)
 
 	// Create the shared drive flag variable
 	p_drive_state = new TaskShare<bool> ("Drive_State");
-	p_drive_state->put (0);
-
-	//Create shared edge1 flag
-	edge_1 = new TaskShare<int8_t> ("Edge1");
-
-	//Create shared USR1 pulse width
-	width_1 = new TaskShare<uint16_t> ("Width1");
-
+	
 	// The user interface is at low priority; it could have been run in the idle task
 	// but it is desired to exercise the RTOS more thoroughly in this test program
-//	new task_user ("UserInt", task_priority (1), 260, p_ser_port);
+	new task_user ("UserInt", task_priority (1), 260, p_ser_port);
 
 	// Create a Task to control the steering of the car
-	//new task_steering ("Steering", task_priority (5), 200, p_ser_port);
+	new task_steering ("Steering", task_priority (5), 200, p_ser_port);
 
 	// Create a Task to control the motor
-//	new task_motor ("Motor", task_priority (8), 200, p_ser_port);
+	new task_motor ("Motor", task_priority (8), 200, p_ser_port);
 
 	// Create a Task to control the RF transceiver
-	//new task_radio ("RF", task_priority (6), 200, p_ser_port);
-
+	new task_radio ("RF", task_priority (6), 200, p_ser_port);
+	
 	//Create a Task to coordinate the other tasks
-	//new task_car_control ("CarControl",task_priority (2), 200, p_ser_port);
+	new task_car_control ("CarControl",task_priority (2), 200, p_ser_port);
 
 	//Create a Task to read ultrasonic receiver 1
-	new task_USR1 ("USR1",task_priority (7), 200, p_ser_port);
+	//new task_USR1 ("USR1",task_priority (7), 200, p_ser_port);
+
 	//Create a Task to read ultrasonic receiver 2
 	//new task_USR2 ("USR2",task_priority (7), 200, p_ser_port);
 
@@ -161,28 +155,7 @@ int main (void)
 
 	// Here's where the RTOS scheduler is started up. It should never exit as long as
 	// power is on and the microcontroller isn't rebooted
-	sei(); // interrupts on
 	vTaskStartScheduler ();
 
 	return 1;
-}
-
-ISR(TIMER3_CAPT_vect)
-{
-    uint16_t count1 = TCNT3;
-		//width_1->ISR_put(1);	//store value of pulse width
-    if (edge_1->ISR_get ())	// rising edge
-    {
-	// set Edge Sense set to falling edge, clear counter
-        TCCR3B &= ~(1 << ICES3);
-        TCNT3 = 0;
-				edge_1->ISR_put(0);		//Toggle edge_1 to 0
-    }
-    else        // falling edge
-    {
-        // set Edge Sense set to rising edge
-        TCCR3B |= (1 << ICES3);
-	    	width_1->ISR_put(count1);	//store value of pulse width
-				edge_1->ISR_put(1);		//Toggle edge_1 to 1
-    }
 }
