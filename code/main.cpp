@@ -149,7 +149,7 @@ int main (void)
 	new task_car_control ("CarControl",task_priority (2), 200, p_ser_port);
 
 	//Create a Task to read ultrasonic receiver 1
-	new task_USR1 ("USR1",task_priority (7), 200, p_ser_port);
+	//new task_USR1 ("USR1",task_priority (7), 200, p_ser_port);
 	//Create a Task to read ultrasonic receiver 2
 	//new task_USR2 ("USR2",task_priority (7), 200, p_ser_port);
 

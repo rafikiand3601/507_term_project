@@ -81,7 +81,7 @@ void task_USR1::run (void)
 					//DDRG |= (1 << PG5);				//Configure port pin as output
 					//TCCR0 |= ((1 << WGM02) | (1 << CS02) | (1 << CS01) | (1 << CS00))
 					//DDRC &= (1 << PC0);				//Configure port pin as input
-					ECHO = 0;
+					ECHO = 0;			//Test Code
 					//Input capture initialization for ECHO pin
 					DDRE &= (1 << PE7);					//Configure as input
 					DDRE = 0x00;	//test code
@@ -95,18 +95,19 @@ void task_USR1::run (void)
 
 					//Initialize Trigger pin
 					DDRC |= (1 << PC1);		//Configure as output
+					PORTC |= (1 << PC1);	//Set Trigger pin high
 					transition_to (1);		//Go to state 1
 					break;
 			case (1):
-					//*p_serial <<width_1->get()<< endl; //Test code
-
-					if(width_1->get())
-					{
-						*p_serial <<width_1->get()<< endl; //Test code
-						PORTC &= ~(1 << PC1);		//Set PC1 low (test code)
-						width_1->put(0);			//Set width_1 to 0 (test code)
-					}
-					else if (ECHO)
+//Do nothing
+//Test Code
+//					if(width_1->get())
+//					{
+//						*p_serial <<width_1->get()<< endl; //Test code
+//						PORTC &= ~(1 << PC1);		//Set PC1 low (test code)
+//						width_1->put(0);			//Set width_1 to 0 (test code)
+//					}
+					if (ECHO)
 					{
 						PORTC &= ~(1 << PC1);		//Set PC1 low (test code)
 						ECHO = 0;

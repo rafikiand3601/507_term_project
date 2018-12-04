@@ -1,11 +1,11 @@
 //**************************************************************************************
 /** @file task_motor.cpp
- *    This file contains code to drive the ESC for the ME 507 term project. 
+ *    This file contains code to drive the ESC for the ME 507 term project.
  *
  *  Revisions:
  *    @li 11-29-2018 KM file created to test ESC.
- * 
- */ 
+ *
+ */
 //**************************************************************************************
 
 
@@ -23,12 +23,12 @@
  *  parent class's constructor which does most of the work.
  *  @param a_name A character string which will be the name of this task
  *  @param a_priority The priority at which this task will initially run (default: 0)
- *  @param a_stack_size The size of this task's stack in bytes 
+ *  @param a_stack_size The size of this task's stack in bytes
  *                      (default: configMINIMAL_STACK_SIZE)
  */
 
-task_motor::task_motor (const char* a_name, 
-					  unsigned portBASE_TYPE a_priority, 
+task_motor::task_motor (const char* a_name,
+					  unsigned portBASE_TYPE a_priority,
 					  size_t a_stack_size,
 					  emstream* p_ser_dev
 					 )
@@ -48,7 +48,7 @@ void task_motor::run (void)
 
 	offset = -2;
 
-	// This is an infinite loop; it runs until the power is turned off. There is one 
+	// This is an infinite loop; it runs until the power is turned off. There is one
 	// such loop inside the code for each task
 	for (;;)
 	{
@@ -64,7 +64,7 @@ void task_motor::run (void)
 				  * TOP = 0xFF = 255, f_clk = 16 [Mhz]
 				  * N = 1024 ---> f = 61.3 [hz] close enough
 				*/
-				
+
 				// Set PB5 as output pin
 				DDRB |= (1 << PB5);
 				// Setup register for fast pwm, non-inverting
@@ -73,17 +73,17 @@ void task_motor::run (void)
 				// WGM: fast pwm 0x03FF     CS: prescaler = 256
 				TCCR1B |= (1 << WGM12) | (1 << WGM13) | (1 << CS12);
 				// TCCR1C unused
-				
+
 				// ICR = 0xFFFF counts to this value
 				ICR1H = 0x04;
 				ICR1L = 0xE1;
-				
+
 				// Setup of OCR
 				// 1.5 [ms] ----> 667 [hz] ---> 94
 				// Should run 50.0 [hz] period with 1.5 [ms] pulses
 				OCR1AH = 0x00;
 				OCR1AL = 0x5E;
-				
+
 				// Move to control state
 				state = 1;
 				break; // End of state 0
@@ -93,9 +93,9 @@ void task_motor::run (void)
 			case (1):
 				// Vary OCR to change pulse length.
 				// Pulses are between 1.0 and 2.0 [ms]
-				
+
 				OCR1AL = calc_pwm(p_motor_vel->get ());
-				
+
 				break; // End of state 1
 
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -110,7 +110,7 @@ void task_motor::run (void)
 
 		runs++;                             // Increment counter for debugging
 
-		// No matter the state, wait for approximately a millisecond before we 
+		// No matter the state, wait for approximately a millisecond before we
 		// run the loop again. This gives lower priority tasks a chance to run
 		delay_ms (1);
 	}
@@ -127,7 +127,7 @@ uint8_t task_motor::calc_pwm (int8_t pwm)
 	} else if (pwm > 90) {
 		pwm = 90;
 	}
-	
+
 	// Convert degrees to pulse length (64-124)
 	return (uint8_t) (offset + 94 + (pwm * 0.3));
 }
