@@ -1,7 +1,7 @@
 //**************************************************************************************
 /** @file task_user.cpp
  *    This file contains source code for a user interface task for a ME405/FreeRTOS
- *    test suite. 
+ *    test suite.
  *
  *  Revisions:
  *    @li 09-30-2012 JRR Original file was a one-file demonstration with two tasks
@@ -11,18 +11,18 @@
  *    @li 01-04-2014 JRR Changed base class names to TaskBase, TaskShare, etc.
  *
  *  License:
- *    This file is copyright 2012 by JR Ridgely and released under the Lesser GNU 
+ *    This file is copyright 2012 by JR Ridgely and released under the Lesser GNU
  *    Public License, version 2. It intended for educational use only, but its use
  *    is not limited thereto. */
-/*    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
- *    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- *    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
- *    ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
+/*    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ *    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ *    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ *    ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
  *    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUEN-
- *    TIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS 
- *    OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
- *    CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, 
- *    OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+ *    TIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ *    OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ *    CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ *    OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 //**************************************************************************************
 
@@ -43,14 +43,14 @@ const TickType_t ticks_to_delay = ((configTICK_RATE_HZ / 1000) * 5);
  *  parent class's constructor which does most of the work.
  *  @param a_name A character string which will be the name of this task
  *  @param a_priority The priority at which this task will initially run (default: 0)
- *  @param a_stack_size The size of this task's stack in bytes 
+ *  @param a_stack_size The size of this task's stack in bytes
  *                      (default: configMINIMAL_STACK_SIZE)
  *  @param p_ser_dev Pointer to a serial device (port, radio, SD card, etc.) which can
  *                   be used by this task to communicate (default: NULL)
  */
 
-task_user::task_user (const char* a_name, 
-					  unsigned portBASE_TYPE a_priority, 
+task_user::task_user (const char* a_name,
+					  unsigned portBASE_TYPE a_priority,
 					  size_t a_stack_size,
 					  emstream* p_ser_dev
 					 )
@@ -64,7 +64,7 @@ task_user::task_user (const char* a_name,
 //-------------------------------------------------------------------------------------
 /** This task interacts with the user for force him/her to do what he/she is told. It
  *  is just following the modern government model of "This is the land of the free...
- *  free to do exactly what you're told." 
+ *  free to do exactly what you're told."
  */
 
 void task_user::run (void)
@@ -77,7 +77,7 @@ void task_user::run (void)
 	// task does interesting things such as diagnostic printouts
 	*p_serial << PMS ("Press 'h' or '?' for help") << endl;
 
-	// This is an infinite loop; it runs until the power is turned off. There is one 
+	// This is an infinite loop; it runs until the power is turned off. There is one
 	// such loop inside the code for each task
 	for (;;)
 	{
@@ -85,7 +85,7 @@ void task_user::run (void)
 		switch (state)
 		{
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			// In state 0, we're in command mode, so when the user types characters, 
+			// In state 0, we're in command mode, so when the user types characters,
 			// the characters are interpreted as commands to do something
 			case (0):
 				if (p_serial->check_for_char ())            // If the user typed a
@@ -96,19 +96,23 @@ void task_user::run (void)
 					// commands typed in by the user
 					switch (char_in)
 					{
+						case ('o'):
+							*p_serial << PMS ("Object Avoidance") << endl;
+							p_drive_state->put (0x02);
+							break;
 						// The 'r' command starts the car
 						case ('r'):
 							*p_serial << PMS ("run car") << endl;
 							p_drive_state->put (1);
 							break;
-							
+
 						// The 's' command stops the car from running
 						case ('s'):
 							*p_serial << PMS ("stopping car") << endl;
 							p_drive_state->put (0);
 							break;
-							
-							
+
+
 						// The 't' command asks what time it is right now
 						case ('t'):
 							*p_serial << (a_time.set_to_now ()) << endl;
@@ -137,13 +141,13 @@ void task_user::run (void)
 							number_entered = 0;
 							transition_to (1);
 							break;
-							
+
 						// The 'p' command pings the tracked ball
 						case ('p'):
 							*p_serial << PMS ("sending ping") << endl;
 							p_rf_ping->put (1);
 							break;
-							
+
 						// A control-C character causes the CPU to restart
 						case (3):
 							*p_serial << PMS ("Resetting AVR") << endl;
@@ -183,18 +187,18 @@ void task_user::run (void)
 					// Carriage return or Escape ends numeric entry
 					else if (char_in == 13 || char_in == 27)
 					{
-						*p_serial << endl << PMS ("Number entered: ") 
+						*p_serial << endl << PMS ("Number entered: ")
 								  << number_entered << endl;
 						transition_to (0);
 					}
 					else
 					{
-						*p_serial << PMS ("<invalid char \"") << char_in 
+						*p_serial << PMS ("<invalid char \"") << char_in
 								  << PMS ("\">");
 					}
 				}
 
-				// Check the print queue to see if another task has sent this task 
+				// Check the print queue to see if another task has sent this task
 				// something to be printed
 				else if (p_print_ser_queue->check_for_char ())
 				{
@@ -215,7 +219,7 @@ void task_user::run (void)
 
 		runs++;                             // Increment counter for debugging
 
-		// No matter the state, wait for approximately a millisecond before we 
+		// No matter the state, wait for approximately a millisecond before we
 		// run the loop again. This gives lower priority tasks a chance to run
 		delay_ms (1);
 	}
@@ -229,6 +233,7 @@ void task_user::run (void)
 void task_user::print_help_message (void)
 {
 	*p_serial << PROGRAM_VERSION << PMS (" help") << endl;
+	*p_serial << PMS ("  o:     Activate object avoidance") << endl;
 	*p_serial << PMS ("  r:     Start the car driving") << endl;
 	*p_serial << PMS ("  s:     Stop the car from running") << endl;
 	*p_serial << PMS ("  p:     Send a ping via RF") << endl;
@@ -243,7 +248,7 @@ void task_user::print_help_message (void)
 
 //-------------------------------------------------------------------------------------
 /** This method displays information about the status of the system, including the
- *  following: 
+ *  following:
  *    \li The name and version of the program
  *    \li The name, status, priority, and free stack space of each task
  *    \li Processor cycles used by each task
@@ -254,8 +259,8 @@ void task_user::show_status (void)
 {
 	time_stamp the_time;					// Holds current time for printing
 
-	// First print the program version, compile date, etc. 
-	*p_serial << endl << PROGRAM_VERSION << PMS (__DATE__) << endl 
+	// First print the program version, compile date, etc.
+	*p_serial << endl << PROGRAM_VERSION << PMS (__DATE__) << endl
 			  << PMS ("System time: ") << the_time.set_to_now ()
 			  << PMS (", Heap: ") << heap_left() << "/" << configTOTAL_HEAP_SIZE
 			  #ifdef OCR5A
@@ -271,5 +276,3 @@ void task_user::show_status (void)
 	*p_serial << endl;
 	print_all_shares (p_serial);
 }
-
-

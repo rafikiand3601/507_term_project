@@ -67,26 +67,55 @@ void task_car_control::run (void)
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Run control actions
 			case (1):
-				if (!(p_drive_state->get ()))
+				if ((p_drive_state->get ()) == 0)
 				{
 					state = 2;
 				}
-				p_motor_vel->put (20);
+				p_motor_vel->put (25);
 				p_servo_pos->put (0);
+				//*p_serial <<width_1->get () << endl;
 
 				break; // End of state 1
 
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Stop car from running
 			case (2):
-				if ((p_drive_state->get ()))
+				if ((p_drive_state->get ()) == 0x01)
 				{
 					state = 1;
 				}
+				else if ((p_drive_state->get ()) == 0x02)
+				{
+					state = 3;
+				}
+
 				p_motor_vel->put (0);
 				p_servo_pos->put (90);
 
 				break; // End of state 2
+
+			case (3):
+				if ((p_drive_state->get ()) == 0)
+				{
+					state = 2;
+				}
+
+				else if ((width_1->get ()) < 150)
+				{
+					p_motor_vel->put (0);
+					p_servo_pos->put (90);
+					//*p_serial <<width_1->get () << endl;
+
+				}
+
+				else if ((width_1->get ()) > 150)
+				{
+					p_motor_vel->put (0);
+					p_servo_pos->put (0);
+				//	*p_serial <<width_1->get () << endl;
+				}
+				//*p_serial <<'1'<< endl;
+				break;
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// We should never get to the default state. If we do, complain and restart
 			default:

@@ -51,7 +51,7 @@ extern TaskShare<int8_t>* p_enc_read;
 extern TaskShare<bool>* p_rf_ping;
 
 // Drive state flag
-extern TaskShare<bool>* p_drive_state;
+extern TaskShare<uint8_t>* p_drive_state;
 
 //Rising or falling edge flag for ultrasonic sensor
 extern TaskShare<int8_t>* edge_1;

@@ -114,7 +114,7 @@ void task_USR1::run (void)
 					}
 					else
 					{
-						*p_serial <<width_1->get()<< endl;
+						//*p_serial <<width_1->get()<< endl;
 						PORTC |= (1 << PC1);		//Set PC1 high (test code)
 						ECHO = 1;
 						//delay_ms(50);
