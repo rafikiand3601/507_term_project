@@ -56,7 +56,6 @@ protected:
 	uint8_t get_reg (uint8_t);
 	void write_nrf (uint8_t, uint8_t);
 	uint8_t *read_or_write (uint8_t, uint8_t, uint8_t*, uint8_t);
-	void transmit (uint8_t*);
 
 public:
 	// This constructor creates a user interface task object

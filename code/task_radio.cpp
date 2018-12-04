@@ -63,10 +63,8 @@ void task_radio::run (void)
 				to_address[1] = 0x01;
 				//setup_rf();
 				
-				init_spi ();
-				_delay_us (10);
+				init_spi();
 				*p_serial << get_reg(STATUS) << endl;
-				//write_byte (R_REGISTER + STATUS);
 				
 				state = 1;
 				break; // End of state 0
@@ -86,28 +84,11 @@ void task_radio::run (void)
 				// Send ping signal
 				*p_serial << get_reg(STATUS) << endl;
 				
-				uint8_t name [5];
-				name[0] = 'n';
-				name[1] = 'o';
-				name[2] = 'd';
-				name[3] = 'e';
-				name[4] = '1';
-				//int i;
-				// Set up transmitter address
-				read_or_write (W, TX_ADDR, name, 5);
+				uint8_t val [5];
+				val[0] = 0x01;
+				// Enable data pipe 0
+				//write_to_nrf (W, EN_RXADDR, val, 1);
 				
-				// Set as transmitter, and power on
-				uint8_t val [2];
-				val[0] = 0b00000010;
-				read_or_write (W, CONFIG, val, 1);
-				
-				_delay_ms(2);
-				
-				// Send message
-				uint8_t data[2];
-				data[0] = 0x00;
-				data[1] = 'a';
-				transmit(data);
 				
 				state = 1;
 				break;
@@ -155,19 +136,18 @@ void task_radio::setup_rf(void) {
 
 void task_radio::init_spi (void)
 {
-	// Set MOSI(PB2) and SCK(PB1) output, MISO(PB3) input, CSN(PB0) output
-	DDRB |= (1 << PB2) | (1 << PB1) | (1 << PB0);
+	// Set MOSI(PB2) and SCK(PB1) output, MISO(PB3) input
+	DDRB |= (1 << PB2) | (1 << PB1);
 	DDRB &= ~(1 << PB3);
-	// Set CE(PE3) as output
-	DDRE |= (1 << PE3);
-
+	// Set CSN(PE2) as output
+	DDRE |= (1 << PE2);
 	// Enable SPI as master
-	SPCR |= (1 << SPE) | (1 << MSTR) | (1 << SPR1);
+	SPCR |= (1 << SPE) | (1 << MSTR);
 	
 	// CSN high to start with
-	PORTB |= (1 << PB0);
+	PORTE |= (1 << PE2);
 	// CE low to start with
-	PORTE &= ~(1 << PE3);
+	PORTE |= (1 << PE3);
 }
 
 
@@ -177,7 +157,9 @@ char task_radio::write_byte (char c_data)
 	SPDR = c_data;
 	
 	// Wait for transmit to finish
-	while(!(SPSR & (1 << SPIF))) ;
+	while(!(SPSR & (1 << SPIF)))
+	{
+	};
 	
 	return SPDR;
 }
@@ -186,15 +168,15 @@ uint8_t task_radio::get_reg (uint8_t reg)
 {
 	_delay_us (10);
 	// Set CSN low
-	PORTB &= ~(1 << PB0);
+	PORTE &= ~(1 << PE2);
 	_delay_us (10);
 	// Set nRF to reading mode
 	write_byte (R_REGISTER + reg);
 	_delay_us (10);
-	reg = write_byte (NOP);
+	reg = write_byte(NOP);
 	_delay_us (10);
 	// Set CSN high
-	PORTB |= (1 << PB0);
+	PORTE |= (1 << PE2);
 	return reg;
 }
 
@@ -202,15 +184,15 @@ void task_radio::write_nrf (uint8_t reg, uint8_t package)
 {
 	_delay_us(10);
 	// Set CSN low
-	PORTB &= ~(1 << PB0);
+	PORTE &= ~(1 << PE2);
 	_delay_us(10);
-	// Set nRF to writing mode
+	// Set nRF to reading mode
 	write_byte (W_REGISTER + reg);
 	_delay_us(10);
 	write_byte (package);
 	_delay_us(10);
 	// Set CSN high
-	PORTB |= (1 << PB0);
+	PORTE |= (1 << PE2);
 }
 
 uint8_t *task_radio::read_or_write (uint8_t ReadWrite, uint8_t reg, uint8_t *val, uint8_t antVal)
@@ -224,7 +206,7 @@ uint8_t *task_radio::read_or_write (uint8_t ReadWrite, uint8_t reg, uint8_t *val
 	
 	_delay_us (10);
 	// Set CSN low
-	PORTB &= ~(1 << PB0);
+	PORTE &= ~(1 << PE2);
 	_delay_us (10);
 	write_byte (reg);
 	_delay_us (10);
@@ -245,21 +227,6 @@ uint8_t *task_radio::read_or_write (uint8_t ReadWrite, uint8_t reg, uint8_t *val
 	}
 	
 	// Set CSN high
-	PORTB |= (1 << PB0);
+	PORTE |= (1 << PE2);
 	return ret;
 }
-
-
-void task_radio::transmit (uint8_t *W_buff)
-{
-	read_or_write (R, FLUSH_TX, W_buff, 0);
-	read_or_write (R, W_TX_PAYLOAD, W_buff, 2);
-	
-	_delay_ms(10);
-	// Set CE high
-	PORTE |= (1 << PE3);
-	_delay_ms(10);
-	// Set CE low
-	PORTE &= ~(1 << PE3);
-}
-	
