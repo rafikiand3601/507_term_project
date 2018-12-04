@@ -59,14 +59,50 @@ void task_radio::run (void)
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// State 0, setup radio transciever
 			case (0):
-				to_address[0] = 0x00;
-				to_address[1] = 0x01;
-				//setup_rf();
 				
 				init_spi ();
 				_delay_us (10);
-				*p_serial << get_reg(STATUS) << endl;
-				//write_byte (R_REGISTER + STATUS);
+				
+				uint8_t val [2];
+				
+				// Enable auto acknowledge
+				val[0] = 0x01;
+				read_or_write (W, EN_AA, val, 1);
+				
+				// Enable data pipe 0
+				val[0] = 0x01;
+				read_or_write (W, EN_RXADDR, val, 1);
+				
+				// RF Channel
+				val[0] = 0x01;
+				read_or_write (W, RF_CH, val, 1);
+				
+				// RF setup
+				val[0] = 0b00000111;
+				read_or_write (W, RF_SETUP, val, 1);
+				
+				// Set retry number
+				val[0] = 0x2f;
+				read_or_write (W, SETUP_RETR, val, 1);
+				
+				// Set payload width
+				val[0] = 2;
+				read_or_write (W, RX_PW_P0, val, 1);
+				
+				// Set as transmitter, and power on
+				val[0] = 0b00000010;
+				read_or_write (W, CONFIG, val, 1);
+				
+				uint8_t name [5];
+				name[0] = 'n';
+				name[1] = 'o';
+				name[2] = 'd';
+				name[3] = 'e';
+				name[4] = '1';
+				//int i;
+				// Set up transmitter address
+				read_or_write (W, RX_ADDR_P0, name, 5);
+				read_or_write (W, TX_ADDR, name, 5);
 				
 				state = 1;
 				break; // End of state 0
@@ -85,21 +121,6 @@ void task_radio::run (void)
 			case (2):
 				// Send ping signal
 				*p_serial << get_reg(STATUS) << endl;
-				
-				uint8_t name [5];
-				name[0] = 'n';
-				name[1] = 'o';
-				name[2] = 'd';
-				name[3] = 'e';
-				name[4] = '1';
-				//int i;
-				// Set up transmitter address
-				read_or_write (W, TX_ADDR, name, 5);
-				
-				// Set as transmitter, and power on
-				uint8_t val [2];
-				val[0] = 0b00000010;
-				read_or_write (W, CONFIG, val, 1);
 				
 				_delay_ms(2);
 				
@@ -130,23 +151,6 @@ void task_radio::run (void)
 		delay_ms (1);
 	}
 }
-
-
-/*
-void task_radio::setup_rf(void) {
-    p_rf->ss.port = &PORTE;
-    p_rf->ss.pin = PE2;
-    p_rf->ce.port = &PORTE;
-    p_rf->ce.pin = PE3;
-    p_rf->sck.port = &PORTB;
-    p_rf->sck.pin = PB1;
-    p_rf->mosi.port = &PORTB;
-    p_rf->mosi.pin = PB2;
-    p_rf->miso.port = &PORTB;
-    p_rf->miso.pin = PB3;
-    nRF24L01_begin(p_rf);
-}
-*/
 
 
 
