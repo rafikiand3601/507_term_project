@@ -1,11 +1,11 @@
 //**************************************************************************************
 /** @file task_car_control.cpp
- *    This file contains code to drive the steering servo for the ME 507 term project. 
+ *    This file contains code to drive the steering servo for the ME 507 term project.
  *
  *  Revisions:
  *    @li 11-29-2018 KM file created to test steering servo.
- *  
- */ 
+ *
+ */
 //**************************************************************************************
 
 
@@ -23,12 +23,12 @@
  *  parent class's constructor which does most of the work.
  *  @param a_name A character string which will be the name of this task
  *  @param a_priority The priority at which this task will initially run (default: 0)
- *  @param a_stack_size The size of this task's stack in bytes 
+ *  @param a_stack_size The size of this task's stack in bytes
  *                      (default: configMINIMAL_STACK_SIZE)
  */
 
-task_car_control::task_car_control (const char* a_name, 
-					  unsigned portBASE_TYPE a_priority, 
+task_car_control::task_car_control (const char* a_name,
+					  unsigned portBASE_TYPE a_priority,
 					  size_t a_stack_size,
 					  emstream* p_ser_dev
 					 )
@@ -40,13 +40,13 @@ task_car_control::task_car_control (const char* a_name,
 
 
 //-------------------------------------------------------------------------------------
-/** This task handles the steering 
+/** This task handles the steering
  */
 
 void task_car_control::run (void)
 {
 
-	// This is an infinite loop; it runs until the power is turned off. There is one 
+	// This is an infinite loop; it runs until the power is turned off. There is one
 	// such loop inside the code for each task
 	for (;;)
 	{
@@ -56,11 +56,11 @@ void task_car_control::run (void)
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// State 0
 			case (0):
-				
+
 				// Set motor and servo to initial positions
 				p_motor_vel->put (0);
 				p_servo_pos->put (0);
-				
+
 				state = 2;
 				break; // End of state 0
 
@@ -73,9 +73,9 @@ void task_car_control::run (void)
 				}
 				p_motor_vel->put (30);
 				p_servo_pos->put (10);
-				
+
 				break; // End of state 1
-				
+
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Stop car from running
 			case (2):
@@ -85,7 +85,7 @@ void task_car_control::run (void)
 				}
 				p_motor_vel->put (0);
 				p_servo_pos->put (0);
-				
+
 				break; // End of state 2
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// We should never get to the default state. If we do, complain and restart
@@ -99,10 +99,8 @@ void task_car_control::run (void)
 
 		runs++;                             // Increment counter for debugging
 
-		// No matter the state, wait for approximately a millisecond before we 
+		// No matter the state, wait for approximately a millisecond before we
 		// run the loop again. This gives lower priority tasks a chance to run
 		delay_ms (1);
 	}
 }
-
-
