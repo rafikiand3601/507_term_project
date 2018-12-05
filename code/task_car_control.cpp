@@ -92,7 +92,6 @@ void task_car_control::run (void)
 				p_motor_vel->put (0);
 				p_servo_pos->put (90);
 
-
 				break; // End of state 2
 
 			case (3):

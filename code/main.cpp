@@ -143,7 +143,7 @@ int main (void)
 	new task_motor ("Motor", task_priority (8), 200, p_ser_port);
 
 	// Create a Task to control the RF transceiver
-	new task_radio ("RF", task_priority (6), 200, p_ser_port);
+	//new task_radio ("RF", task_priority (6), 200, p_ser_port);
 
 	//Create a Task to coordinate the other tasks
 	new task_car_control ("CarControl",task_priority (2), 200, p_ser_port);

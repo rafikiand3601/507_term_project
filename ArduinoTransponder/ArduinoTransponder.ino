@@ -12,11 +12,13 @@ RF24 radio(ce_pin, cs_pin);
 
 void setup() 
 {
+
+  // Init pins
+  //pinMode(trig_pin, OUTPUT);  // Trigger pin
+  //digitalWrite(trig_pin, LOW);
+
   // Start radio and serial
   Serial.begin(9600);
-  radio.setChannel(0x01);
-  radio.setPayloadSize(0x02);
-  radio.printDetails();
   radio.begin();
   uint8_t addresses[][6] = {"node1", "node2"};
   radio.openReadingPipe(1, addresses[0]);
