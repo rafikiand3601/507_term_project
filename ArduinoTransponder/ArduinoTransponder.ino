@@ -10,8 +10,13 @@ uint8_t ce_pin = 7;
 RF24 radio(ce_pin, cs_pin);
 
 
-void setup() 
+void setup()
 {
+
+  // Init pins
+  //pinMode(trig_pin, OUTPUT);  // Trigger pin
+  //digitalWrite(trig_pin, LOW);
+
   // Start radio and serial
   Serial.begin(9600);
   radio.begin();
@@ -28,7 +33,7 @@ void loop()
 {
   // Wait until a message is recieved
   if (radio.available())
-  { 
+  {
     char buf[20];
     uint8_t len = sizeof(buf);
     // Read message into buffer
@@ -40,7 +45,7 @@ void loop()
       //delayMicroseconds(10);
       //digitalWrite(trig_pin, LOW);
     }
-      
+
     // Send a reply
     /*
     uint8_t data[] = "received";
