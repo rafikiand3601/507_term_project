@@ -1,0 +1,89 @@
+\hypertarget{classtask__radio}{}\section{task\+\_\+radio Class Reference}
+\label{classtask__radio}\index{task\+\_\+radio@{task\+\_\+radio}}
+Inheritance diagram for task\+\_\+radio\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classtask__radio}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classtask__radio_ad6d6a721a2642bb3074d682ea880aa30}{task\+\_\+radio}} (const char $\ast$, unsigned port\+B\+A\+S\+E\+\_\+\+T\+Y\+PE, size\+\_\+t, emstream $\ast$)
+\item 
+void \mbox{\hyperlink{classtask__radio_a4aeed57265c3fd031bd1219a9854811d}{run}} (void)
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtask__radio_a59772aadb73eef73bdbea1442d114490}\label{classtask__radio_a59772aadb73eef73bdbea1442d114490}} 
+void {\bfseries setup\+\_\+rf} (void)
+\item 
+\mbox{\Hypertarget{classtask__radio_ae65a87dacc155acdc221ca640a6812f8}\label{classtask__radio_ae65a87dacc155acdc221ca640a6812f8}} 
+void {\bfseries init\+\_\+spi} (void)
+\item 
+\mbox{\Hypertarget{classtask__radio_ae18b22460053f286ad2327b785cfa018}\label{classtask__radio_ae18b22460053f286ad2327b785cfa018}} 
+char {\bfseries write\+\_\+byte} (char)
+\item 
+\mbox{\Hypertarget{classtask__radio_a864714d4a62ca47b6852272d70aa0a0e}\label{classtask__radio_a864714d4a62ca47b6852272d70aa0a0e}} 
+uint8\+\_\+t {\bfseries get\+\_\+reg} (uint8\+\_\+t)
+\item 
+\mbox{\Hypertarget{classtask__radio_a4c451948697170e43a0b79674b76d5a6}\label{classtask__radio_a4c451948697170e43a0b79674b76d5a6}} 
+void {\bfseries write\+\_\+nrf} (uint8\+\_\+t, uint8\+\_\+t)
+\item 
+\mbox{\Hypertarget{classtask__radio_a06d1554c99f26f78698d156f8a729ec7}\label{classtask__radio_a06d1554c99f26f78698d156f8a729ec7}} 
+uint8\+\_\+t $\ast$ {\bfseries read\+\_\+or\+\_\+write} (uint8\+\_\+t, uint8\+\_\+t, uint8\+\_\+t $\ast$, uint8\+\_\+t)
+\item 
+\mbox{\Hypertarget{classtask__radio_ae86d2810bfbf4174f73b6c975f2deef4}\label{classtask__radio_ae86d2810bfbf4174f73b6c975f2deef4}} 
+void {\bfseries transmit} (uint8\+\_\+t $\ast$)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 47 of file task\+\_\+radio.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtask__radio_ad6d6a721a2642bb3074d682ea880aa30}\label{classtask__radio_ad6d6a721a2642bb3074d682ea880aa30}} 
+\index{task\+\_\+radio@{task\+\_\+radio}!task\+\_\+radio@{task\+\_\+radio}}
+\index{task\+\_\+radio@{task\+\_\+radio}!task\+\_\+radio@{task\+\_\+radio}}
+\subsubsection{\texorpdfstring{task\+\_\+radio()}{task\_radio()}}
+{\footnotesize\ttfamily task\+\_\+radio\+::task\+\_\+radio (\begin{DoxyParamCaption}\item[{const char $\ast$}]{a\+\_\+name,  }\item[{unsigned port\+B\+A\+S\+E\+\_\+\+T\+Y\+PE}]{a\+\_\+priority,  }\item[{size\+\_\+t}]{a\+\_\+stack\+\_\+size,  }\item[{emstream $\ast$}]{p\+\_\+ser\+\_\+dev }\end{DoxyParamCaption})}
+
+This constructor creates a new data acquisition task. Its main job is to call the parent class\textquotesingle{}s constructor which does most of the work. 
+\begin{DoxyParams}{Parameters}
+{\em a\+\_\+name} & A character string which will be the name of this task \\
+\hline
+{\em a\+\_\+priority} & The priority at which this task will initially run (default\+: 0) \\
+\hline
+{\em a\+\_\+stack\+\_\+size} & The size of this task\textquotesingle{}s stack in bytes (default\+: config\+M\+I\+N\+I\+M\+A\+L\+\_\+\+S\+T\+A\+C\+K\+\_\+\+S\+I\+ZE) \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 33 of file task\+\_\+radio.\+cpp.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classtask__radio_a4aeed57265c3fd031bd1219a9854811d}\label{classtask__radio_a4aeed57265c3fd031bd1219a9854811d}} 
+\index{task\+\_\+radio@{task\+\_\+radio}!run@{run}}
+\index{run@{run}!task\+\_\+radio@{task\+\_\+radio}}
+\subsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily void task\+\_\+radio\+::run (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+This method is called by the R\+T\+OS once to run the task loop for ever and ever.
+
+This task handles sending messages over the transciever to the transponder 
+
+Definition at line 49 of file task\+\_\+radio.\+cpp.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{task__radio_8h}{task\+\_\+radio.\+h}}\item 
+\mbox{\hyperlink{task__radio_8cpp}{task\+\_\+radio.\+cpp}}\end{DoxyCompactItemize}

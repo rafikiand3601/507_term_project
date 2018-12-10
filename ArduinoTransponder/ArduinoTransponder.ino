@@ -14,12 +14,12 @@ void setup()
 {
   // Start radio and serial
   Serial.begin(9600);
+  radio.begin();
   radio.setChannel(0x01);
   radio.setPayloadSize(0x02);
-  radio.printDetails();
-  radio.begin();
+  //radio.printDetails(); // Does not work
   uint8_t addresses[][6] = {"node1", "node2"};
-  radio.openReadingPipe(1, addresses[0]);
+  radio.openReadingPipe(0, addresses[0]);
   Serial.println("Server Running");
   radio.startListening();
 }

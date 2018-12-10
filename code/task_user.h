@@ -1,29 +1,24 @@
 //**************************************************************************************
 /** @file task_user.h
- *    This file contains header stuff for a user interface task for a ME507/FreeRTOS
- *    test suite. 
+ *    This file contains header contents for the user control task.
  *
  *  Revisions:
- *    @li 09-30-2012 JRR Original file was a one-file demonstration with two tasks
- *    @li 10-05-2012 JRR Split into multiple files, one for each task
- *    @li 10-25-2012 JRR Changed to a more fully C++ version with class task_user
- *    @li 11-04-2012 JRR Modified from the data acquisition example to the test suite
- *    @li 01-04-2014 JRR Changed base class names to TaskBase, TaskShare, etc.
+ *    @li 11-29-2018 KM header for user control task created.
  *
  *  License:
- *    This file is copyright 2012 by JR Ridgely and released under the Lesser GNU 
- *    Public License, version 2. It intended for educational use only, but its use
- *    is not limited thereto. */
-/*    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
- *    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- *    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
- *    ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
- *    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUEN-
- *    TIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS 
- *    OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
- *    CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, 
- *    OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
- *    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
+ *	This code is based on Prof. JR Ridgely's FreeRTOS CPP example code. The FreeRTOS
+ *	framework is used, but the tasks are a product of our 507 group. Since the original
+ *	code used the LGPL, our code will also use the LGPL.
+ *		THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ *		AND	ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * 		IMPLIED 	WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * 		ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ * 		LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUEN-
+ * 		TIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * 		OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * 		CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * 		OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * 		OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 //**************************************************************************************
 
 // This define prevents this .h file from being included multiple times in a .cpp file
@@ -52,10 +47,7 @@
 
 
 //-------------------------------------------------------------------------------------
-/** This task interacts with the user for force him/her to do what he/she is told. What
- *  a rude task this is. Then again, computers tend to be that way; if they're polite
- *  with you, they're probably spying on you. 
- */
+
 
 class task_user : public TaskBase
 {

@@ -1,19 +1,16 @@
 //*************************************************************************************
 /** @file shares.h
  *    This file contains extern declarations for queues and other inter-task data
- *    communication objects used in a ME405/507/FreeRTOS project.
+ *    communication objects for the 507 term project.
  *
  *  Revisions:
- *    @li 09-30-2012 JRR Original file was a one-file demonstration with two tasks
- *    @li 10-05-2012 JRR Split into multiple files, one for each task plus a main one
- *    @li 10-29-2012 JRR Reorganized with global queue and shared data references
- *    @li 01-04-2014 JRR Re-reorganized, allocating shares with new now
+ *    @li 11-29-2018 KM file created to allow all tasks to access shared data.
  *
  *  License:
- *		This file is copyright 2015 by JR Ridgely and released under the Lesser GNU
- *		Public License, version 2. It intended for educational use only, but its use
- *		is not limited thereto. */
-/*		THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ *	This code is based on Prof. JR Ridgely's FreeRTOS CPP example code. The FreeRTOS
+ *	framework is used, but the tasks are a product of our 507 group. Since the original
+ *	code used the LGPL, our code will also use the LGPL.
+ *		THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  *		AND	ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * 		IMPLIED 	WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
  * 		ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
