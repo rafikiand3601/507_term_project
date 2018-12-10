@@ -4,11 +4,7 @@
  *    test suite.
  *
  *  Revisions:
- *    @li 09-30-2012 JRR Original file was a one-file demonstration with two tasks
- *    @li 10-05-2012 JRR Split into multiple files, one for each task
- *    @li 10-25-2012 JRR Changed to a more fully C++ version with class task_user
- *    @li 11-04-2012 JRR Modified from the data acquisition example to the test suite
- *    @li 01-04-2014 JRR Changed base class names to TaskBase, TaskShare, etc.
+ *    @li 12-10-2018 AS created file for distance sensor operation
  *
  *  License:
  *    This file is copyright 2012 by JR Ridgely and released under the Lesser GNU
@@ -64,9 +60,8 @@ task_USR1::task_USR1 (const char* a_name,
 
 
 //-------------------------------------------------------------------------------------
-/** This task interacts with the user for force him/her to do what he/she is told. It
- *  is just following the modern government model of "This is the land of the free...
- *  free to do exactly what you're told."
+/** This Task enables input capture interrupts and toggles the trigger pin on the
+ *  distance sensor to continually detect nearby objects.
  */
 
 void task_USR1::run (void)
@@ -78,17 +73,14 @@ void task_USR1::run (void)
 		{
 			//State 0
 			case (0):
-					//DDRG |= (1 << PG5);				//Configure port pin as output
-					//TCCR0 |= ((1 << WGM02) | (1 << CS02) | (1 << CS01) | (1 << CS00))
-					//DDRC &= (1 << PC0);				//Configure port pin as input
-					ECHO = 0;			//Test Code
+					ECHO = 0;			//Variable for trigger pin, only needed for demo code
 					//Input capture initialization for ECHO pin
 					DDRE &= (1 << PE7);					//Configure as input
-					DDRE = 0x00;	//test code
-					TCCR3B = 0x00; //test code
-					TCCR3B |= (1 << ICES3) | (1<<CS32);	//Set to edge capture, 1024 prescaler set
-					TIMSK3 |= (1 << ICIE3);
-					TIFR3 = (1 << ICF3);
+					DDRE = 0x00;
+					TCCR3B = 0x00;
+					TCCR3B |= (1 << ICES3) | (1<<CS32);	//Set to rising edge capture, 1024 prescaler set
+					TIMSK3 |= (1 << ICIE3);			//Enable interrupts
+					TIFR3 = (1 << ICF3);			//Clear input capture flag by writing a one
 
 					edge_1->put (1);			//Initialize
 					width_1->put (0);			//Initialize
@@ -99,25 +91,23 @@ void task_USR1::run (void)
 					transition_to (1);		//Go to state 1
 					break;
 			case (1):
-//Do nothing
 //Test Code
 //					if(width_1->get())
 //					{
 //						*p_serial <<width_1->get()<< endl; //Test code
-//						PORTC &= ~(1 << PC1);		//Set PC1 low (test code)
-//						width_1->put(0);			//Set width_1 to 0 (test code)
+//						PORTC &= ~(1 << PC1);		//Set PC1 low
+//						width_1->put(0);			//Set width_1 to 0
 //					}
 					if (ECHO)
 					{
-						PORTC &= ~(1 << PC1);		//Set PC1 low (test code)
+						PORTC &= ~(1 << PC1);		//Set PC1 low
 						ECHO = 0;
 					}
 					else
 					{
 						//*p_serial <<width_1->get()<< endl;
-						PORTC |= (1 << PC1);		//Set PC1 high (test code)
+						PORTC |= (1 << PC1);		//Set PC1 high
 						ECHO = 1;
-						//delay_ms(50);
 					}
 
 					break;
@@ -130,7 +120,7 @@ void task_USR1::run (void)
 		};
 		runs++;                             // Increment counter for debugging
 
-		// No matter the state, wait for approximately a millisecond before we
+		// No matter the state, wait for approximately 50 milliseconds before we
 		// run the loop again. This gives lower priority tasks a chance to run
 		delay_ms (50);
  	}

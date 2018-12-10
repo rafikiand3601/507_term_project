@@ -1,6 +1,6 @@
 //**************************************************************************************
-/** @file task_user.h
- *    This file contains header stuff for a user interface task for a ME507/FreeRTOS
+/** @file task_USR1.h
+ *    This file contains header stuff for a ultrasonic distance sensor task for a ME507/FreeRTOS
  *    test suite.
  *
  *  Revisions:
@@ -9,6 +9,7 @@
  *    @li 10-25-2012 JRR Changed to a more fully C++ version with class task_user
  *    @li 11-04-2012 JRR Modified from the data acquisition example to the test suite
  *    @li 01-04-2014 JRR Changed base class names to TaskBase, TaskShare, etc.
+ *		@li 12-10-2018 AS Modified file for distance sensor task
  *
  *  License:
  *    This file is copyright 2012 by JR Ridgely and released under the Lesser GNU
