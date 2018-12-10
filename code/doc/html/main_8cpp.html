@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Example Project Name -- CHANGE THIS NOW: main.cpp File Reference</title>
+<title>ME-507 Term Project: Ball Fetching Car: main.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,9 +21,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Example Project Name -- CHANGE THIS NOW
-   &#160;<span id="projectnumber">0.001</span>
+   <div id="projectname">ME-507 Term Project: Ball Fetching Car
+   &#160;<span id="projectnumber">V0.9</span>
    </div>
+   <div id="projectbrief">This project is an ME-507 term project with the 						goal of having a model car track a ball with 						 electronics on it.</div>
   </td>
  </tr>
  </tbody>
@@ -90,7 +91,7 @@ $(function() {
 <code>#include &quot;<a class="el" href="task__motor_8h_source.html">task_motor.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="task__car__control_8h_source.html">task_car_control.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="task__radio_8h_source.html">task_radio.h</a>&quot;</code><br />
-<code>#include &quot;task_USR1.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="task__USR1_8h_source.html">task_USR1.h</a>&quot;</code><br />
 </div>
 <p><a href="main_8cpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -98,47 +99,73 @@ $(function() {
 Functions</h2></td></tr>
 <tr class="memitem:a840291bc02cba5474a4cb46a9b9566fe"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a840291bc02cba5474a4cb46a9b9566fe">main</a> (void)</td></tr>
 <tr class="separator:a840291bc02cba5474a4cb46a9b9566fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afdd244607cefccfe77024721d1ab9622"><td class="memItemLeft" align="right" valign="top"><a id="afdd244607cefccfe77024721d1ab9622"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>ISR</b> (TIMER3_CAPT_vect)</td></tr>
+<tr class="memitem:afdd244607cefccfe77024721d1ab9622"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#afdd244607cefccfe77024721d1ab9622">ISR</a> (TIMER3_CAPT_vect)</td></tr>
+<tr class="memdesc:afdd244607cefccfe77024721d1ab9622"><td class="mdescLeft">&#160;</td><td class="mdescRight">An ISR routine to determine the rotational velocity of the motor.  <a href="#afdd244607cefccfe77024721d1ab9622">More...</a><br /></td></tr>
 <tr class="separator:afdd244607cefccfe77024721d1ab9622"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:acd99bf5d187d4809af2f460a5415e904"><td class="memItemLeft" align="right" valign="top"><a id="acd99bf5d187d4809af2f460a5415e904"></a>
-TextQueue *&#160;</td><td class="memItemRight" valign="bottom"><b>p_print_ser_queue</b></td></tr>
+<tr class="memitem:acd99bf5d187d4809af2f460a5415e904"><td class="memItemLeft" align="right" valign="top">TextQueue *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#acd99bf5d187d4809af2f460a5415e904">p_print_ser_queue</a></td></tr>
+<tr class="memdesc:acd99bf5d187d4809af2f460a5415e904"><td class="mdescLeft">&#160;</td><td class="mdescRight">A queue to print data to a serial port in a task friendly way.  <a href="#acd99bf5d187d4809af2f460a5415e904">More...</a><br /></td></tr>
 <tr class="separator:acd99bf5d187d4809af2f460a5415e904"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a658458b35e40d0a0ba7b27a99667273d"><td class="memItemLeft" align="right" valign="top"><a id="a658458b35e40d0a0ba7b27a99667273d"></a>
-TaskShare&lt; int8_t &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>p_servo_pos</b></td></tr>
+<tr class="memitem:a658458b35e40d0a0ba7b27a99667273d"><td class="memItemLeft" align="right" valign="top">TaskShare&lt; int8_t &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a658458b35e40d0a0ba7b27a99667273d">p_servo_pos</a></td></tr>
+<tr class="memdesc:a658458b35e40d0a0ba7b27a99667273d"><td class="mdescLeft">&#160;</td><td class="mdescRight">A pointer to a variable that controls the servo position.  <a href="#a658458b35e40d0a0ba7b27a99667273d">More...</a><br /></td></tr>
 <tr class="separator:a658458b35e40d0a0ba7b27a99667273d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a377a9ec5b3493875d102b708b87c7b1f"><td class="memItemLeft" align="right" valign="top"><a id="a377a9ec5b3493875d102b708b87c7b1f"></a>
-TaskShare&lt; int8_t &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>p_motor_vel</b></td></tr>
+<tr class="memitem:a377a9ec5b3493875d102b708b87c7b1f"><td class="memItemLeft" align="right" valign="top">TaskShare&lt; int8_t &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a377a9ec5b3493875d102b708b87c7b1f">p_motor_vel</a></td></tr>
+<tr class="memdesc:a377a9ec5b3493875d102b708b87c7b1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">A pointer to a variable that controls the motor velocity.  <a href="#a377a9ec5b3493875d102b708b87c7b1f">More...</a><br /></td></tr>
 <tr class="separator:a377a9ec5b3493875d102b708b87c7b1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaba85f0f59ab3fbdbbb3e9fee5f48795"><td class="memItemLeft" align="right" valign="top"><a id="aaba85f0f59ab3fbdbbb3e9fee5f48795"></a>
-TaskShare&lt; int8_t &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>p_enc_read</b></td></tr>
+<tr class="memitem:aaba85f0f59ab3fbdbbb3e9fee5f48795"><td class="memItemLeft" align="right" valign="top">TaskShare&lt; int8_t &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#aaba85f0f59ab3fbdbbb3e9fee5f48795">p_enc_read</a></td></tr>
+<tr class="memdesc:aaba85f0f59ab3fbdbbb3e9fee5f48795"><td class="mdescLeft">&#160;</td><td class="mdescRight">A pointer to a variable that represents the encoder ticks per second.  <a href="#aaba85f0f59ab3fbdbbb3e9fee5f48795">More...</a><br /></td></tr>
 <tr class="separator:aaba85f0f59ab3fbdbbb3e9fee5f48795"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a188eb21a8430d67a13e1a49e8a4247bc"><td class="memItemLeft" align="right" valign="top"><a id="a188eb21a8430d67a13e1a49e8a4247bc"></a>
-TaskShare&lt; bool &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>p_rf_ping</b></td></tr>
+<tr class="memitem:a188eb21a8430d67a13e1a49e8a4247bc"><td class="memItemLeft" align="right" valign="top">TaskShare&lt; bool &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a188eb21a8430d67a13e1a49e8a4247bc">p_rf_ping</a></td></tr>
+<tr class="memdesc:a188eb21a8430d67a13e1a49e8a4247bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">A pointer to a variable that tells the RF module to ping the transponder.  <a href="#a188eb21a8430d67a13e1a49e8a4247bc">More...</a><br /></td></tr>
 <tr class="separator:a188eb21a8430d67a13e1a49e8a4247bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a417763188f0e12c3bc2627b0783cf562"><td class="memItemLeft" align="right" valign="top"><a id="a417763188f0e12c3bc2627b0783cf562"></a>
-TaskShare&lt; uint8_t &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>p_drive_state</b></td></tr>
+<tr class="memitem:a417763188f0e12c3bc2627b0783cf562"><td class="memItemLeft" align="right" valign="top">TaskShare&lt; uint8_t &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a417763188f0e12c3bc2627b0783cf562">p_drive_state</a></td></tr>
+<tr class="memdesc:a417763188f0e12c3bc2627b0783cf562"><td class="mdescLeft">&#160;</td><td class="mdescRight">A pointer to a variable that controls the drive state.  <a href="#a417763188f0e12c3bc2627b0783cf562">More...</a><br /></td></tr>
 <tr class="separator:a417763188f0e12c3bc2627b0783cf562"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2bc6c6fe7bf518436a70d7f9384aab2"><td class="memItemLeft" align="right" valign="top"><a id="ad2bc6c6fe7bf518436a70d7f9384aab2"></a>
-TaskShare&lt; int8_t &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>edge_1</b></td></tr>
+<tr class="memitem:ad2bc6c6fe7bf518436a70d7f9384aab2"><td class="memItemLeft" align="right" valign="top">TaskShare&lt; int8_t &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ad2bc6c6fe7bf518436a70d7f9384aab2">edge_1</a></td></tr>
+<tr class="memdesc:ad2bc6c6fe7bf518436a70d7f9384aab2"><td class="mdescLeft">&#160;</td><td class="mdescRight">A pointer to a variable that represents the edge change for the ISR.  <a href="#ad2bc6c6fe7bf518436a70d7f9384aab2">More...</a><br /></td></tr>
 <tr class="separator:ad2bc6c6fe7bf518436a70d7f9384aab2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad554ea3ddab2e460573f8c5ee31eb44d"><td class="memItemLeft" align="right" valign="top"><a id="ad554ea3ddab2e460573f8c5ee31eb44d"></a>
-TaskShare&lt; uint16_t &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>width_1</b></td></tr>
+<tr class="memitem:ad554ea3ddab2e460573f8c5ee31eb44d"><td class="memItemLeft" align="right" valign="top">TaskShare&lt; uint16_t &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ad554ea3ddab2e460573f8c5ee31eb44d">width_1</a></td></tr>
+<tr class="memdesc:ad554ea3ddab2e460573f8c5ee31eb44d"><td class="mdescLeft">&#160;</td><td class="mdescRight">A pointer to the pulse width value of the encoder ticks.  <a href="#ad554ea3ddab2e460573f8c5ee31eb44d">More...</a><br /></td></tr>
 <tr class="separator:ad554ea3ddab2e460573f8c5ee31eb44d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This file contains the <a class="el" href="main_8cpp.html#a840291bc02cba5474a4cb46a9b9566fe">main()</a> code for a multi-task program run under the FreeRTOS framework.</p>
 <p>Revisions: </p><ul>
 <li>11-29-2018 KM file created to setup the task state-machine. </li>
-<li>12-4-2018 KM added all tasks to state machine.</li>
+<li>12-4-2018 KM added all tasks to state machine. </li>
+<li>12-9-2018 KM last planned edit.</li>
 </ul>
 <p>License: This code is based on Prof. JR Ridgely's FreeRTOS CPP example code. The FreeRTOS framework is used, but the tasks are a product of our 507 group. Since the original code used the LGPL, our code will also use the LGPL. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUEN- TIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. </p>
 
 <p class="definition">Definition in file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
 </div><h2 class="groupheader">Function Documentation</h2>
+<a id="afdd244607cefccfe77024721d1ab9622"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afdd244607cefccfe77024721d1ab9622">&#9670;&nbsp;</a></span>ISR()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ISR </td>
+          <td>(</td>
+          <td class="paramtype">TIMER3_CAPT_vect&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>An ISR routine to determine the rotational velocity of the motor. </p>
+<p>This routine is used to determine the rotational velocity of the motor. While it runs, it has not been fully implemented in our code. </p>
+
+<p class="definition">Definition at line <a class="el" href="main_8cpp_source.html#l00205">205</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="main_8cpp_source.html#l00108">edge_1</a>, and <a class="el" href="main_8cpp_source.html#l00115">width_1</a>.</p>
+
+</div>
+</div>
 <a id="a840291bc02cba5474a4cb46a9b9566fe"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a840291bc02cba5474a4cb46a9b9566fe">&#9670;&nbsp;</a></span>main()</h2>
 
@@ -156,14 +183,185 @@ TaskShare&lt; uint16_t &gt; *&#160;</td><td class="memItemRight" valign="bottom"
 </div><div class="memdoc">
 <p>The main function sets up the RTOS. Some test tasks are created. Then the scheduler is started up; the scheduler runs until power is turned off or there's a reset. </p><dl class="section return"><dt>Returns</dt><dd>This is a real-time microcontroller program which doesn't return. Ever. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="main_8cpp_source.html#l00079">79</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8cpp_source.html#l00125">125</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="main_8cpp_source.html#l00108">edge_1</a>, <a class="el" href="main_8cpp_source.html#l00102">p_drive_state</a>, <a class="el" href="main_8cpp_source.html#l00088">p_enc_read</a>, <a class="el" href="main_8cpp_source.html#l00081">p_motor_vel</a>, <a class="el" href="main_8cpp_source.html#l00067">p_print_ser_queue</a>, <a class="el" href="main_8cpp_source.html#l00095">p_rf_ping</a>, <a class="el" href="main_8cpp_source.html#l00074">p_servo_pos</a>, and <a class="el" href="main_8cpp_source.html#l00115">width_1</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="ad2bc6c6fe7bf518436a70d7f9384aab2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2bc6c6fe7bf518436a70d7f9384aab2">&#9670;&nbsp;</a></span>edge_1</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TaskShare&lt;int8_t&gt;* edge_1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>A pointer to a variable that represents the edge change for the ISR. </p>
+<p>edge_1 A pointer to a int8_t variable that stores which edge is active so that the ISR can return the pulse width properly. </p>
+
+<p class="definition">Definition at line <a class="el" href="main_8cpp_source.html#l00108">108</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="main_8cpp_source.html#l00205">ISR()</a>, <a class="el" href="main_8cpp_source.html#l00125">main()</a>, and <a class="el" href="task__USR1_8cpp_source.html#l00068">task_USR1::run()</a>.</p>
+
+</div>
+</div>
+<a id="a417763188f0e12c3bc2627b0783cf562"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a417763188f0e12c3bc2627b0783cf562">&#9670;&nbsp;</a></span>p_drive_state</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TaskShare&lt;uint8_t&gt;* p_drive_state</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>A pointer to a variable that controls the drive state. </p>
+<p>p_drive_state A pointer to a uint8_t TaskShare variable that tells the car control task which state to go into. This variable is set by the user interface task and read by the car control task. </p>
+
+<p class="definition">Definition at line <a class="el" href="main_8cpp_source.html#l00102">102</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="main_8cpp_source.html#l00125">main()</a>, <a class="el" href="task__car__control_8cpp_source.html#l00052">task_car_control::run()</a>, and <a class="el" href="task__user_8cpp_source.html#l00068">task_user::run()</a>.</p>
+
+</div>
+</div>
+<a id="aaba85f0f59ab3fbdbbb3e9fee5f48795"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaba85f0f59ab3fbdbbb3e9fee5f48795">&#9670;&nbsp;</a></span>p_enc_read</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TaskShare&lt;int8_t&gt;* p_enc_read</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>A pointer to a variable that represents the encoder ticks per second. </p>
+<p>p_enc_read A pointer to an int8_t TaskShare variable that represents the encoder ticks per second. This variable is set by the encoder read task, but is not fully implemented. </p>
+
+<p class="definition">Definition at line <a class="el" href="main_8cpp_source.html#l00088">88</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="main_8cpp_source.html#l00125">main()</a>.</p>
+
+</div>
+</div>
+<a id="a377a9ec5b3493875d102b708b87c7b1f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a377a9ec5b3493875d102b708b87c7b1f">&#9670;&nbsp;</a></span>p_motor_vel</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TaskShare&lt;int8_t&gt;* p_motor_vel</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>A pointer to a variable that controls the motor velocity. </p>
+<p>p_motor_vel A pointer to an int8_t TaskShare variable that can control the velocity of the motor. This variable is set by the car control task and read by the servo task. </p>
+
+<p class="definition">Definition at line <a class="el" href="main_8cpp_source.html#l00081">81</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="main_8cpp_source.html#l00125">main()</a>, <a class="el" href="task__car__control_8cpp_source.html#l00052">task_car_control::run()</a>, and <a class="el" href="task__motor_8cpp_source.html#l00065">task_motor::run()</a>.</p>
+
+</div>
+</div>
+<a id="acd99bf5d187d4809af2f460a5415e904"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd99bf5d187d4809af2f460a5415e904">&#9670;&nbsp;</a></span>p_print_ser_queue</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TextQueue* p_print_ser_queue</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>A queue to print data to a serial port in a task friendly way. </p>
+<p>p_ser_print_queue A pointer to a TextQueue serial queue object that can print data without interrupting task timing. This is utilized to by various tasks, but most importantly the user interface task. </p>
+
+<p class="definition">Definition at line <a class="el" href="main_8cpp_source.html#l00067">67</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="main_8cpp_source.html#l00125">main()</a>, and <a class="el" href="task__user_8cpp_source.html#l00068">task_user::run()</a>.</p>
+
+</div>
+</div>
+<a id="a188eb21a8430d67a13e1a49e8a4247bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a188eb21a8430d67a13e1a49e8a4247bc">&#9670;&nbsp;</a></span>p_rf_ping</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TaskShare&lt;bool&gt;* p_rf_ping</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>A pointer to a variable that tells the RF module to ping the transponder. </p>
+<p>p_rf_ping A pointer to a bool TaskShare variable that tells the RF module to send a ping signal to the transciever. This variable is set by the user interface task and read by the RF module task. </p>
+
+<p class="definition">Definition at line <a class="el" href="main_8cpp_source.html#l00095">95</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="main_8cpp_source.html#l00125">main()</a>, <a class="el" href="task__user_8cpp_source.html#l00068">task_user::run()</a>, and <a class="el" href="task__radio_8cpp_source.html#l00064">task_radio::run()</a>.</p>
+
+</div>
+</div>
+<a id="a658458b35e40d0a0ba7b27a99667273d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a658458b35e40d0a0ba7b27a99667273d">&#9670;&nbsp;</a></span>p_servo_pos</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TaskShare&lt;int8_t&gt;* p_servo_pos</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>A pointer to a variable that controls the servo position. </p>
+<p>p_motor_vel A pointer to an int8_t TaskShare variable that can control the position of the servo. This variable is set by the car control task and read by the servo task. </p>
+
+<p class="definition">Definition at line <a class="el" href="main_8cpp_source.html#l00074">74</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="main_8cpp_source.html#l00125">main()</a>, <a class="el" href="task__steering_8cpp_source.html#l00066">task_steering::run()</a>, and <a class="el" href="task__car__control_8cpp_source.html#l00052">task_car_control::run()</a>.</p>
+
+</div>
+</div>
+<a id="ad554ea3ddab2e460573f8c5ee31eb44d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad554ea3ddab2e460573f8c5ee31eb44d">&#9670;&nbsp;</a></span>width_1</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TaskShare&lt;uint16_t&gt;* width_1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>A pointer to the pulse width value of the encoder ticks. </p>
+<p>width_1 A pointer to the uint16_t variable that represents the width of the encoder pulse for timing reporting. This variable is set in the encoder ISR. This feature is not fully implemented. </p>
+
+<p class="definition">Definition at line <a class="el" href="main_8cpp_source.html#l00115">115</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="main_8cpp_source.html#l00205">ISR()</a>, <a class="el" href="main_8cpp_source.html#l00125">main()</a>, <a class="el" href="task__USR1_8cpp_source.html#l00068">task_USR1::run()</a>, and <a class="el" href="task__car__control_8cpp_source.html#l00052">task_car_control::run()</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Dec 9 2018 15:42:07 for Example Project Name -- CHANGE THIS NOW by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 10 2018 13:54:16 for ME-507 Term Project: Ball Fetching Car by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.14
 </small></address>

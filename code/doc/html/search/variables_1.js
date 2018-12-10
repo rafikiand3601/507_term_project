@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ticks_5fto_5fdelay',['ticks_to_delay',['../task__user_8cpp.html#a608f2ff6213a79bd1f25a29544aeaba5',1,'ticks_to_delay():&#160;task_user.cpp'],['../task__USR1_8cpp.html#a608f2ff6213a79bd1f25a29544aeaba5',1,'ticks_to_delay():&#160;task_USR1.cpp']]]
+  ['offset',['offset',['../classtask__motor.html#a7ccbea1fe01e35b055688cca8b5be8f0',1,'task_motor']]]
 ];

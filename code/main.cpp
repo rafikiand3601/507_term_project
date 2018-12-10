@@ -7,6 +7,7 @@
  *  Revisions:
  *    \li 11-29-2018 KM file created to setup the task state-machine.
  *    \li 12-4-2018 KM added all tasks to state machine.
+ *    @li 12-9-2018 KM last planned edit.
  *
  *  License:
  *	This code is based on Prof. JR Ridgely's FreeRTOS CPP example code. The FreeRTOS
@@ -58,14 +59,59 @@
 
 
 
-
+/** @brief A queue to print data to a serial port in a task friendly way.
+ *  @details p_ser_print_queue A pointer to a TextQueue serial queue object that can
+ *  print data without interrupting task timing. This is utilized to by various tasks,
+ *  but most importantly the user interface task.
+ */
 TextQueue* p_print_ser_queue;
+
+/** @brief A pointer to a variable that controls the servo position.
+ *  @details p_motor_vel A pointer to an int8_t TaskShare variable that can control
+ *  the position of the servo. This variable is set by the car control task and read
+ *  by the servo task.
+ */
 TaskShare<int8_t>* p_servo_pos;
+
+/** @brief A pointer to a variable that controls the motor velocity.
+ *  @details p_motor_vel A pointer to an int8_t TaskShare variable that can control
+ *  the velocity of the motor. This variable is set by the car control task and read
+ *  by the servo task.
+ */
 TaskShare<int8_t>* p_motor_vel;
+
+/** @brief A pointer to a variable that represents the encoder ticks per second.
+ *  @details p_enc_read A pointer to an int8_t TaskShare variable that represents
+ *  the encoder ticks per second. This variable is set by the encoder read task,
+ *  but is not fully implemented.
+ */
 TaskShare<int8_t>* p_enc_read;
+
+/** @brief A pointer to a variable that tells the RF module to ping the transponder.
+ *  @details p_rf_ping A pointer to a bool TaskShare variable that tells the RF
+ *  module to send a ping signal to the transciever. This variable is set by the
+ *  user interface task and read by the RF module task.
+ */
 TaskShare<bool>* p_rf_ping;
+
+/** @brief A pointer to a variable that controls the drive state.
+ *  @details p_drive_state A pointer to a uint8_t TaskShare variable that tells the 
+ *  car control task which state to go into. This variable is set by the user
+ *  interface task and read by the car control task.
+ */
 TaskShare<uint8_t>* p_drive_state;
+
+/** @brief A pointer to a variable that represents the edge change for the ISR.
+ *  @details edge_1 A pointer to a int8_t variable that stores which edge is active
+ *  so that the ISR can return the pulse width properly.
+ */
 TaskShare<int8_t>* edge_1;
+
+/** @brief A pointer to the pulse width value of the encoder ticks.
+ *  @details width_1 A pointer to the uint16_t variable that represents the width
+ *  of the encoder pulse for timing reporting. This variable is set in the encoder ISR.
+ *  This feature is not fully implemented.
+ */
 TaskShare<uint16_t>* width_1;
 
 
@@ -133,6 +179,7 @@ int main (void)
 
 	//Create a Task to read ultrasonic receiver 1
 	new task_USR1 ("USR1",task_priority (7), 200, p_ser_port);
+	
 	//Create a Task to read ultrasonic receiver 2
 	//new task_USR2 ("USR2",task_priority (7), 200, p_ser_port);
 
@@ -150,6 +197,11 @@ int main (void)
 	return 1;
 }
 
+
+/** @brief An ISR routine to determine the rotational velocity of the motor.
+ *  @details This routine  is used to determine the rotational velocity of the motor.
+ *  While it runs, it has not been fully implemented in our code.
+ */
 ISR(TIMER3_CAPT_vect)
 {
     uint16_t count1 = TCNT3;

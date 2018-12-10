@@ -1,5 +1,14 @@
 \hypertarget{classtask__motor}{}\section{task\+\_\+motor Class Reference}
 \label{classtask__motor}\index{task\+\_\+motor@{task\+\_\+motor}}
+
+
+This task is used to control the velocity of the motor.  
+
+
+
+
+{\ttfamily \#include $<$task\+\_\+motor.\+h$>$}
+
 Inheritance diagram for task\+\_\+motor\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -12,24 +21,26 @@ Inheritance diagram for task\+\_\+motor\+:\begin{figure}[H]
 \mbox{\hyperlink{classtask__motor_a6ed0a0b463e698d636b28bcdd518a027}{task\+\_\+motor}} (const char $\ast$, unsigned port\+B\+A\+S\+E\+\_\+\+T\+Y\+PE, size\+\_\+t, emstream $\ast$)
 \item 
 void \mbox{\hyperlink{classtask__motor_a895a075ec470c9d5a07b8959de06aacd}{run}} (void)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em This method is called to run the motor control loop. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 uint8\+\_\+t \mbox{\hyperlink{classtask__motor_a6022366bdc25c0a1c16b96bbc02bcffa}{calc\+\_\+pwm}} (int8\+\_\+t)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em This method calculates the P\+WM length to be sent to the timer. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\Hypertarget{classtask__motor_a7ccbea1fe01e35b055688cca8b5be8f0}\label{classtask__motor_a7ccbea1fe01e35b055688cca8b5be8f0}} 
-int8\+\_\+t {\bfseries offset}
-\end{DoxyCompactItemize}
+int8\+\_\+t \mbox{\hyperlink{classtask__motor_a7ccbea1fe01e35b055688cca8b5be8f0}{offset}}
+\begin{DoxyCompactList}\small\item\em This value is used to set the offset from zero so that the motor does not move when set to 0 velocity. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
+This task is used to control the velocity of the motor. 
 
+This task inherits the Task\+Base class, and is used to run as a finite state machine. It controls the actions of the motor using a timer for P\+WM. 
 
-Definition at line 40 of file task\+\_\+motor.\+h.
+Definition at line 55 of file task\+\_\+motor.\+h.
 
 
 
@@ -40,9 +51,7 @@ Definition at line 40 of file task\+\_\+motor.\+h.
 \subsubsection{\texorpdfstring{task\+\_\+motor()}{task\_motor()}}
 {\footnotesize\ttfamily task\+\_\+motor\+::task\+\_\+motor (\begin{DoxyParamCaption}\item[{const char $\ast$}]{a\+\_\+name,  }\item[{unsigned port\+B\+A\+S\+E\+\_\+\+T\+Y\+PE}]{a\+\_\+priority,  }\item[{size\+\_\+t}]{a\+\_\+stack\+\_\+size,  }\item[{emstream $\ast$}]{p\+\_\+ser\+\_\+dev }\end{DoxyParamCaption})}
 
-This constructor creates a task to control the motor velocity. It is used to
-
-parent task task base class handles the R\+T\+OS functionality. 
+This constructor creates a task to control the motor velocity. It is used to control the forward movement of the car. 
 \begin{DoxyParams}{Parameters}
 {\em a\+\_\+name} & A character string which will be the name of this task \\
 \hline
@@ -50,10 +59,12 @@ parent task task base class handles the R\+T\+OS functionality.
 \hline
 {\em a\+\_\+stack\+\_\+size} & The size of this task\textquotesingle{}s stack in bytes (default\+: config\+M\+I\+N\+I\+M\+A\+L\+\_\+\+S\+T\+A\+C\+K\+\_\+\+S\+I\+ZE) \\
 \hline
+{\em p\+\_\+ser\+\_\+dev} & A pointer to the serial port which writes debugging info. \\
+\hline
 \end{DoxyParams}
 
 
-Definition at line 32 of file task\+\_\+motor.\+cpp.
+Definition at line 45 of file task\+\_\+motor.\+cpp.
 
 
 
@@ -63,6 +74,10 @@ Definition at line 32 of file task\+\_\+motor.\+cpp.
 \index{calc\+\_\+pwm@{calc\+\_\+pwm}!task\+\_\+motor@{task\+\_\+motor}}
 \subsubsection{\texorpdfstring{calc\+\_\+pwm()}{calc\_pwm()}}
 {\footnotesize\ttfamily uint8\+\_\+t task\+\_\+motor\+::calc\+\_\+pwm (\begin{DoxyParamCaption}\item[{int8\+\_\+t}]{pwm }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+This method calculates the P\+WM length to be sent to the timer. 
 
 This method takes a single input of the desired motor velocity. From this value, the timer pulse length that corresponds to this velocity is calculated and returned. 
 \begin{DoxyParams}{Parameters}
@@ -74,7 +89,11 @@ pulse\+\_\+length A uint8\+\_\+t type variable that represents the counter value
 \end{DoxyReturn}
 
 
-Definition at line 131 of file task\+\_\+motor.\+cpp.
+Definition at line 150 of file task\+\_\+motor.\+cpp.
+
+
+
+References offset.
 
 
 
@@ -86,15 +105,17 @@ Referenced by run().
 \subsubsection{\texorpdfstring{run()}{run()}}
 {\footnotesize\ttfamily void task\+\_\+motor\+::run (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
 
-This method is called by the R\+T\+OS once to run the task loop for ever and ever.
-
-This task handles the motor driving f = f\+\_\+clk / N$\ast$(1 + T\+OP) Want f = 50 \mbox{[}hz\mbox{]} T\+OP = 0x\+FF = 255, f\+\_\+clk = 16 \mbox{[}Mhz\mbox{]} N = 1024 ---$>$ f = 61.\+3 \mbox{[}hz\mbox{]} close enough
-
-Definition at line 48 of file task\+\_\+motor.\+cpp.
 
 
+This method is called to run the motor control loop. 
 
-References calc\+\_\+pwm().
+This function works within the Free\+R\+T\+OS framework. Once it is called, it loops through a switch for as long as the main program is running in a finite state machine. This task uses the shared p\+\_\+motor\+\_\+vel variable calculate and set the P\+WM signal which activates the motor controller. 
+
+Definition at line 65 of file task\+\_\+motor.\+cpp.
+
+
+
+References calc\+\_\+pwm(), offset, and p\+\_\+motor\+\_\+vel.
 
 
 

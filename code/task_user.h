@@ -4,6 +4,7 @@
  *
  *  Revisions:
  *    @li 11-29-2018 KM header for user control task created.
+ *    @li 12-9-2018 KM last planned edit.
  *
  *  License:
  *	This code is based on Prof. JR Ridgely's FreeRTOS CPP example code. The FreeRTOS
@@ -32,7 +33,6 @@
 #include "queue.h"                          // FreeRTOS inter-task communication queues
 
 #include "rs232int.h"                       // ME405/507 library for serial comm.
-#include "adc.h"                            // Header for A/D converter class driver
 #include "time_stamp.h"                     // Class to implement a microsecond timer
 #include "taskbase.h"                       // Header for ME405/507 base task class
 #include "taskqueue.h"                      // Header of wrapper for FreeRTOS queues
@@ -49,6 +49,12 @@
 //-------------------------------------------------------------------------------------
 
 
+
+/** @brief This task is used to create a user interface to communicate with.
+ *  @details This task inherits the TaskBase class, and is used to run as a finite 
+ *  state machine. It talks over a serial interface, and sets various inter-task
+ *  variables that control other tasks.
+ */
 class task_user : public TaskBase
 {
 private:

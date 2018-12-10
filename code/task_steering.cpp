@@ -34,12 +34,13 @@
 
 
 //-------------------------------------------------------------------------------------
-/** This constructor creates a new data acquisition task. Its main job is to call the
- *  parent class's constructor which does most of the work.
+/** This constructor creates a task to control the servo angle. It is used to
+ *  control the movement direction of the car.
  *  @param a_name A character string which will be the name of this task
  *  @param a_priority The priority at which this task will initially run (default: 0)
- *  @param a_stack_size The size of this task's stack in bytes 
+ *  @param a_stack_size The size of this task's stack in bytes
  *                      (default: configMINIMAL_STACK_SIZE)
+ *  @param p_ser_dev A pointer to the serial port which writes debugging info. 
  */
 
 task_steering::task_steering (const char* a_name, 
@@ -55,7 +56,11 @@ task_steering::task_steering (const char* a_name,
 
 
 //-------------------------------------------------------------------------------------
-/** This task handles the steering 
+/** @brief This method is called to run the servo control loop.
+ *  @details This function works within the FreeRTOS framework. Once it is called, it 
+ *  loops through a switch for as long as the main program is running in a finite state
+ *  machine. This task uses the shared p_servo_pos variable calculate and set the
+ *  PWM signal which activates the servo.
  */
 
 void task_steering::run (void)
@@ -72,11 +77,10 @@ void task_steering::run (void)
 			// In state 0, setup the output pin for the servo on PB4(OC2A)
 			case (0):
 				// Need a wave with period ~ 20 ms and pulse length of 1.0-2.0 ms
-				/** f = f_clk / N*(1 + TOP)
-				  * Want f = 50 [hz]
-				  * TOP = 0xFF = 255, f_clk = 16 [Mhz]
-				  * N = 1024 ---> f = 61.3 [hz] close enough
-				*/
+				// f = f_clk / N*(1 + TOP)
+				// Want f = 50 [hz]
+				// TOP = 0xFF = 255, f_clk = 16 [Mhz]
+				// N = 1024 ---> f = 61.3 [hz] close enough
 				
 				// Set PB4 as output pin
 				DDRB |= (1 << PB4);
@@ -122,14 +126,13 @@ void task_steering::run (void)
 }
 
 //-------------------------------------------------------------------------------------
-/** This method takes a single input of the desired servo angle. From this value,
- *  the timer pulse length that corresponds to this angle is calculated and returned.
- *  @param pwm An int8_t type variable that represents the desired servo angle.
- *  This value can be between 90 and -90.
+/** @brief This method calculates the PWM length to be sent to the servo timer.
+ *  @details This method takes a single input of the desired servo position. From this
+ *  value, the timer pulse length that corresponds to this position is calculated and 
+ *  returned.
  *  @return pulse_length A uint8_t type variable that represents the counter value to 
  *  be written to timer register so that the correct motor speed will be achieved.
  */
-
 uint8_t task_steering::calc_pwm (int8_t pwm)
 {
 	// Make sure input is between -90 and 90 degrees

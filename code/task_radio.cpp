@@ -4,6 +4,7 @@
  *
  *  Revisions:
  *    @li 12-1-2018 KM file created to operate the transciever.
+ *    @li 12-9-2018 KM last planned edit.
  *  
  *  License:
  *	This code is based on Prof. JR Ridgely's FreeRTOS CPP example code. The FreeRTOS
@@ -41,6 +42,7 @@
  *  @param a_priority The priority at which this task will initially run (default: 0)
  *  @param a_stack_size The size of this task's stack in bytes 
  *                      (default: configMINIMAL_STACK_SIZE)
+ *  @param p_ser_dev A pointer to the serial port which writes debugging info. 
  */
 
 task_radio::task_radio (const char* a_name, 
@@ -145,27 +147,15 @@ void task_radio::run (void)
 }
 
 
-/*
-void task_radio::setup_rf(void) {
-    p_rf->ss.port = &PORTE;
-    p_rf->ss.pin = PE2;
-    p_rf->ce.port = &PORTE;
-    p_rf->ce.pin = PE3;
-    p_rf->sck.port = &PORTB;
-    p_rf->sck.pin = PB1;
-    p_rf->mosi.port = &PORTB;
-    p_rf->mosi.pin = PB2;
-    p_rf->miso.port = &PORTB;
-    p_rf->miso.pin = PB3;
-    nRF24L01_begin(p_rf);
-}
-*/
-
-
-
 
 //----------------------------------------------------------------------------------
 
+
+
+/** @brief A method to initialize the SPI interface to the RF module.
+  * @details This method sets the correct SPI pins as inputs and outputs, and sets
+  * their states so that the SPI interface can connect to the RF module.
+  */
 void task_radio::init_spi (void)
 {
 	// Set MOSI(PB2) and SCK(PB1) output, MISO(PB3) input, CSN(PB0) output
@@ -184,6 +174,12 @@ void task_radio::init_spi (void)
 }
 
 
+/** @brief A method to send a byte to the RF module.
+  * @details This method uses the SPI data register on our microcontroller to
+  * send a byte of information to the RF module.
+  * @param c_data A char byte that is to be sent to the RF module.
+  * @return SPDR The char data that was sent to the RF module.
+  */
 char task_radio::write_byte (char c_data)
 {
 	// Load byte to data register
@@ -195,6 +191,13 @@ char task_radio::write_byte (char c_data)
 	return SPDR;
 }
 
+/** @brief A method to get the value of a register on the RF module.
+  * @details This method uses the SPI data register on our microcontroller to
+  * send a byte of information to the RF module.
+  * @param reg A uint8_t value that corresonds to the desired register.
+  * @return reg The uint8_t data that was contained in the desired register
+  * RF module.
+  */
 uint8_t task_radio::get_reg (uint8_t reg)
 {
 	_delay_us (10);
@@ -211,21 +214,20 @@ uint8_t task_radio::get_reg (uint8_t reg)
 	return reg;
 }
 
-void task_radio::write_nrf (uint8_t reg, uint8_t package)
-{
-	_delay_us(10);
-	// Set CSN low
-	PORTB &= ~(1 << PB0);
-	_delay_us(10);
-	// Set nRF to writing mode
-	write_byte (W_REGISTER + reg);
-	_delay_us(10);
-	write_byte (package);
-	_delay_us(10);
-	// Set CSN high
-	PORTB |= (1 << PB0);
-}
 
+/** @brief A method to write data to the RF module.
+  * @details This method uses the SPI data register on our microcontroller to
+  * send a byte of information to the RF module.
+  * @param ReadWrite A uint8_t character that corresponds to either a value
+  * being written to or read from the RF module.
+  * @param reg A uint8_t value that corresponds to the register of the RF
+  * module that is being modified.
+  * @param val A pointer to the values array that are to written to the RF
+  * module.
+  * @param antVal A uint8_t value that signifies the number of bytes to write
+  * to the RF module.
+  * @return ret The array of uint8_t* data that was sent to the RF module.
+  */
 uint8_t *task_radio::read_or_write (uint8_t ReadWrite, uint8_t reg, uint8_t *val, uint8_t antVal)
 {
 	if (ReadWrite == W)
@@ -262,7 +264,12 @@ uint8_t *task_radio::read_or_write (uint8_t ReadWrite, uint8_t reg, uint8_t *val
 	return ret;
 }
 
-
+/** @brief A method to transmit a character array with the RF module.
+  * @details This method uses the read_or_write method to transmit an array
+  * of characters using the RF module.
+  * @param W_buff A uint8_t* pointer to an array which is to be sent to
+  * the RF module.
+  */
 void task_radio::transmit (uint8_t *W_buff)
 {
 	read_or_write (R, FLUSH_TX, W_buff, 0);

@@ -33,7 +33,6 @@
 #include "queue.h"                          // FreeRTOS inter-task communication queues
 
 #include "rs232int.h"                       // ME405/507 library for serial comm.
-#include "adc.h"                            // Header for A/D converter class driver
 #include "time_stamp.h"                     // Class to implement a microsecond timer
 #include "taskbase.h"                       // Header for ME405/507 base task class
 #include "taskqueue.h"                      // Header of wrapper for FreeRTOS queues

@@ -5,6 +5,7 @@
  *
  *  Revisions:
  *    @li 11-29-2018 KM file created to allow all tasks to access shared data.
+ *    @li 12-9-2018 KM last planned edit.
  *
  *  License:
  *	This code is based on Prof. JR Ridgely's FreeRTOS CPP example code. The FreeRTOS

@@ -3,7 +3,8 @@
  *    This file contains header contents for the steering task.
  *
  *  Revisions:
- *    @li 11-29-2018 KM header for steering task created. 
+ *    @li 11-29-2018 KM header for steering task created.
+ *    @li 12-9-2018 KM last planned edit.
  *
  *  License:
  *	This code is based on Prof. JR Ridgely's FreeRTOS CPP example code. The FreeRTOS
@@ -37,7 +38,6 @@
 
 // ME 507 library includes
 #include "rs232int.h"                       // ME405/507 library for serial comm.
-#include "adc.h"                            // Header for A/D converter class driver
 #include "time_stamp.h"                     // Class to implement a microsecond timer
 #include "taskbase.h"                       // Header for ME405/507 base task class
 #include "taskqueue.h"                      // Header of wrapper for FreeRTOS queues
@@ -47,7 +47,10 @@
 #include "shares.h"                         // Global ('extern') queue declarations
 
 
-
+/** @brief This task is used to control the position of the servo.
+ *  @details This task inherits the TaskBase class, and is used to run as a finite 
+ *   state machine. It controls the actions of the servo using a timer for PWM.
+ */
 
 class task_steering : public TaskBase
 {
@@ -59,11 +62,9 @@ protected:
 	uint8_t calc_pwm (int8_t);
 
 public:
-	// This constructor creates a user interface task object
 	task_steering (const char*, unsigned portBASE_TYPE, size_t, emstream*);
 
-	/** This method is called by the RTOS once to run the task loop for ever and ever.
-	 */
+	/// This method is called by the RTOS once to run the task loop for ever and ever.
 	void run (void);
 };
 

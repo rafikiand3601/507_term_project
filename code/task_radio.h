@@ -3,7 +3,8 @@
  *    This file contains header contents for the RF transciever task.
  *
  *  Revisions:
- *    @li 11-29-2018 KM header for RF transciever task. 
+ *    @li 11-29-2018 KM header for RF transciever task.
+ *    @li 12-9-2018 KM last planned edit.
  *
  *  License:
  *	This code is based on Prof. JR Ridgely's FreeRTOS CPP example code. The FreeRTOS
@@ -37,7 +38,6 @@
 
 // ME 507 library includes
 #include "rs232int.h"                       // ME405/507 library for serial comm.
-#include "adc.h"                            // Header for A/D converter class driver
 #include "time_stamp.h"                     // Class to implement a microsecond timer
 #include "taskbase.h"                       // Header for ME405/507 base task class
 #include "taskqueue.h"                      // Header of wrapper for FreeRTOS queues
@@ -52,18 +52,21 @@
 
 
 
-
+/** @brief This task is used to control the RF transciever.
+ *  @details This task inherits the TaskBase class, and is used to run as a finite 
+ *  state machine. It controls the actions of the RF transciever using an SPI interface.
+ *  While this task can communicate with the RF transciever, we have not gotten the
+ *  transciever to communicate with another RF module.
+ */
 class task_radio : public TaskBase
 {
 private:
 	uint8_t to_address[2];
 
 protected:
-	void setup_rf (void);
 	void init_spi (void);
 	char write_byte (char);
 	uint8_t get_reg (uint8_t);
-	void write_nrf (uint8_t, uint8_t);
 	uint8_t *read_or_write (uint8_t, uint8_t, uint8_t*, uint8_t);
 	void transmit (uint8_t*);
 

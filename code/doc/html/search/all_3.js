@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['operator_3c_3c',['operator&lt;&lt;',['../adc_8cpp.html#afb33ca9fe94765ee57079e7feb03f975',1,'operator&lt;&lt;(emstream &amp;serpt, adc &amp;a2d):&#160;adc.cpp'],['../adc_8h.html#a6e6d1e227b216fe2a1fee9b0ea52180d',1,'operator&lt;&lt;(emstream &amp;, adc &amp;):&#160;adc.cpp']]]
+  ['init_5fspi',['init_spi',['../classtask__radio.html#ae65a87dacc155acdc221ca640a6812f8',1,'task_radio']]],
+  ['isr',['ISR',['../main_8cpp.html#afdd244607cefccfe77024721d1ab9622',1,'main.cpp']]]
 ];

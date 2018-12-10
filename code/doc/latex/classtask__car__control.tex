@@ -1,5 +1,14 @@
 \hypertarget{classtask__car__control}{}\section{task\+\_\+car\+\_\+control Class Reference}
 \label{classtask__car__control}\index{task\+\_\+car\+\_\+control@{task\+\_\+car\+\_\+control}}
+
+
+This task is used to control movement of the car.  
+
+
+
+
+{\ttfamily \#include $<$task\+\_\+car\+\_\+control.\+h$>$}
+
 Inheritance diagram for task\+\_\+car\+\_\+control\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -12,13 +21,15 @@ Inheritance diagram for task\+\_\+car\+\_\+control\+:\begin{figure}[H]
 \mbox{\hyperlink{classtask__car__control_ae42d6364ed49d5d59a5d3dbebc8a7f38}{task\+\_\+car\+\_\+control}} (const char $\ast$, unsigned port\+B\+A\+S\+E\+\_\+\+T\+Y\+PE, size\+\_\+t, emstream $\ast$)
 \item 
 void \mbox{\hyperlink{classtask__car__control_a797dbdeb270271b48c468442d3ab91bd}{run}} (void)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em This method is called to actuate the motor and servo. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
+This task is used to control movement of the car. 
 
+This task inherits the Task\+Base class, and is used to run as a finite state machine. It controls the actions of the motor and servo using shared variables. 
 
-Definition at line 40 of file task\+\_\+car\+\_\+control.\+h.
+Definition at line 56 of file task\+\_\+car\+\_\+control.\+h.
 
 
 
@@ -29,7 +40,7 @@ Definition at line 40 of file task\+\_\+car\+\_\+control.\+h.
 \subsubsection{\texorpdfstring{task\+\_\+car\+\_\+control()}{task\_car\_control()}}
 {\footnotesize\ttfamily task\+\_\+car\+\_\+control\+::task\+\_\+car\+\_\+control (\begin{DoxyParamCaption}\item[{const char $\ast$}]{a\+\_\+name,  }\item[{unsigned port\+B\+A\+S\+E\+\_\+\+T\+Y\+PE}]{a\+\_\+priority,  }\item[{size\+\_\+t}]{a\+\_\+stack\+\_\+size,  }\item[{emstream $\ast$}]{p\+\_\+ser\+\_\+dev }\end{DoxyParamCaption})}
 
-This constructor creates a new data acquisition task. Its main job is to call the parent class\textquotesingle{}s constructor which does most of the work. 
+This constructor creates a task to control the actions of the car. It is used to control the motor setpoint and the servo setpoint. 
 \begin{DoxyParams}{Parameters}
 {\em a\+\_\+name} & A character string which will be the name of this task \\
 \hline
@@ -37,10 +48,12 @@ This constructor creates a new data acquisition task. Its main job is to call th
 \hline
 {\em a\+\_\+stack\+\_\+size} & The size of this task\textquotesingle{}s stack in bytes (default\+: config\+M\+I\+N\+I\+M\+A\+L\+\_\+\+S\+T\+A\+C\+K\+\_\+\+S\+I\+ZE) \\
 \hline
+{\em p\+\_\+ser\+\_\+dev} & A pointer to the serial port which writes debugging info. \\
+\hline
 \end{DoxyParams}
 
 
-Definition at line 30 of file task\+\_\+car\+\_\+control.\+cpp.
+Definition at line 32 of file task\+\_\+car\+\_\+control.\+cpp.
 
 
 
@@ -51,11 +64,19 @@ Definition at line 30 of file task\+\_\+car\+\_\+control.\+cpp.
 \subsubsection{\texorpdfstring{run()}{run()}}
 {\footnotesize\ttfamily void task\+\_\+car\+\_\+control\+::run (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
 
+
+
+This method is called to actuate the motor and servo. 
+
 This method is called by the R\+T\+OS once to run the task loop for ever and ever.
 
-This task handles the steering 
+This function works within the Free\+R\+T\+OS framework. Once it is called, it loops through a switch for as long as the main program is running in a finite state machine. This task uses the shared p\+\_\+motor\+\_\+vel and p\+\_\+servo\+\_\+pos variables calculate to get the car to move as desired. 
 
-Definition at line 46 of file task\+\_\+car\+\_\+control.\+cpp.
+Definition at line 52 of file task\+\_\+car\+\_\+control.\+cpp.
+
+
+
+References p\+\_\+drive\+\_\+state, p\+\_\+motor\+\_\+vel, p\+\_\+servo\+\_\+pos, and width\+\_\+1.
 
 
 

@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['adc',['adc',['../classadc.html',1,'adc'],['../classadc.html#af3b8262c08f5fc5ae325a20622883424',1,'adc::adc()']]],
-  ['adc_2ecpp',['adc.cpp',['../adc_8cpp.html',1,'']]],
-  ['adc_2eh',['adc.h',['../adc_8h.html',1,'']]]
+  ['calc_5fpwm',['calc_pwm',['../classtask__motor.html#a6022366bdc25c0a1c16b96bbc02bcffa',1,'task_motor::calc_pwm()'],['../classtask__steering.html#a6f33131ca25de22a81282b1142d939b3',1,'task_steering::calc_pwm()']]]
 ];

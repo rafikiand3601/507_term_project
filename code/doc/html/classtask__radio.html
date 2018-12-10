@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Example Project Name -- CHANGE THIS NOW: task_radio Class Reference</title>
+<title>ME-507 Term Project: Ball Fetching Car: task_radio Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,9 +21,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Example Project Name -- CHANGE THIS NOW
-   &#160;<span id="projectnumber">0.001</span>
+   <div id="projectname">ME-507 Term Project: Ball Fetching Car
+   &#160;<span id="projectnumber">V0.9</span>
    </div>
+   <div id="projectbrief">This project is an ME-507 term project with the 						goal of having a model car track a ball with 						 electronics on it.</div>
   </td>
  </tr>
  </tbody>
@@ -70,6 +71,11 @@ $(function() {
 <div class="title">task_radio Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>This task is used to control the RF transciever.  
+ <a href="classtask__radio.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="task__radio_8h_source.html">task_radio.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for task_radio:</div>
 <div class="dyncontent">
@@ -88,31 +94,27 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a59772aadb73eef73bdbea1442d114490"><td class="memItemLeft" align="right" valign="top"><a id="a59772aadb73eef73bdbea1442d114490"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setup_rf</b> (void)</td></tr>
-<tr class="separator:a59772aadb73eef73bdbea1442d114490"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae65a87dacc155acdc221ca640a6812f8"><td class="memItemLeft" align="right" valign="top"><a id="ae65a87dacc155acdc221ca640a6812f8"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>init_spi</b> (void)</td></tr>
+<tr class="memitem:ae65a87dacc155acdc221ca640a6812f8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtask__radio.html#ae65a87dacc155acdc221ca640a6812f8">init_spi</a> (void)</td></tr>
+<tr class="memdesc:ae65a87dacc155acdc221ca640a6812f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">A method to initialize the SPI interface to the RF module.  <a href="#ae65a87dacc155acdc221ca640a6812f8">More...</a><br /></td></tr>
 <tr class="separator:ae65a87dacc155acdc221ca640a6812f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae18b22460053f286ad2327b785cfa018"><td class="memItemLeft" align="right" valign="top"><a id="ae18b22460053f286ad2327b785cfa018"></a>
-char&#160;</td><td class="memItemRight" valign="bottom"><b>write_byte</b> (char)</td></tr>
+<tr class="memitem:ae18b22460053f286ad2327b785cfa018"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtask__radio.html#ae18b22460053f286ad2327b785cfa018">write_byte</a> (char)</td></tr>
+<tr class="memdesc:ae18b22460053f286ad2327b785cfa018"><td class="mdescLeft">&#160;</td><td class="mdescRight">A method to send a byte to the RF module.  <a href="#ae18b22460053f286ad2327b785cfa018">More...</a><br /></td></tr>
 <tr class="separator:ae18b22460053f286ad2327b785cfa018"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a864714d4a62ca47b6852272d70aa0a0e"><td class="memItemLeft" align="right" valign="top"><a id="a864714d4a62ca47b6852272d70aa0a0e"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>get_reg</b> (uint8_t)</td></tr>
+<tr class="memitem:a864714d4a62ca47b6852272d70aa0a0e"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtask__radio.html#a864714d4a62ca47b6852272d70aa0a0e">get_reg</a> (uint8_t)</td></tr>
+<tr class="memdesc:a864714d4a62ca47b6852272d70aa0a0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">A method to get the value of a register on the RF module.  <a href="#a864714d4a62ca47b6852272d70aa0a0e">More...</a><br /></td></tr>
 <tr class="separator:a864714d4a62ca47b6852272d70aa0a0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4c451948697170e43a0b79674b76d5a6"><td class="memItemLeft" align="right" valign="top"><a id="a4c451948697170e43a0b79674b76d5a6"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>write_nrf</b> (uint8_t, uint8_t)</td></tr>
-<tr class="separator:a4c451948697170e43a0b79674b76d5a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a06d1554c99f26f78698d156f8a729ec7"><td class="memItemLeft" align="right" valign="top"><a id="a06d1554c99f26f78698d156f8a729ec7"></a>
-uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>read_or_write</b> (uint8_t, uint8_t, uint8_t *, uint8_t)</td></tr>
+<tr class="memitem:a06d1554c99f26f78698d156f8a729ec7"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtask__radio.html#a06d1554c99f26f78698d156f8a729ec7">read_or_write</a> (uint8_t, uint8_t, uint8_t *, uint8_t)</td></tr>
+<tr class="memdesc:a06d1554c99f26f78698d156f8a729ec7"><td class="mdescLeft">&#160;</td><td class="mdescRight">A method to write data to the RF module.  <a href="#a06d1554c99f26f78698d156f8a729ec7">More...</a><br /></td></tr>
 <tr class="separator:a06d1554c99f26f78698d156f8a729ec7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae86d2810bfbf4174f73b6c975f2deef4"><td class="memItemLeft" align="right" valign="top"><a id="ae86d2810bfbf4174f73b6c975f2deef4"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>transmit</b> (uint8_t *)</td></tr>
+<tr class="memitem:ae86d2810bfbf4174f73b6c975f2deef4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtask__radio.html#ae86d2810bfbf4174f73b6c975f2deef4">transmit</a> (uint8_t *)</td></tr>
+<tr class="memdesc:ae86d2810bfbf4174f73b6c975f2deef4"><td class="mdescLeft">&#160;</td><td class="mdescRight">A method to transmit a character array with the RF module.  <a href="#ae86d2810bfbf4174f73b6c975f2deef4">More...</a><br /></td></tr>
 <tr class="separator:ae86d2810bfbf4174f73b6c975f2deef4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="task__radio_8h_source.html#l00047">47</a> of file <a class="el" href="task__radio_8h_source.html">task_radio.h</a>.</p>
+<div class="textblock"><p>This task is used to control the RF transciever. </p>
+<p>This task inherits the TaskBase class, and is used to run as a finite state machine. It controls the actions of the RF transciever using an SPI interface. While this task can communicate with the RF transciever, we have not gotten the transciever to communicate with another RF module. </p>
+
+<p class="definition">Definition at line <a class="el" href="task__radio_8h_source.html#l00061">61</a> of file <a class="el" href="task__radio_8h_source.html">task_radio.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ad6d6a721a2642bb3074d682ea880aa30"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad6d6a721a2642bb3074d682ea880aa30">&#9670;&nbsp;</a></span>task_radio()</h2>
@@ -156,15 +158,156 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>transmit</b> (uint8_t
     <tr><td class="paramname">a_name</td><td>A character string which will be the name of this task </td></tr>
     <tr><td class="paramname">a_priority</td><td>The priority at which this task will initially run (default: 0) </td></tr>
     <tr><td class="paramname">a_stack_size</td><td>The size of this task's stack in bytes (default: configMINIMAL_STACK_SIZE) </td></tr>
+    <tr><td class="paramname">p_ser_dev</td><td>A pointer to the serial port which writes debugging info. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="task__radio_8cpp_source.html#l00033">33</a> of file <a class="el" href="task__radio_8cpp_source.html">task_radio.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="task__radio_8cpp_source.html#l00048">48</a> of file <a class="el" href="task__radio_8cpp_source.html">task_radio.cpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a864714d4a62ca47b6852272d70aa0a0e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a864714d4a62ca47b6852272d70aa0a0e">&#9670;&nbsp;</a></span>get_reg()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t task_radio::get_reg </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>reg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>A method to get the value of a register on the RF module. </p>
+<p>This method uses the SPI data register on our microcontroller to send a byte of information to the RF module. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">reg</td><td>A uint8_t value that corresonds to the desired register. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>reg The uint8_t data that was contained in the desired register RF module. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="task__radio_8cpp_source.html#l00201">201</a> of file <a class="el" href="task__radio_8cpp_source.html">task_radio.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="task__radio_8cpp_source.html#l00183">write_byte()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="task__radio_8cpp_source.html#l00064">run()</a>.</p>
+
+</div>
+</div>
+<a id="ae65a87dacc155acdc221ca640a6812f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae65a87dacc155acdc221ca640a6812f8">&#9670;&nbsp;</a></span>init_spi()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void task_radio::init_spi </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>A method to initialize the SPI interface to the RF module. </p>
+<p>This method sets the correct SPI pins as inputs and outputs, and sets their states so that the SPI interface can connect to the RF module. </p>
+
+<p class="definition">Definition at line <a class="el" href="task__radio_8cpp_source.html#l00159">159</a> of file <a class="el" href="task__radio_8cpp_source.html">task_radio.cpp</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="task__radio_8cpp_source.html#l00064">run()</a>.</p>
+
+</div>
+</div>
+<a id="a06d1554c99f26f78698d156f8a729ec7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06d1554c99f26f78698d156f8a729ec7">&#9670;&nbsp;</a></span>read_or_write()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t * task_radio::read_or_write </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>ReadWrite</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>reg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>val</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>antVal</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>A method to write data to the RF module. </p>
+<p>This method uses the SPI data register on our microcontroller to send a byte of information to the RF module. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ReadWrite</td><td>A uint8_t character that corresponds to either a value being written to or read from the RF module. </td></tr>
+    <tr><td class="paramname">reg</td><td>A uint8_t value that corresponds to the register of the RF module that is being modified. </td></tr>
+    <tr><td class="paramname">val</td><td>A pointer to the values array that are to written to the RF module. </td></tr>
+    <tr><td class="paramname">antVal</td><td>A uint8_t value that signifies the number of bytes to write to the RF module. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ret The array of uint8_t* data that was sent to the RF module. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="task__radio_8cpp_source.html#l00231">231</a> of file <a class="el" href="task__radio_8cpp_source.html">task_radio.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="task__radio_8cpp_source.html#l00183">write_byte()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="task__radio_8cpp_source.html#l00064">run()</a>, and <a class="el" href="task__radio_8cpp_source.html#l00273">transmit()</a>.</p>
+
+</div>
+</div>
 <a id="a4aeed57265c3fd031bd1219a9854811d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4aeed57265c3fd031bd1219a9854811d">&#9670;&nbsp;</a></span>run()</h2>
 
@@ -183,7 +326,88 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>transmit</b> (uint8_t
 <p>This method is called by the RTOS once to run the task loop for ever and ever.</p>
 <p>This task handles sending messages over the transciever to the transponder </p>
 
-<p class="definition">Definition at line <a class="el" href="task__radio_8cpp_source.html#l00049">49</a> of file <a class="el" href="task__radio_8cpp_source.html">task_radio.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="task__radio_8cpp_source.html#l00064">64</a> of file <a class="el" href="task__radio_8cpp_source.html">task_radio.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="task__radio_8cpp_source.html#l00201">get_reg()</a>, <a class="el" href="task__radio_8cpp_source.html#l00159">init_spi()</a>, <a class="el" href="main_8cpp_source.html#l00095">p_rf_ping</a>, <a class="el" href="task__radio_8cpp_source.html#l00231">read_or_write()</a>, and <a class="el" href="task__radio_8cpp_source.html#l00273">transmit()</a>.</p>
+
+</div>
+</div>
+<a id="ae86d2810bfbf4174f73b6c975f2deef4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae86d2810bfbf4174f73b6c975f2deef4">&#9670;&nbsp;</a></span>transmit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void task_radio::transmit </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>W_buff</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>A method to transmit a character array with the RF module. </p>
+<p>This method uses the read_or_write method to transmit an array of characters using the RF module. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">W_buff</td><td>A uint8_t* pointer to an array which is to be sent to the RF module. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="task__radio_8cpp_source.html#l00273">273</a> of file <a class="el" href="task__radio_8cpp_source.html">task_radio.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="task__radio_8cpp_source.html#l00231">read_or_write()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="task__radio_8cpp_source.html#l00064">run()</a>.</p>
+
+</div>
+</div>
+<a id="ae18b22460053f286ad2327b785cfa018"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae18b22460053f286ad2327b785cfa018">&#9670;&nbsp;</a></span>write_byte()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">char task_radio::write_byte </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>c_data</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>A method to send a byte to the RF module. </p>
+<p>This method uses the SPI data register on our microcontroller to send a byte of information to the RF module. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">c_data</td><td>A char byte that is to be sent to the RF module. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>SPDR The char data that was sent to the RF module. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="task__radio_8cpp_source.html#l00183">183</a> of file <a class="el" href="task__radio_8cpp_source.html">task_radio.cpp</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="task__radio_8cpp_source.html#l00201">get_reg()</a>, and <a class="el" href="task__radio_8cpp_source.html#l00231">read_or_write()</a>.</p>
 
 </div>
 </div>
@@ -194,7 +418,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>transmit</b> (uint8_t
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Dec 9 2018 15:42:08 for Example Project Name -- CHANGE THIS NOW by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 10 2018 13:54:18 for ME-507 Term Project: Ball Fetching Car by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.14
 </small></address>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Example Project Name -- CHANGE THIS NOW: task_user Class Reference</title>
+<title>ME-507 Term Project: Ball Fetching Car: task_user Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,9 +21,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Example Project Name -- CHANGE THIS NOW
-   &#160;<span id="projectnumber">0.001</span>
+   <div id="projectname">ME-507 Term Project: Ball Fetching Car
+   &#160;<span id="projectnumber">V0.9</span>
    </div>
+   <div id="projectbrief">This project is an ME-507 term project with the 						goal of having a model car track a ball with 						 electronics on it.</div>
   </td>
  </tr>
  </tbody>
@@ -71,6 +72,9 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
+<p>This task is used to create a user interface to communicate with.  
+ <a href="classtask__user.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="task__user_8h_source.html">task_user.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for task_user:</div>
@@ -96,9 +100,10 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a105bebbd9cb1031154c3dfc3662db4a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This task interacts with the user for force him/her to do what he/she is told. What a rude task this is. Then again, computers tend to be that way; if they're polite with you, they're probably spying on you. </p>
+<div class="textblock"><p>This task is used to create a user interface to communicate with. </p>
+<p>This task inherits the TaskBase class, and is used to run as a finite state machine. It talks over a serial interface, and sets various inter-task variables that control other tasks. </p>
 
-<p class="definition">Definition at line <a class="el" href="task__user_8h_source.html#l00060">60</a> of file <a class="el" href="task__user_8h_source.html">task_user.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="task__user_8h_source.html#l00058">58</a> of file <a class="el" href="task__user_8h_source.html">task_user.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a3aba77563b375bb14838800608da48bc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3aba77563b375bb14838800608da48bc">&#9670;&nbsp;</a></span>task_user()</h2>
@@ -147,7 +152,7 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="task__user_8cpp_source.html#l00052">52</a> of file <a class="el" href="task__user_8cpp_source.html">task_user.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="task__user_8cpp_source.html#l00050">50</a> of file <a class="el" href="task__user_8cpp_source.html">task_user.cpp</a>.</p>
 
 </div>
 </div>
@@ -177,9 +182,11 @@ Protected Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>This method prints a simple help message. </p>
 
-<p class="definition">Definition at line <a class="el" href="task__user_8cpp_source.html#l00233">233</a> of file <a class="el" href="task__user_8cpp_source.html">task_user.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="task__user_8cpp_source.html#l00231">231</a> of file <a class="el" href="task__user_8cpp_source.html">task_user.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="task__user_8h_source.html#l00051">PROGRAM_VERSION</a>.</p>
+<p class="reference">References <a class="el" href="task__user_8h_source.html#l00046">PROGRAM_VERSION</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="task__user_8cpp_source.html#l00068">run()</a>.</p>
 
 </div>
 </div>
@@ -202,7 +209,9 @@ Protected Member Functions</h2></td></tr>
 <p>This task interacts with the user for force him/her to do what he/she is told. It is just following the modern government model of "This is the land of the free...
 free to do exactly what you're told." </p>
 
-<p class="definition">Definition at line <a class="el" href="task__user_8cpp_source.html#l00070">70</a> of file <a class="el" href="task__user_8cpp_source.html">task_user.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="task__user_8cpp_source.html#l00068">68</a> of file <a class="el" href="task__user_8cpp_source.html">task_user.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="main_8cpp_source.html#l00102">p_drive_state</a>, <a class="el" href="main_8cpp_source.html#l00067">p_print_ser_queue</a>, <a class="el" href="main_8cpp_source.html#l00095">p_rf_ping</a>, <a class="el" href="task__user_8cpp_source.html#l00231">print_help_message()</a>, and <a class="el" href="task__user_8cpp_source.html#l00256">show_status()</a>.</p>
 
 </div>
 </div>
@@ -236,9 +245,11 @@ free to do exactly what you're told." </p>
 <li>Amount of heap space free and setting of RTOS tick timer </li>
 </ul>
 
-<p class="definition">Definition at line <a class="el" href="task__user_8cpp_source.html#l00258">258</a> of file <a class="el" href="task__user_8cpp_source.html">task_user.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="task__user_8cpp_source.html#l00256">256</a> of file <a class="el" href="task__user_8cpp_source.html">task_user.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="task__user_8h_source.html#l00051">PROGRAM_VERSION</a>.</p>
+<p class="reference">References <a class="el" href="task__user_8h_source.html#l00046">PROGRAM_VERSION</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="task__user_8cpp_source.html#l00068">run()</a>.</p>
 
 </div>
 </div>
@@ -249,7 +260,7 @@ free to do exactly what you're told." </p>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Dec 9 2018 15:42:09 for Example Project Name -- CHANGE THIS NOW by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 10 2018 13:54:18 for ME-507 Term Project: Ball Fetching Car by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.14
 </small></address>

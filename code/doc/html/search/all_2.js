@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['main',['main',['../main_8cpp.html#a840291bc02cba5474a4cb46a9b9566fe',1,'main.cpp']]],
-  ['main_2ecpp',['main.cpp',['../main_8cpp.html',1,'']]]
+  ['get_5freg',['get_reg',['../classtask__radio.html#a864714d4a62ca47b6852272d70aa0a0e',1,'task_radio']]]
 ];

@@ -1,5 +1,14 @@
 \hypertarget{classtask__steering}{}\section{task\+\_\+steering Class Reference}
 \label{classtask__steering}\index{task\+\_\+steering@{task\+\_\+steering}}
+
+
+This task is used to control the position of the servo.  
+
+
+
+
+{\ttfamily \#include $<$task\+\_\+steering.\+h$>$}
+
 Inheritance diagram for task\+\_\+steering\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -12,18 +21,20 @@ Inheritance diagram for task\+\_\+steering\+:\begin{figure}[H]
 \mbox{\hyperlink{classtask__steering_af8a9a96908212f23d97b2f859b571c4d}{task\+\_\+steering}} (const char $\ast$, unsigned port\+B\+A\+S\+E\+\_\+\+T\+Y\+PE, size\+\_\+t, emstream $\ast$)
 \item 
 void \mbox{\hyperlink{classtask__steering_a223e9f1d50c0c48ff5326b7ae01ae689}{run}} (void)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em This method is called by the R\+T\+OS once to run the task loop for ever and ever. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 uint8\+\_\+t \mbox{\hyperlink{classtask__steering_a6f33131ca25de22a81282b1142d939b3}{calc\+\_\+pwm}} (int8\+\_\+t)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em This method calculates the P\+WM length to be sent to the servo timer. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
+This task is used to control the position of the servo. 
 
+This task inherits the Task\+Base class, and is used to run as a finite state machine. It controls the actions of the servo using a timer for P\+WM. 
 
-Definition at line 40 of file task\+\_\+steering.\+h.
+Definition at line 55 of file task\+\_\+steering.\+h.
 
 
 
@@ -34,7 +45,7 @@ Definition at line 40 of file task\+\_\+steering.\+h.
 \subsubsection{\texorpdfstring{task\+\_\+steering()}{task\_steering()}}
 {\footnotesize\ttfamily task\+\_\+steering\+::task\+\_\+steering (\begin{DoxyParamCaption}\item[{const char $\ast$}]{a\+\_\+name,  }\item[{unsigned port\+B\+A\+S\+E\+\_\+\+T\+Y\+PE}]{a\+\_\+priority,  }\item[{size\+\_\+t}]{a\+\_\+stack\+\_\+size,  }\item[{emstream $\ast$}]{p\+\_\+ser\+\_\+dev }\end{DoxyParamCaption})}
 
-This constructor creates a new data acquisition task. Its main job is to call the parent class\textquotesingle{}s constructor which does most of the work. 
+This constructor creates a task to control the servo angle. It is used to control the movement direction of the car. 
 \begin{DoxyParams}{Parameters}
 {\em a\+\_\+name} & A character string which will be the name of this task \\
 \hline
@@ -42,10 +53,12 @@ This constructor creates a new data acquisition task. Its main job is to call th
 \hline
 {\em a\+\_\+stack\+\_\+size} & The size of this task\textquotesingle{}s stack in bytes (default\+: config\+M\+I\+N\+I\+M\+A\+L\+\_\+\+S\+T\+A\+C\+K\+\_\+\+S\+I\+ZE) \\
 \hline
+{\em p\+\_\+ser\+\_\+dev} & A pointer to the serial port which writes debugging info. \\
+\hline
 \end{DoxyParams}
 
 
-Definition at line 32 of file task\+\_\+steering.\+cpp.
+Definition at line 46 of file task\+\_\+steering.\+cpp.
 
 
 
@@ -56,17 +69,16 @@ Definition at line 32 of file task\+\_\+steering.\+cpp.
 \subsubsection{\texorpdfstring{calc\+\_\+pwm()}{calc\_pwm()}}
 {\footnotesize\ttfamily uint8\+\_\+t task\+\_\+steering\+::calc\+\_\+pwm (\begin{DoxyParamCaption}\item[{int8\+\_\+t}]{pwm }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
 
-This method takes a single input of the desired servo angle. From this value, the timer pulse length that corresponds to this angle is calculated and returned. 
-\begin{DoxyParams}{Parameters}
-{\em pwm} & An int8\+\_\+t type variable that represents the desired servo angle. This value can be between 90 and -\/90. \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
+
+
+This method calculates the P\+WM length to be sent to the servo timer. 
+
+This method takes a single input of the desired servo position. From this value, the timer pulse length that corresponds to this position is calculated and returned. \begin{DoxyReturn}{Returns}
 pulse\+\_\+length A uint8\+\_\+t type variable that represents the counter value to be written to timer register so that the correct motor speed will be achieved. 
 \end{DoxyReturn}
 
 
-Definition at line 120 of file task\+\_\+steering.\+cpp.
+Definition at line 136 of file task\+\_\+steering.\+cpp.
 
 
 
@@ -78,15 +90,19 @@ Referenced by run().
 \subsubsection{\texorpdfstring{run()}{run()}}
 {\footnotesize\ttfamily void task\+\_\+steering\+::run (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
 
-This method is called by the R\+T\+OS once to run the task loop for ever and ever.
-
-This task handles the steering f = f\+\_\+clk / N$\ast$(1 + T\+OP) Want f = 50 \mbox{[}hz\mbox{]} T\+OP = 0x\+FF = 255, f\+\_\+clk = 16 \mbox{[}Mhz\mbox{]} N = 1024 ---$>$ f = 61.\+3 \mbox{[}hz\mbox{]} close enough
-
-Definition at line 48 of file task\+\_\+steering.\+cpp.
 
 
+This method is called by the R\+T\+OS once to run the task loop for ever and ever. 
 
-References calc\+\_\+pwm().
+This method is called to run the servo control loop.
+
+This function works within the Free\+R\+T\+OS framework. Once it is called, it loops through a switch for as long as the main program is running in a finite state machine. This task uses the shared p\+\_\+servo\+\_\+pos variable calculate and set the P\+WM signal which activates the servo. 
+
+Definition at line 66 of file task\+\_\+steering.\+cpp.
+
+
+
+References calc\+\_\+pwm(), and p\+\_\+servo\+\_\+pos.
 
 
 

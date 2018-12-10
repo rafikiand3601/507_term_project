@@ -4,6 +4,7 @@
  *
  *  Revisions:
  *    @li 11-29-2018 KM car control header created.
+ *    @li 12-9-2018 KM last planned edit.
  *
  *  License:
  *	This code is based on Prof. JR Ridgely's FreeRTOS CPP example code. The FreeRTOS
@@ -37,7 +38,6 @@
 
 // ME 507 library includes
 #include "rs232int.h"                       // ME405/507 library for serial comm.
-#include "adc.h"                            // Header for A/D converter class driver
 #include "time_stamp.h"                     // Class to implement a microsecond timer
 #include "taskbase.h"                       // Header for ME405/507 base task class
 #include "taskqueue.h"                      // Header of wrapper for FreeRTOS queues
@@ -48,7 +48,11 @@
 
 
 
-
+/** @brief This task is used to control movement of the car.
+ *  @details This task inherits the TaskBase class, and is used to run as a finite 
+ *   state machine. It controls the actions of the motor and servo using shared
+ *   variables.
+ */
 class task_car_control : public TaskBase
 {
 private:
