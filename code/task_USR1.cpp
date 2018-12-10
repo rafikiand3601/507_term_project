@@ -60,36 +60,53 @@ task_USR1::task_USR1 (const char* a_name,
 
 
 //-------------------------------------------------------------------------------------
-/** This Task enables input capture interrupts and toggles the trigger pin on the
- *  distance sensor to continually detect nearby objects.
+/** @brief This method is called to run the Ultrasonic distance sensor task.
+ *  @details This function works within the FreeRTOS framework. Once it is called,
+ *  it initializes necessary pins, and sets up input capture interrupts to measure
+ *  the ECHO pulse from the sensor.It also cotinually toggles the trigger pin
+ *  such that the sensor continually sends pulses for object detection.
  */
 
+ // This is an infinite loop; it runs until the power is turned off. There is one
+ // such loop inside the code for each task
 void task_USR1::run (void)
 {
 
 	for (;;)
 	{
+		// Run the finite state machine. The variable 'state' is kept by parent class
 		switch (state)
 		{
-			//State 0
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			// In state 0, setup the output pin PC1, input capture interrupts on PE7
 			case (0):
-					ECHO = 0;			//Variable for trigger pin, only needed for demo code
+					//Variable for trigger pin, only needed for demo code
+					ECHO = 0;
 					//Input capture initialization for ECHO pin
-					DDRE &= (1 << PE7);					//Configure as input
+					//Configure PE7 as input
+					DDRE &= (1 << PE7);
 					DDRE = 0x00;
 					TCCR3B = 0x00;
-					TCCR3B |= (1 << ICES3) | (1<<CS32);	//Set to rising edge capture, 1024 prescaler set
-					TIMSK3 |= (1 << ICIE3);			//Enable interrupts
-					TIFR3 = (1 << ICF3);			//Clear input capture flag by writing a one
+					//Set to rising edge capture, 1024 prescaler set
+					TCCR3B |= (1 << ICES3) | (1<<CS32);
+					//Enable interrupts
+					TIMSK3 |= (1 << ICIE3);
+					//Clear input capture flag by writing a one
+					TIFR3 = (1 << ICF3);
 
-					edge_1->put (1);			//Initialize
-					width_1->put (0);			//Initialize
+					edge_1->put (1);
+					width_1->put (0);
 
 					//Initialize Trigger pin
-					DDRC |= (1 << PC1);		//Configure as output
-					PORTC |= (1 << PC1);	//Set Trigger pin high
-					transition_to (1);		//Go to state 1
+					//Configure as output
+					DDRC |= (1 << PC1);
+					//Set Trigger pin high
+					PORTC |= (1 << PC1);
+					//Go to state 1
+					transition_to (1);
 					break;
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			// In state 1, toggle distance sensor trigger pin to send pulses
 			case (1):
 //Test Code
 //					if(width_1->get())
@@ -100,18 +117,21 @@ void task_USR1::run (void)
 //					}
 					if (ECHO)
 					{
-						PORTC &= ~(1 << PC1);		//Set PC1 low
+						//Set PC1 low
+						PORTC &= ~(1 << PC1);
 						ECHO = 0;
 					}
 					else
 					{
 						//*p_serial <<width_1->get()<< endl;
-						PORTC |= (1 << PC1);		//Set PC1 high
+						//Set PC1 high
+						PORTC |= (1 << PC1);
 						ECHO = 1;
 					}
 
 					break;
-
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			// We should never get to the default state. If we do, complain and restart
 			default:
 					*p_serial << PMS ("Illegal state! Resetting AVR") << endl;
 					wdt_enable (WDTO_120MS);

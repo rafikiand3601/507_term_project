@@ -42,9 +42,10 @@
 #include "shares.h"                         // Global ('extern') queue declarations
 
 //-------------------------------------------------------------------------------------
-/** This task interacts with the user for force him/her to do what he/she is told. What
- *  a rude task this is. Then again, computers tend to be that way; if they're polite
- *  with you, they're probably spying on you.
+/** @brief This task is used to run the distance sensor.
+ *  @details This task inherits the TaskBase class, and is used to run as a finite
+ *   state machine. It runs the distance sensor by toggling the trigger pin, and
+ * 	 records ECHO pulse width using input capture interrupts
  */
 
 class task_USR1 : public TaskBase
