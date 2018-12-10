@@ -10,7 +10,7 @@ uint8_t ce_pin = 7;
 RF24 radio(ce_pin, cs_pin);
 
 
-void setup() 
+void setup()
 {
 
   // Init pins
@@ -20,8 +20,11 @@ void setup()
   // Start radio and serial
   Serial.begin(9600);
   radio.begin();
+  radio.setChannel(0x01);
+  radio.setPayloadSize(0x02);
+  //radio.printDetails(); // Does not work
   uint8_t addresses[][6] = {"node1", "node2"};
-  radio.openReadingPipe(1, addresses[0]);
+  radio.openReadingPipe(0, addresses[0]);
   Serial.println("Server Running");
   radio.startListening();
 }
@@ -30,7 +33,7 @@ void loop()
 {
   // Wait until a message is recieved
   if (radio.available())
-  { 
+  {
     char buf[20];
     uint8_t len = sizeof(buf);
     // Read message into buffer
@@ -42,7 +45,7 @@ void loop()
       //delayMicroseconds(10);
       //digitalWrite(trig_pin, LOW);
     }
-      
+
     // Send a reply
     /*
     uint8_t data[] = "received";

@@ -1,0 +1,82 @@
+\hypertarget{classtask__USR1}{}\section{task\+\_\+\+U\+S\+R1 Class Reference}
+\label{classtask__USR1}\index{task\+\_\+\+U\+S\+R1@{task\+\_\+\+U\+S\+R1}}
+
+
+{\ttfamily \#include $<$task\+\_\+\+U\+S\+R1.\+h$>$}
+
+Inheritance diagram for task\+\_\+\+U\+S\+R1\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classtask__USR1}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classtask__USR1_a09b56d4b1411901f63f762174266ecfa}{task\+\_\+\+U\+S\+R1}} (const char $\ast$, unsigned port\+B\+A\+S\+E\+\_\+\+T\+Y\+PE, size\+\_\+t, emstream $\ast$)
+\item 
+void \mbox{\hyperlink{classtask__USR1_a95b84a7b7f293a56470b74eb541fe346}{run}} (void)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtask__USR1_a306766d3d24e1682f19c2e5ee4c3d8ce}\label{classtask__USR1_a306766d3d24e1682f19c2e5ee4c3d8ce}} 
+uint8\+\_\+t {\bfseries E\+C\+HO}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This task interacts with the user for force him/her to do what he/she is told. What a rude task this is. Then again, computers tend to be that way; if they\textquotesingle{}re polite with you, they\textquotesingle{}re probably spying on you. 
+
+Definition at line 50 of file task\+\_\+\+U\+S\+R1.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtask__USR1_a09b56d4b1411901f63f762174266ecfa}\label{classtask__USR1_a09b56d4b1411901f63f762174266ecfa}} 
+\index{task\+\_\+\+U\+S\+R1@{task\+\_\+\+U\+S\+R1}!task\+\_\+\+U\+S\+R1@{task\+\_\+\+U\+S\+R1}}
+\index{task\+\_\+\+U\+S\+R1@{task\+\_\+\+U\+S\+R1}!task\+\_\+\+U\+S\+R1@{task\+\_\+\+U\+S\+R1}}
+\subsubsection{\texorpdfstring{task\+\_\+\+U\+S\+R1()}{task\_USR1()}}
+{\footnotesize\ttfamily task\+\_\+\+U\+S\+R1\+::task\+\_\+\+U\+S\+R1 (\begin{DoxyParamCaption}\item[{const char $\ast$}]{a\+\_\+name,  }\item[{unsigned port\+B\+A\+S\+E\+\_\+\+T\+Y\+PE}]{a\+\_\+priority,  }\item[{size\+\_\+t}]{a\+\_\+stack\+\_\+size,  }\item[{emstream $\ast$}]{p\+\_\+ser\+\_\+dev }\end{DoxyParamCaption})}
+
+This constructor creates a new data acquisition task. Its main job is to call the parent class\textquotesingle{}s constructor which does most of the work. 
+\begin{DoxyParams}{Parameters}
+{\em a\+\_\+name} & A character string which will be the name of this task \\
+\hline
+{\em a\+\_\+priority} & The priority at which this task will initially run (default\+: 0) \\
+\hline
+{\em a\+\_\+stack\+\_\+size} & The size of this task\textquotesingle{}s stack in bytes (default\+: config\+M\+I\+N\+I\+M\+A\+L\+\_\+\+S\+T\+A\+C\+K\+\_\+\+S\+I\+ZE) \\
+\hline
+{\em p\+\_\+ser\+\_\+dev} & Pointer to a serial device (port, radio, SD card, etc.) which can be used by this task to communicate (default\+: N\+U\+LL) \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 50 of file task\+\_\+\+U\+S\+R1.\+cpp.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classtask__USR1_a95b84a7b7f293a56470b74eb541fe346}\label{classtask__USR1_a95b84a7b7f293a56470b74eb541fe346}} 
+\index{task\+\_\+\+U\+S\+R1@{task\+\_\+\+U\+S\+R1}!run@{run}}
+\index{run@{run}!task\+\_\+\+U\+S\+R1@{task\+\_\+\+U\+S\+R1}}
+\subsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily void task\+\_\+\+U\+S\+R1\+::run (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+This method is called by the R\+T\+OS once to run the task loop for ever and ever.
+
+This task interacts with the user for force him/her to do what he/she is told. It is just following the modern government model of \char`\"{}\+This is the land of the free...
+free to do exactly what you\textquotesingle{}re told.\char`\"{} 
+
+Definition at line 68 of file task\+\_\+\+U\+S\+R1.\+cpp.
+
+
+
+References edge\+\_\+1, and width\+\_\+1.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{task__USR1_8h}{task\+\_\+\+U\+S\+R1.\+h}}\item 
+\mbox{\hyperlink{task__USR1_8cpp}{task\+\_\+\+U\+S\+R1.\+cpp}}\end{DoxyCompactItemize}

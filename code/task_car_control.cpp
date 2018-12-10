@@ -1,9 +1,10 @@
 //**************************************************************************************
 /** @file task_car_control.cpp
- *    This file contains code to drive the steering servo for the ME 507 term project.
+ *    This file contains code to control the car actions for the ME 507 term project.
  *
  *  Revisions:
- *    @li 11-29-2018 KM file created to test steering servo.
+ *    @li 11-29-2018 KM file created to test the control of the car.
+ *    @li 12-9-2018 KM last planned edit.
  *
  */
 //**************************************************************************************
@@ -13,18 +14,19 @@
 #include <avr/io.h>                         // Port I/O for SFR's
 #include <avr/wdt.h>                        // Watchdog timer header
 
-#include "task_car_control.h"                      // Header for this file
+#include "task_car_control.h"                // Header for this file
 
 
 
 
 //-------------------------------------------------------------------------------------
-/** This constructor creates a new data acquisition task. Its main job is to call the
- *  parent class's constructor which does most of the work.
+/** This constructor creates a task to control the actions of the car. It is used to
+ *  control the motor setpoint and the servo setpoint.
  *  @param a_name A character string which will be the name of this task
  *  @param a_priority The priority at which this task will initially run (default: 0)
  *  @param a_stack_size The size of this task's stack in bytes
  *                      (default: configMINIMAL_STACK_SIZE)
+ *  @param p_ser_dev A pointer to the serial port which writes debugging info. 
  */
 
 task_car_control::task_car_control (const char* a_name,
@@ -40,7 +42,11 @@ task_car_control::task_car_control (const char* a_name,
 
 
 //-------------------------------------------------------------------------------------
-/** This task handles the steering
+/** @brief This method is called to actuate the motor and servo.
+ *  @details This function works within the FreeRTOS framework. Once it is called, it 
+ *  loops through a switch for as long as the main program is running in a finite state
+ *  machine. This task uses the shared p_motor_vel and p_servo_pos variables calculate
+ *  to get the car to move as desired.
  */
 
 void task_car_control::run (void)

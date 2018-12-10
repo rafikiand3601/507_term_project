@@ -1,0 +1,232 @@
+\hypertarget{classtask__radio}{}\section{task\+\_\+radio Class Reference}
+\label{classtask__radio}\index{task\+\_\+radio@{task\+\_\+radio}}
+
+
+This task is used to control the RF transciever.  
+
+
+
+
+{\ttfamily \#include $<$task\+\_\+radio.\+h$>$}
+
+Inheritance diagram for task\+\_\+radio\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classtask__radio}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classtask__radio_ad6d6a721a2642bb3074d682ea880aa30}{task\+\_\+radio}} (const char $\ast$, unsigned port\+B\+A\+S\+E\+\_\+\+T\+Y\+PE, size\+\_\+t, emstream $\ast$)
+\item 
+void \mbox{\hyperlink{classtask__radio_a4aeed57265c3fd031bd1219a9854811d}{run}} (void)
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classtask__radio_ae65a87dacc155acdc221ca640a6812f8}{init\+\_\+spi}} (void)
+\begin{DoxyCompactList}\small\item\em A method to initialize the S\+PI interface to the RF module. \end{DoxyCompactList}\item 
+char \mbox{\hyperlink{classtask__radio_ae18b22460053f286ad2327b785cfa018}{write\+\_\+byte}} (char)
+\begin{DoxyCompactList}\small\item\em A method to send a byte to the RF module. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{classtask__radio_a864714d4a62ca47b6852272d70aa0a0e}{get\+\_\+reg}} (uint8\+\_\+t)
+\begin{DoxyCompactList}\small\item\em A method to get the value of a register on the RF module. \end{DoxyCompactList}\item 
+uint8\+\_\+t $\ast$ \mbox{\hyperlink{classtask__radio_a06d1554c99f26f78698d156f8a729ec7}{read\+\_\+or\+\_\+write}} (uint8\+\_\+t, uint8\+\_\+t, uint8\+\_\+t $\ast$, uint8\+\_\+t)
+\begin{DoxyCompactList}\small\item\em A method to write data to the RF module. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classtask__radio_ae86d2810bfbf4174f73b6c975f2deef4}{transmit}} (uint8\+\_\+t $\ast$)
+\begin{DoxyCompactList}\small\item\em A method to transmit a character array with the RF module. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This task is used to control the RF transciever. 
+
+This task inherits the Task\+Base class, and is used to run as a finite state machine. It controls the actions of the RF transciever using an S\+PI interface. While this task can communicate with the RF transciever, we have not gotten the transciever to communicate with another RF module. 
+
+Definition at line 61 of file task\+\_\+radio.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtask__radio_ad6d6a721a2642bb3074d682ea880aa30}\label{classtask__radio_ad6d6a721a2642bb3074d682ea880aa30}} 
+\index{task\+\_\+radio@{task\+\_\+radio}!task\+\_\+radio@{task\+\_\+radio}}
+\index{task\+\_\+radio@{task\+\_\+radio}!task\+\_\+radio@{task\+\_\+radio}}
+\subsubsection{\texorpdfstring{task\+\_\+radio()}{task\_radio()}}
+{\footnotesize\ttfamily task\+\_\+radio\+::task\+\_\+radio (\begin{DoxyParamCaption}\item[{const char $\ast$}]{a\+\_\+name,  }\item[{unsigned port\+B\+A\+S\+E\+\_\+\+T\+Y\+PE}]{a\+\_\+priority,  }\item[{size\+\_\+t}]{a\+\_\+stack\+\_\+size,  }\item[{emstream $\ast$}]{p\+\_\+ser\+\_\+dev }\end{DoxyParamCaption})}
+
+This constructor creates a new data acquisition task. Its main job is to call the parent class\textquotesingle{}s constructor which does most of the work. 
+\begin{DoxyParams}{Parameters}
+{\em a\+\_\+name} & A character string which will be the name of this task \\
+\hline
+{\em a\+\_\+priority} & The priority at which this task will initially run (default\+: 0) \\
+\hline
+{\em a\+\_\+stack\+\_\+size} & The size of this task\textquotesingle{}s stack in bytes (default\+: config\+M\+I\+N\+I\+M\+A\+L\+\_\+\+S\+T\+A\+C\+K\+\_\+\+S\+I\+ZE) \\
+\hline
+{\em p\+\_\+ser\+\_\+dev} & A pointer to the serial port which writes debugging info. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 48 of file task\+\_\+radio.\+cpp.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classtask__radio_a864714d4a62ca47b6852272d70aa0a0e}\label{classtask__radio_a864714d4a62ca47b6852272d70aa0a0e}} 
+\index{task\+\_\+radio@{task\+\_\+radio}!get\+\_\+reg@{get\+\_\+reg}}
+\index{get\+\_\+reg@{get\+\_\+reg}!task\+\_\+radio@{task\+\_\+radio}}
+\subsubsection{\texorpdfstring{get\+\_\+reg()}{get\_reg()}}
+{\footnotesize\ttfamily uint8\+\_\+t task\+\_\+radio\+::get\+\_\+reg (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{reg }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+A method to get the value of a register on the RF module. 
+
+This method uses the S\+PI data register on our microcontroller to send a byte of information to the RF module. 
+\begin{DoxyParams}{Parameters}
+{\em reg} & A uint8\+\_\+t value that corresonds to the desired register. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+reg The uint8\+\_\+t data that was contained in the desired register RF module. 
+\end{DoxyReturn}
+
+
+Definition at line 201 of file task\+\_\+radio.\+cpp.
+
+
+
+References write\+\_\+byte().
+
+
+
+Referenced by run().
+
+\mbox{\Hypertarget{classtask__radio_ae65a87dacc155acdc221ca640a6812f8}\label{classtask__radio_ae65a87dacc155acdc221ca640a6812f8}} 
+\index{task\+\_\+radio@{task\+\_\+radio}!init\+\_\+spi@{init\+\_\+spi}}
+\index{init\+\_\+spi@{init\+\_\+spi}!task\+\_\+radio@{task\+\_\+radio}}
+\subsubsection{\texorpdfstring{init\+\_\+spi()}{init\_spi()}}
+{\footnotesize\ttfamily void task\+\_\+radio\+::init\+\_\+spi (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+A method to initialize the S\+PI interface to the RF module. 
+
+This method sets the correct S\+PI pins as inputs and outputs, and sets their states so that the S\+PI interface can connect to the RF module. 
+
+Definition at line 159 of file task\+\_\+radio.\+cpp.
+
+
+
+Referenced by run().
+
+\mbox{\Hypertarget{classtask__radio_a06d1554c99f26f78698d156f8a729ec7}\label{classtask__radio_a06d1554c99f26f78698d156f8a729ec7}} 
+\index{task\+\_\+radio@{task\+\_\+radio}!read\+\_\+or\+\_\+write@{read\+\_\+or\+\_\+write}}
+\index{read\+\_\+or\+\_\+write@{read\+\_\+or\+\_\+write}!task\+\_\+radio@{task\+\_\+radio}}
+\subsubsection{\texorpdfstring{read\+\_\+or\+\_\+write()}{read\_or\_write()}}
+{\footnotesize\ttfamily uint8\+\_\+t $\ast$ task\+\_\+radio\+::read\+\_\+or\+\_\+write (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{Read\+Write,  }\item[{uint8\+\_\+t}]{reg,  }\item[{uint8\+\_\+t $\ast$}]{val,  }\item[{uint8\+\_\+t}]{ant\+Val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+A method to write data to the RF module. 
+
+This method uses the S\+PI data register on our microcontroller to send a byte of information to the RF module. 
+\begin{DoxyParams}{Parameters}
+{\em Read\+Write} & A uint8\+\_\+t character that corresponds to either a value being written to or read from the RF module. \\
+\hline
+{\em reg} & A uint8\+\_\+t value that corresponds to the register of the RF module that is being modified. \\
+\hline
+{\em val} & A pointer to the values array that are to written to the RF module. \\
+\hline
+{\em ant\+Val} & A uint8\+\_\+t value that signifies the number of bytes to write to the RF module. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+ret The array of uint8\+\_\+t$\ast$ data that was sent to the RF module. 
+\end{DoxyReturn}
+
+
+Definition at line 231 of file task\+\_\+radio.\+cpp.
+
+
+
+References write\+\_\+byte().
+
+
+
+Referenced by run(), and transmit().
+
+\mbox{\Hypertarget{classtask__radio_a4aeed57265c3fd031bd1219a9854811d}\label{classtask__radio_a4aeed57265c3fd031bd1219a9854811d}} 
+\index{task\+\_\+radio@{task\+\_\+radio}!run@{run}}
+\index{run@{run}!task\+\_\+radio@{task\+\_\+radio}}
+\subsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily void task\+\_\+radio\+::run (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+This method is called by the R\+T\+OS once to run the task loop for ever and ever.
+
+This task handles sending messages over the transciever to the transponder 
+
+Definition at line 64 of file task\+\_\+radio.\+cpp.
+
+
+
+References get\+\_\+reg(), init\+\_\+spi(), p\+\_\+rf\+\_\+ping, read\+\_\+or\+\_\+write(), and transmit().
+
+\mbox{\Hypertarget{classtask__radio_ae86d2810bfbf4174f73b6c975f2deef4}\label{classtask__radio_ae86d2810bfbf4174f73b6c975f2deef4}} 
+\index{task\+\_\+radio@{task\+\_\+radio}!transmit@{transmit}}
+\index{transmit@{transmit}!task\+\_\+radio@{task\+\_\+radio}}
+\subsubsection{\texorpdfstring{transmit()}{transmit()}}
+{\footnotesize\ttfamily void task\+\_\+radio\+::transmit (\begin{DoxyParamCaption}\item[{uint8\+\_\+t $\ast$}]{W\+\_\+buff }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+A method to transmit a character array with the RF module. 
+
+This method uses the read\+\_\+or\+\_\+write method to transmit an array of characters using the RF module. 
+\begin{DoxyParams}{Parameters}
+{\em W\+\_\+buff} & A uint8\+\_\+t$\ast$ pointer to an array which is to be sent to the RF module. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 273 of file task\+\_\+radio.\+cpp.
+
+
+
+References read\+\_\+or\+\_\+write().
+
+
+
+Referenced by run().
+
+\mbox{\Hypertarget{classtask__radio_ae18b22460053f286ad2327b785cfa018}\label{classtask__radio_ae18b22460053f286ad2327b785cfa018}} 
+\index{task\+\_\+radio@{task\+\_\+radio}!write\+\_\+byte@{write\+\_\+byte}}
+\index{write\+\_\+byte@{write\+\_\+byte}!task\+\_\+radio@{task\+\_\+radio}}
+\subsubsection{\texorpdfstring{write\+\_\+byte()}{write\_byte()}}
+{\footnotesize\ttfamily char task\+\_\+radio\+::write\+\_\+byte (\begin{DoxyParamCaption}\item[{char}]{c\+\_\+data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+A method to send a byte to the RF module. 
+
+This method uses the S\+PI data register on our microcontroller to send a byte of information to the RF module. 
+\begin{DoxyParams}{Parameters}
+{\em c\+\_\+data} & A char byte that is to be sent to the RF module. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+S\+P\+DR The char data that was sent to the RF module. 
+\end{DoxyReturn}
+
+
+Definition at line 183 of file task\+\_\+radio.\+cpp.
+
+
+
+Referenced by get\+\_\+reg(), and read\+\_\+or\+\_\+write().
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{task__radio_8h}{task\+\_\+radio.\+h}}\item 
+\mbox{\hyperlink{task__radio_8cpp}{task\+\_\+radio.\+cpp}}\end{DoxyCompactItemize}

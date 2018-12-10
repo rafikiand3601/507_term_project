@@ -4,8 +4,22 @@
  *
  *  Revisions:
  *    @li 11-29-2018 KM file created to test ESC.
+ *    @li 12-9-2018 KM last planned edit.
  *
- */
+ *  License:
+ *	This code is based on Prof. JR Ridgely's FreeRTOS CPP example code. The FreeRTOS
+ *	framework is used, but the tasks are a product of our 507 group. Since the original
+ *	code used the LGPL, our code will also use the LGPL.
+ *		THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ *		AND	ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * 		IMPLIED 	WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * 		ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ * 		LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUEN-
+ * 		TIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * 		OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * 		CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * 		OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * 		OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 //**************************************************************************************
 
 
@@ -19,12 +33,13 @@
 
 
 //-------------------------------------------------------------------------------------
-/** This constructor creates a new data acquisition task. Its main job is to call the
- *  parent class's constructor which does most of the work.
+/** This constructor creates a task to control the motor velocity. It is used to
+ *  control the forward movement of the car.
  *  @param a_name A character string which will be the name of this task
  *  @param a_priority The priority at which this task will initially run (default: 0)
  *  @param a_stack_size The size of this task's stack in bytes
  *                      (default: configMINIMAL_STACK_SIZE)
+ *  @param p_ser_dev A pointer to the serial port which writes debugging info. 
  */
 
 task_motor::task_motor (const char* a_name,
@@ -40,7 +55,11 @@ task_motor::task_motor (const char* a_name,
 
 
 //-------------------------------------------------------------------------------------
-/** This task handles the motor driving
+/** @brief This method is called to run the motor control loop.
+ *  @details This function works within the FreeRTOS framework. Once it is called, it 
+ *  loops through a switch for as long as the main program is running in a finite state
+ *  machine. This task uses the shared p_motor_vel variable calculate and set the
+ *  PWM signal which activates the motor controller.
  */
 
 void task_motor::run (void)
@@ -59,11 +78,11 @@ void task_motor::run (void)
 			// In state 0, setup the output pin for the motor on PB5(OC1A)
 			case (0):
 				// Need a wave with period ~ 20 ms and pulse length of 1.0-2.0 ms
-				/** f = f_clk / N*(1 + TOP)
-				  * Want f = 50 [hz]
-				  * TOP = 0xFF = 255, f_clk = 16 [Mhz]
-				  * N = 1024 ---> f = 61.3 [hz] close enough
-				*/
+				// f = f_clk / N*(1 + TOP)
+				// Want f = 50 [hz]
+				// TOP = 0xFF = 255, f_clk = 16 [Mhz]
+				// N = 1024 ---> f = 61.3 [hz] close enough
+				
 
 				// Set PB5 as output pin
 				DDRB |= (1 << PB5);
@@ -117,15 +136,25 @@ void task_motor::run (void)
 }
 
 
+//-------------------------------------------------------------------------------------
+/** @brief This method calculates the PWM length to be sent to the timer.
+ *  @details This method takes a single input of the desired motor velocity. From this
+ *  value, the timer pulse length that corresponds to this velocity is calculated and 
+ *  returned.
+ *  @param pwm An int8_t type variable that represents the desired motor speed.
+ *  This value can be between 100 and -100.
+ *  @return pulse_length A uint8_t type variable that represents the counter value to 
+ *  be written to timer register so that the correct motor speed will be achieved.
+ */
 
 uint8_t task_motor::calc_pwm (int8_t pwm)
 {
 	// Make sure input is between -90 and 90 degrees
-	if (pwm < -90)
+	if (pwm < -100)
 	{
-		pwm = -90;
-	} else if (pwm > 90) {
-		pwm = 90;
+		pwm = -100;
+	} else if (pwm > 100) {
+		pwm = 100;
 	}
 
 	// Convert degrees to pulse length (64-124)

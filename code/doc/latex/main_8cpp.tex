@@ -1,0 +1,242 @@
+\hypertarget{main_8cpp}{}\section{main.\+cpp File Reference}
+\label{main_8cpp}\index{main.\+cpp@{main.\+cpp}}
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$avr/io.\+h$>$}\newline
+{\ttfamily \#include $<$avr/wdt.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$avr/interrupt.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}Free\+R\+T\+O\+S.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}task.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}queue.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}croutine.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}rs232int.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}time\+\_\+stamp.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}taskbase.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}textqueue.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}taskqueue.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}taskshare.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}shares.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}task\+\_\+user.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}task\+\_\+steering.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}task\+\_\+motor.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}task\+\_\+car\+\_\+control.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}task\+\_\+radio.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}task\+\_\+\+U\+S\+R1.\+h\char`\"{}}\newline
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{main_8cpp_a840291bc02cba5474a4cb46a9b9566fe}{main}} (void)
+\item 
+\mbox{\hyperlink{main_8cpp_afdd244607cefccfe77024721d1ab9622}{I\+SR}} (T\+I\+M\+E\+R3\+\_\+\+C\+A\+P\+T\+\_\+vect)
+\begin{DoxyCompactList}\small\item\em An I\+SR routine to determine the rotational velocity of the motor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+Text\+Queue $\ast$ \mbox{\hyperlink{main_8cpp_acd99bf5d187d4809af2f460a5415e904}{p\+\_\+print\+\_\+ser\+\_\+queue}}
+\begin{DoxyCompactList}\small\item\em A queue to print data to a serial port in a task friendly way. \end{DoxyCompactList}\item 
+Task\+Share$<$ int8\+\_\+t $>$ $\ast$ \mbox{\hyperlink{main_8cpp_a658458b35e40d0a0ba7b27a99667273d}{p\+\_\+servo\+\_\+pos}}
+\begin{DoxyCompactList}\small\item\em A pointer to a variable that controls the servo position. \end{DoxyCompactList}\item 
+Task\+Share$<$ int8\+\_\+t $>$ $\ast$ \mbox{\hyperlink{main_8cpp_a377a9ec5b3493875d102b708b87c7b1f}{p\+\_\+motor\+\_\+vel}}
+\begin{DoxyCompactList}\small\item\em A pointer to a variable that controls the motor velocity. \end{DoxyCompactList}\item 
+Task\+Share$<$ int8\+\_\+t $>$ $\ast$ \mbox{\hyperlink{main_8cpp_aaba85f0f59ab3fbdbbb3e9fee5f48795}{p\+\_\+enc\+\_\+read}}
+\begin{DoxyCompactList}\small\item\em A pointer to a variable that represents the encoder ticks per second. \end{DoxyCompactList}\item 
+Task\+Share$<$ bool $>$ $\ast$ \mbox{\hyperlink{main_8cpp_a188eb21a8430d67a13e1a49e8a4247bc}{p\+\_\+rf\+\_\+ping}}
+\begin{DoxyCompactList}\small\item\em A pointer to a variable that tells the RF module to ping the transponder. \end{DoxyCompactList}\item 
+Task\+Share$<$ uint8\+\_\+t $>$ $\ast$ \mbox{\hyperlink{main_8cpp_a417763188f0e12c3bc2627b0783cf562}{p\+\_\+drive\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em A pointer to a variable that controls the drive state. \end{DoxyCompactList}\item 
+Task\+Share$<$ int8\+\_\+t $>$ $\ast$ \mbox{\hyperlink{main_8cpp_ad2bc6c6fe7bf518436a70d7f9384aab2}{edge\+\_\+1}}
+\begin{DoxyCompactList}\small\item\em A pointer to a variable that represents the edge change for the I\+SR. \end{DoxyCompactList}\item 
+Task\+Share$<$ uint16\+\_\+t $>$ $\ast$ \mbox{\hyperlink{main_8cpp_ad554ea3ddab2e460573f8c5ee31eb44d}{width\+\_\+1}}
+\begin{DoxyCompactList}\small\item\em A pointer to the pulse width value of the encoder ticks. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This file contains the \mbox{\hyperlink{main_8cpp_a840291bc02cba5474a4cb46a9b9566fe}{main()}} code for a multi-\/task program run under the Free\+R\+T\+OS framework.
+
+Revisions\+: \begin{DoxyItemize}
+\item 11-\/29-\/2018 KM file created to setup the task state-\/machine. \item 12-\/4-\/2018 KM added all tasks to state machine. \item 12-\/9-\/2018 KM last planned edit.\end{DoxyItemize}
+License\+: This code is based on Prof. JR Ridgely\textquotesingle{}s Free\+R\+T\+OS C\+PP example code. The Free\+R\+T\+OS framework is used, but the tasks are a product of our 507 group. Since the original code used the L\+G\+PL, our code will also use the L\+G\+PL. T\+H\+IS S\+O\+F\+T\+W\+A\+RE IS P\+R\+O\+V\+I\+D\+ED BY T\+HE C\+O\+P\+Y\+R\+I\+G\+HT H\+O\+L\+D\+E\+RS A\+ND C\+O\+N\+T\+R\+I\+B\+U\+T\+O\+RS \char`\"{}\+A\+S I\+S\char`\"{} A\+ND A\+NY E\+X\+P\+R\+E\+SS OR I\+M\+P\+L\+I\+ED W\+A\+R\+R\+A\+N\+T\+I\+ES, I\+N\+C\+L\+U\+D\+I\+NG, B\+UT N\+OT L\+I\+M\+I\+T\+ED TO, T\+HE I\+M\+P\+L\+I\+ED W\+A\+R\+R\+A\+N\+T\+I\+ES OF M\+E\+R\+C\+H\+A\+N\+T\+A\+B\+I\+L\+I\+TY A\+ND F\+I\+T\+N\+E\+SS F\+OR A P\+A\+R\+T\+I\+C\+U\+L\+AR P\+U\+R\+P\+O\+SE A\+RE D\+I\+S\+C\+L\+A\+I\+M\+ED. IN NO E\+V\+E\+NT S\+H\+A\+LL T\+HE C\+O\+P\+Y\+R\+I\+G\+HT O\+W\+N\+ER OR C\+O\+N\+T\+R\+I\+B\+U\+T\+O\+RS BE L\+I\+A\+B\+LE F\+OR A\+NY D\+I\+R\+E\+CT, I\+N\+D\+I\+R\+E\+CT, I\+N\+C\+I\+D\+E\+N\+T\+AL, S\+P\+E\+C\+I\+AL, E\+X\+E\+M\+P\+L\+A\+RY, OR C\+O\+N\+S\+E\+Q\+U\+E\+N-\/ T\+I\+AL D\+A\+M\+A\+G\+ES (I\+N\+C\+L\+U\+D\+I\+NG, B\+UT N\+OT L\+I\+M\+I\+T\+ED TO, P\+R\+O\+C\+U\+R\+E\+M\+E\+NT OF S\+U\+B\+S\+T\+I\+T\+U\+TE G\+O\+O\+DS OR S\+E\+R\+V\+I\+C\+ES; L\+O\+SS OF U\+SE, D\+A\+TA, OR P\+R\+O\+F\+I\+TS; OR B\+U\+S\+I\+N\+E\+SS I\+N\+T\+E\+R\+R\+U\+P\+T\+I\+ON) H\+O\+W\+E\+V\+ER C\+A\+U\+S\+ED A\+ND ON A\+NY T\+H\+E\+O\+RY OF L\+I\+A\+B\+I\+L\+I\+TY, W\+H\+E\+T\+H\+ER IN C\+O\+N\+T\+R\+A\+CT, S\+T\+R\+I\+CT L\+I\+A\+B\+I\+L\+I\+TY, OR T\+O\+RT (I\+N\+C\+L\+U\+D\+I\+NG N\+E\+G\+L\+I\+G\+E\+N\+CE OR O\+T\+H\+E\+R\+W\+I\+SE) A\+R\+I\+S\+I\+NG IN A\+NY W\+AY O\+UT OF T\+HE U\+SE OF T\+H\+IS S\+O\+F\+T\+W\+A\+RE, E\+V\+EN IF A\+D\+V\+I\+S\+ED OF T\+HE P\+O\+S\+S\+I\+B\+I\+L\+I\+TY OF S\+U\+CH D\+A\+M\+A\+GE. 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{main_8cpp_afdd244607cefccfe77024721d1ab9622}\label{main_8cpp_afdd244607cefccfe77024721d1ab9622}} 
+\index{main.\+cpp@{main.\+cpp}!I\+SR@{I\+SR}}
+\index{I\+SR@{I\+SR}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{I\+S\+R()}{ISR()}}
+{\footnotesize\ttfamily I\+SR (\begin{DoxyParamCaption}\item[{T\+I\+M\+E\+R3\+\_\+\+C\+A\+P\+T\+\_\+vect}]{ }\end{DoxyParamCaption})}
+
+
+
+An I\+SR routine to determine the rotational velocity of the motor. 
+
+This routine is used to determine the rotational velocity of the motor. While it runs, it has not been fully implemented in our code. 
+
+Definition at line 205 of file main.\+cpp.
+
+
+
+References edge\+\_\+1, and width\+\_\+1.
+
+\mbox{\Hypertarget{main_8cpp_a840291bc02cba5474a4cb46a9b9566fe}\label{main_8cpp_a840291bc02cba5474a4cb46a9b9566fe}} 
+\index{main.\+cpp@{main.\+cpp}!main@{main}}
+\index{main@{main}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+The main function sets up the R\+T\+OS. Some test tasks are created. Then the scheduler is started up; the scheduler runs until power is turned off or there\textquotesingle{}s a reset. \begin{DoxyReturn}{Returns}
+This is a real-\/time microcontroller program which doesn\textquotesingle{}t return. Ever. 
+\end{DoxyReturn}
+
+
+Definition at line 125 of file main.\+cpp.
+
+
+
+References edge\+\_\+1, p\+\_\+drive\+\_\+state, p\+\_\+enc\+\_\+read, p\+\_\+motor\+\_\+vel, p\+\_\+print\+\_\+ser\+\_\+queue, p\+\_\+rf\+\_\+ping, p\+\_\+servo\+\_\+pos, and width\+\_\+1.
+
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{main_8cpp_ad2bc6c6fe7bf518436a70d7f9384aab2}\label{main_8cpp_ad2bc6c6fe7bf518436a70d7f9384aab2}} 
+\index{main.\+cpp@{main.\+cpp}!edge\+\_\+1@{edge\+\_\+1}}
+\index{edge\+\_\+1@{edge\+\_\+1}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{edge\+\_\+1}{edge\_1}}
+{\footnotesize\ttfamily Task\+Share$<$int8\+\_\+t$>$$\ast$ edge\+\_\+1}
+
+
+
+A pointer to a variable that represents the edge change for the I\+SR. 
+
+edge\+\_\+1 A pointer to a int8\+\_\+t variable that stores which edge is active so that the I\+SR can return the pulse width properly. 
+
+Definition at line 108 of file main.\+cpp.
+
+
+
+Referenced by I\+S\+R(), main(), and task\+\_\+\+U\+S\+R1\+::run().
+
+\mbox{\Hypertarget{main_8cpp_a417763188f0e12c3bc2627b0783cf562}\label{main_8cpp_a417763188f0e12c3bc2627b0783cf562}} 
+\index{main.\+cpp@{main.\+cpp}!p\+\_\+drive\+\_\+state@{p\+\_\+drive\+\_\+state}}
+\index{p\+\_\+drive\+\_\+state@{p\+\_\+drive\+\_\+state}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{p\+\_\+drive\+\_\+state}{p\_drive\_state}}
+{\footnotesize\ttfamily Task\+Share$<$uint8\+\_\+t$>$$\ast$ p\+\_\+drive\+\_\+state}
+
+
+
+A pointer to a variable that controls the drive state. 
+
+p\+\_\+drive\+\_\+state A pointer to a uint8\+\_\+t Task\+Share variable that tells the car control task which state to go into. This variable is set by the user interface task and read by the car control task. 
+
+Definition at line 102 of file main.\+cpp.
+
+
+
+Referenced by main(), task\+\_\+car\+\_\+control\+::run(), and task\+\_\+user\+::run().
+
+\mbox{\Hypertarget{main_8cpp_aaba85f0f59ab3fbdbbb3e9fee5f48795}\label{main_8cpp_aaba85f0f59ab3fbdbbb3e9fee5f48795}} 
+\index{main.\+cpp@{main.\+cpp}!p\+\_\+enc\+\_\+read@{p\+\_\+enc\+\_\+read}}
+\index{p\+\_\+enc\+\_\+read@{p\+\_\+enc\+\_\+read}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{p\+\_\+enc\+\_\+read}{p\_enc\_read}}
+{\footnotesize\ttfamily Task\+Share$<$int8\+\_\+t$>$$\ast$ p\+\_\+enc\+\_\+read}
+
+
+
+A pointer to a variable that represents the encoder ticks per second. 
+
+p\+\_\+enc\+\_\+read A pointer to an int8\+\_\+t Task\+Share variable that represents the encoder ticks per second. This variable is set by the encoder read task, but is not fully implemented. 
+
+Definition at line 88 of file main.\+cpp.
+
+
+
+Referenced by main().
+
+\mbox{\Hypertarget{main_8cpp_a377a9ec5b3493875d102b708b87c7b1f}\label{main_8cpp_a377a9ec5b3493875d102b708b87c7b1f}} 
+\index{main.\+cpp@{main.\+cpp}!p\+\_\+motor\+\_\+vel@{p\+\_\+motor\+\_\+vel}}
+\index{p\+\_\+motor\+\_\+vel@{p\+\_\+motor\+\_\+vel}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{p\+\_\+motor\+\_\+vel}{p\_motor\_vel}}
+{\footnotesize\ttfamily Task\+Share$<$int8\+\_\+t$>$$\ast$ p\+\_\+motor\+\_\+vel}
+
+
+
+A pointer to a variable that controls the motor velocity. 
+
+p\+\_\+motor\+\_\+vel A pointer to an int8\+\_\+t Task\+Share variable that can control the velocity of the motor. This variable is set by the car control task and read by the servo task. 
+
+Definition at line 81 of file main.\+cpp.
+
+
+
+Referenced by main(), task\+\_\+car\+\_\+control\+::run(), and task\+\_\+motor\+::run().
+
+\mbox{\Hypertarget{main_8cpp_acd99bf5d187d4809af2f460a5415e904}\label{main_8cpp_acd99bf5d187d4809af2f460a5415e904}} 
+\index{main.\+cpp@{main.\+cpp}!p\+\_\+print\+\_\+ser\+\_\+queue@{p\+\_\+print\+\_\+ser\+\_\+queue}}
+\index{p\+\_\+print\+\_\+ser\+\_\+queue@{p\+\_\+print\+\_\+ser\+\_\+queue}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{p\+\_\+print\+\_\+ser\+\_\+queue}{p\_print\_ser\_queue}}
+{\footnotesize\ttfamily Text\+Queue$\ast$ p\+\_\+print\+\_\+ser\+\_\+queue}
+
+
+
+A queue to print data to a serial port in a task friendly way. 
+
+p\+\_\+ser\+\_\+print\+\_\+queue A pointer to a Text\+Queue serial queue object that can print data without interrupting task timing. This is utilized to by various tasks, but most importantly the user interface task. 
+
+Definition at line 67 of file main.\+cpp.
+
+
+
+Referenced by main(), and task\+\_\+user\+::run().
+
+\mbox{\Hypertarget{main_8cpp_a188eb21a8430d67a13e1a49e8a4247bc}\label{main_8cpp_a188eb21a8430d67a13e1a49e8a4247bc}} 
+\index{main.\+cpp@{main.\+cpp}!p\+\_\+rf\+\_\+ping@{p\+\_\+rf\+\_\+ping}}
+\index{p\+\_\+rf\+\_\+ping@{p\+\_\+rf\+\_\+ping}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{p\+\_\+rf\+\_\+ping}{p\_rf\_ping}}
+{\footnotesize\ttfamily Task\+Share$<$bool$>$$\ast$ p\+\_\+rf\+\_\+ping}
+
+
+
+A pointer to a variable that tells the RF module to ping the transponder. 
+
+p\+\_\+rf\+\_\+ping A pointer to a bool Task\+Share variable that tells the RF module to send a ping signal to the transciever. This variable is set by the user interface task and read by the RF module task. 
+
+Definition at line 95 of file main.\+cpp.
+
+
+
+Referenced by main(), task\+\_\+user\+::run(), and task\+\_\+radio\+::run().
+
+\mbox{\Hypertarget{main_8cpp_a658458b35e40d0a0ba7b27a99667273d}\label{main_8cpp_a658458b35e40d0a0ba7b27a99667273d}} 
+\index{main.\+cpp@{main.\+cpp}!p\+\_\+servo\+\_\+pos@{p\+\_\+servo\+\_\+pos}}
+\index{p\+\_\+servo\+\_\+pos@{p\+\_\+servo\+\_\+pos}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{p\+\_\+servo\+\_\+pos}{p\_servo\_pos}}
+{\footnotesize\ttfamily Task\+Share$<$int8\+\_\+t$>$$\ast$ p\+\_\+servo\+\_\+pos}
+
+
+
+A pointer to a variable that controls the servo position. 
+
+p\+\_\+motor\+\_\+vel A pointer to an int8\+\_\+t Task\+Share variable that can control the position of the servo. This variable is set by the car control task and read by the servo task. 
+
+Definition at line 74 of file main.\+cpp.
+
+
+
+Referenced by main(), task\+\_\+steering\+::run(), and task\+\_\+car\+\_\+control\+::run().
+
+\mbox{\Hypertarget{main_8cpp_ad554ea3ddab2e460573f8c5ee31eb44d}\label{main_8cpp_ad554ea3ddab2e460573f8c5ee31eb44d}} 
+\index{main.\+cpp@{main.\+cpp}!width\+\_\+1@{width\+\_\+1}}
+\index{width\+\_\+1@{width\+\_\+1}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{width\+\_\+1}{width\_1}}
+{\footnotesize\ttfamily Task\+Share$<$uint16\+\_\+t$>$$\ast$ width\+\_\+1}
+
+
+
+A pointer to the pulse width value of the encoder ticks. 
+
+width\+\_\+1 A pointer to the uint16\+\_\+t variable that represents the width of the encoder pulse for timing reporting. This variable is set in the encoder I\+SR. This feature is not fully implemented. 
+
+Definition at line 115 of file main.\+cpp.
+
+
+
+Referenced by I\+S\+R(), main(), task\+\_\+\+U\+S\+R1\+::run(), and task\+\_\+car\+\_\+control\+::run().
+
