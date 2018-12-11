@@ -54,6 +54,9 @@ private:
 	// No private variables or methods for this class
 
 protected:
+	/** @brief This variable is used to detect whether the Trigger pin on the distance
+	 *  sensor is set high or low.
+	 */
 uint8_t ECHO;
 
 public:

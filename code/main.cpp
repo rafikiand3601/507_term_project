@@ -1,8 +1,8 @@
 //*************************************************************************************
 /** \file main.cpp
  *    This file contains the main() code for a multi-task program run under the
- *    FreeRTOS framework. 
- *    
+ *    FreeRTOS framework.
+ *
  *
  *  Revisions:
  *    \li 11-29-2018 KM file created to setup the task state-machine.
@@ -95,7 +95,7 @@ TaskShare<int8_t>* p_enc_read;
 TaskShare<bool>* p_rf_ping;
 
 /** @brief A pointer to a variable that controls the drive state.
- *  @details p_drive_state A pointer to a uint8_t TaskShare variable that tells the 
+ *  @details p_drive_state A pointer to a uint8_t TaskShare variable that tells the
  *  car control task which state to go into. This variable is set by the user
  *  interface task and read by the car control task.
  */
@@ -107,10 +107,9 @@ TaskShare<uint8_t>* p_drive_state;
  */
 TaskShare<int8_t>* edge_1;
 
-/** @brief A pointer to the pulse width value of the encoder ticks.
+/** @brief A pointer to the pulse width value of the distance sensor ECHO pin.
  *  @details width_1 A pointer to the uint16_t variable that represents the width
- *  of the encoder pulse for timing reporting. This variable is set in the encoder ISR.
- *  This feature is not fully implemented.
+ *  of the ECHO pulse for distance sensing. This variable is set in the distance sensor ISR.
  */
 TaskShare<uint16_t>* width_1;
 
@@ -179,7 +178,7 @@ int main (void)
 
 	//Create a Task to read ultrasonic receiver 1
 	new task_USR1 ("USR1",task_priority (7), 200, p_ser_port);
-	
+
 	//Create a Task to read ultrasonic receiver 2
 	//new task_USR2 ("USR2",task_priority (7), 200, p_ser_port);
 
@@ -198,9 +197,9 @@ int main (void)
 }
 
 
-/** @brief An ISR routine to determine the rotational velocity of the motor.
- *  @details This routine  is used to determine the rotational velocity of the motor.
- *  While it runs, it has not been fully implemented in our code.
+/** @brief An ISR routine to determine pulse width received from distance sensor.
+ *  @details This routine toggles between rising and falling edge input capture
+ *  to measure pulse width, and stores the value in a global variable.
  */
 ISR(TIMER3_CAPT_vect)
 {
