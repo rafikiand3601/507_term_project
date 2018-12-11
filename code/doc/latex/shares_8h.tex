@@ -18,7 +18,7 @@ Task\+Share$<$ uint8\+\_\+t $>$ $\ast$ \mbox{\hyperlink{shares_8h_a417763188f0e1
 Task\+Share$<$ int8\+\_\+t $>$ $\ast$ \mbox{\hyperlink{shares_8h_ad2bc6c6fe7bf518436a70d7f9384aab2}{edge\+\_\+1}}
 \begin{DoxyCompactList}\small\item\em A pointer to a variable that represents the edge change for the I\+SR. \end{DoxyCompactList}\item 
 Task\+Share$<$ uint16\+\_\+t $>$ $\ast$ \mbox{\hyperlink{shares_8h_ad554ea3ddab2e460573f8c5ee31eb44d}{width\+\_\+1}}
-\begin{DoxyCompactList}\small\item\em A pointer to the pulse width value of the encoder ticks. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em A pointer to the pulse width value of the distance sensor E\+C\+HO pin. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -163,11 +163,11 @@ Referenced by main(), task\+\_\+steering\+::run(), and task\+\_\+car\+\_\+contro
 
 
 
-A pointer to the pulse width value of the encoder ticks. 
+A pointer to the pulse width value of the distance sensor E\+C\+HO pin. 
 
-width\+\_\+1 A pointer to the uint16\+\_\+t variable that represents the width of the encoder pulse for timing reporting. This variable is set in the encoder I\+SR. This feature is not fully implemented. 
+width\+\_\+1 A pointer to the uint16\+\_\+t variable that represents the width of the E\+C\+HO pulse for distance sensing. This variable is set in the distance sensor I\+SR. 
 
-Definition at line 115 of file main.\+cpp.
+Definition at line 114 of file main.\+cpp.
 
 
 

@@ -2,6 +2,11 @@
 \label{classtask__USR1}\index{task\+\_\+\+U\+S\+R1@{task\+\_\+\+U\+S\+R1}}
 
 
+This task is used to run the distance sensor.  
+
+
+
+
 {\ttfamily \#include $<$task\+\_\+\+U\+S\+R1.\+h$>$}
 
 Inheritance diagram for task\+\_\+\+U\+S\+R1\+:\begin{figure}[H]
@@ -16,19 +21,21 @@ Inheritance diagram for task\+\_\+\+U\+S\+R1\+:\begin{figure}[H]
 \mbox{\hyperlink{classtask__USR1_a09b56d4b1411901f63f762174266ecfa}{task\+\_\+\+U\+S\+R1}} (const char $\ast$, unsigned port\+B\+A\+S\+E\+\_\+\+T\+Y\+PE, size\+\_\+t, emstream $\ast$)
 \item 
 void \mbox{\hyperlink{classtask__USR1_a95b84a7b7f293a56470b74eb541fe346}{run}} (void)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em This method is called to run the Ultrasonic distance sensor task. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\Hypertarget{classtask__USR1_a306766d3d24e1682f19c2e5ee4c3d8ce}\label{classtask__USR1_a306766d3d24e1682f19c2e5ee4c3d8ce}} 
-uint8\+\_\+t {\bfseries E\+C\+HO}
-\end{DoxyCompactItemize}
+uint8\+\_\+t \mbox{\hyperlink{classtask__USR1_a306766d3d24e1682f19c2e5ee4c3d8ce}{E\+C\+HO}}
+\begin{DoxyCompactList}\small\item\em This variable is used to detect whether the Trigger pin on the distance sensor is set high or low. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-This task interacts with the user for force him/her to do what he/she is told. What a rude task this is. Then again, computers tend to be that way; if they\textquotesingle{}re polite with you, they\textquotesingle{}re probably spying on you. 
+This task is used to run the distance sensor. 
 
-Definition at line 50 of file task\+\_\+\+U\+S\+R1.\+h.
+This task inherits the Task\+Base class, and is used to run as a finite state machine. It runs the distance sensor by toggling the trigger pin, and records E\+C\+HO pulse width using input capture interrupts 
+
+Definition at line 51 of file task\+\_\+\+U\+S\+R1.\+h.
 
 
 
@@ -63,16 +70,19 @@ Definition at line 50 of file task\+\_\+\+U\+S\+R1.\+cpp.
 \subsubsection{\texorpdfstring{run()}{run()}}
 {\footnotesize\ttfamily void task\+\_\+\+U\+S\+R1\+::run (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
 
+
+
+This method is called to run the Ultrasonic distance sensor task. 
+
 This method is called by the R\+T\+OS once to run the task loop for ever and ever.
 
-This task interacts with the user for force him/her to do what he/she is told. It is just following the modern government model of \char`\"{}\+This is the land of the free...
-free to do exactly what you\textquotesingle{}re told.\char`\"{} 
+This function works within the Free\+R\+T\+OS framework. Once it is called, it initializes necessary pins, and sets up input capture interrupts to measure the E\+C\+HO pulse from the sensor.\+It also cotinually toggles the trigger pin such that the sensor continually sends pulses for object detection. 
 
-Definition at line 68 of file task\+\_\+\+U\+S\+R1.\+cpp.
-
+Definition at line 72 of file task\+\_\+\+U\+S\+R1.\+cpp.
 
 
-References edge\+\_\+1, and width\+\_\+1.
+
+References E\+C\+HO, edge\+\_\+1, and width\+\_\+1.
 
 
 
